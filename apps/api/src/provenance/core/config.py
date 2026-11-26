@@ -30,6 +30,8 @@ class Settings(BaseSettings):
     session_idle_minutes: int = 120
     allowed_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
     max_file_bytes: int = 10 * 1024 * 1024
+    max_pages: int = 200
+    max_table_rows: int = 50_000
     file_link_ttl_s: int = 300
     # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
     trusted_proxies: list[str] = []
