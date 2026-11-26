@@ -4,11 +4,14 @@ import io
 
 from pptx import Presentation
 from pptx.shapes.base import BaseShape
+from pptx.shapes.group import GroupShape
 
 from provenance.ingest.parsers.base import Anchor, Block, ParsedDocument, ParseWarning
 
 
 def _shape_texts(shape: BaseShape) -> list[str]:
+    if isinstance(shape, GroupShape):
+        return [line for child in shape.shapes for line in _shape_texts(child)]
     if getattr(shape, "has_table", False):
         table = shape.table  # type: ignore[attr-defined]
         return [" | ".join(cell.text.strip() for cell in row.cells) for row in table.rows]

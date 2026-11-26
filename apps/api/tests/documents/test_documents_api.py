@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.audit.models import AuditEvent
 from provenance.documents.models import Chunk, Document, DocumentVersion
+from provenance.documents.service import safe_filename
 from provenance.ingest.models import Job
 from provenance.storage.models import StoredFile
 from tests.ingest.harness import Harness
@@ -194,3 +195,22 @@ async def test_profile_change_reindexes_documents(
     assert detail["latest_version"]["number"] == 2
     assert detail["active_version_id"] == detail["latest_version"]["id"]
     assert await harness.deps.index.count(first, active=True) == 0
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        (r"C:\Users\maya\Desktop\runbook.txt", "runbook.txt"),
+        ("../../etc/runbook.txt", "runbook.txt"),
+        ("run\x00book.txt", "runbook.txt"),
+        ("x" * 300 + ".txt", "x" * 251 + ".txt"),
+    ],
+)
+def test_safe_filename(raw: str, expected: str) -> None:
+    assert safe_filename(raw) == expected
+
+
+async def test_long_filename_upload_is_stored_safely(client: AsyncClient, signed_in: str) -> None:
+    created = await upload(client, signed_in, "r" * 300 + ".txt", RUNBOOK)
+
+    assert created["filename"] == "r" * 251 + ".txt"

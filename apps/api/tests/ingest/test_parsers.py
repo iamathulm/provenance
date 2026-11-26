@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pyarrow as pa
 import pytest
+from pptx import Presentation
+from pptx.util import Inches
 
 from provenance.core.config import Settings
 from provenance.ingest.parsers import parse
@@ -184,3 +186,19 @@ def test_unreadable_csv_is_rejected_cleanly() -> None:
         validate_upload("notes.csv", huge_field, Settings(_env_file=None))
 
     assert raised.value.code == "corrupt_file"
+
+
+def test_pptx_text_inside_grouped_shapes_is_indexed(company: DomainProfile) -> None:
+    deck = Presentation()
+    slide = deck.slides.add_slide(deck.slide_layouts[5])
+    slide.shapes.title.text = "Architecture"
+    group = slide.shapes.add_group_shape()
+    group.shapes.add_textbox(
+        Inches(1), Inches(2), Inches(3), Inches(1)
+    ).text_frame.text = "Dock talks to GroundLink over LTE"
+    buffer = io.BytesIO()
+    deck.save(buffer)
+
+    parsed = run("arch.pptx", buffer.getvalue(), company)
+
+    assert "Dock talks to GroundLink over LTE" in parsed.blocks[0].text

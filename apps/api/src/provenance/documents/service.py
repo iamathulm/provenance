@@ -9,6 +9,7 @@ audit trail of both steps.
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from pathlib import PurePath
 
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -32,6 +33,20 @@ from provenance.workspaces.models import Workspace
 class DocumentView:
     document: Document
     latest: DocumentVersion
+
+
+MAX_FILENAME = 255
+
+
+def safe_filename(raw: str) -> str:
+    """Base name only (some browsers send full paths), no control characters, at most 255
+    characters with the extension preserved."""
+    name = "".join(ch for ch in raw.replace("\\", "/").rsplit("/", 1)[-1] if ch.isprintable())
+    name = name.strip() or "upload"
+    if len(name) <= MAX_FILENAME:
+        return name
+    path = PurePath(name)
+    return path.stem[: MAX_FILENAME - len(path.suffix)] + path.suffix
 
 
 def _audit(
@@ -82,6 +97,7 @@ async def upload_document(
     settings: Settings,
 ) -> DocumentView:
     """Validate, store and queue a new document. Invalid files raise before anything is saved."""
+    filename = safe_filename(filename)
     validated = validate_upload(filename, content, settings)
     stored = await put_file(db, workspace, filename, validated.media_type, content, settings)
     document = Document(
@@ -104,6 +120,7 @@ async def replace_document(
     settings: Settings,
 ) -> DocumentView:
     document = await _live_document(db, workspace, document_id)
+    filename = safe_filename(filename)
     validated = validate_upload(filename, content, settings)
     stored = await put_file(db, workspace, filename, validated.media_type, content, settings)
     version = await _queue_version(db, document, stored.id)
