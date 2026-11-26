@@ -22,3 +22,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # Postgres majors must move together with CI and the Neon cloud database.
+      - dependency-name: postgres
+        update-types: ["version-update:semver-major"]
