@@ -25,7 +25,7 @@ def upgrade() -> None:
         sa.Column("media_type", sa.String(length=127), nullable=False),
         sa.Column("size_bytes", sa.BigInteger(), nullable=False),
         sa.Column("sha256", sa.String(length=64), nullable=False),
-        sa.Column("content", sa.LargeBinary(), nullable=True),
+        sa.Column("content", sa.LargeBinary(), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(timezone=True),

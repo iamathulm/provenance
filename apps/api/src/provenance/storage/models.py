@@ -19,4 +19,4 @@ class StoredFile(TimestampMixin, Base):
     media_type: Mapped[str] = mapped_column(String(127))
     size_bytes: Mapped[int] = mapped_column(BigInteger)
     sha256: Mapped[str] = mapped_column(String(64))
-    content: Mapped[bytes] = deferred(mapped_column(LargeBinary))
+    content: Mapped[bytes] = deferred(mapped_column(LargeBinary, nullable=False))

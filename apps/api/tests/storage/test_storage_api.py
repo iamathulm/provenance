@@ -103,3 +103,17 @@ async def test_oversize_file_rejected(
 
     with pytest.raises(PayloadTooLargeError):
         await put_file(db, workspace, "big.txt", "text/plain", b"123456789", small_limit)
+
+
+async def test_malformed_signature_is_rejected_not_crashing(
+    client: AsyncClient, db: AsyncSession, settings: Settings
+) -> None:
+    workspace_id = await sign_in_with_workspace(client)
+    stored = await store(db, workspace_id, settings)
+
+    response = await client.get(
+        f"/v1/workspaces/{workspace_id}/files/{stored.id}/raw",
+        params={"expires": "9999999999", "signature": "é" * 64},
+    )
+
+    assert response.status_code == 422

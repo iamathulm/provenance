@@ -51,7 +51,7 @@ async def create_link(
 async def download(
     file_id: uuid.UUID,
     expires: Annotated[int, Query()],
-    signature: Annotated[str, Query(max_length=64)],
+    signature: Annotated[str, Query(pattern=r"^[0-9a-f]{64}$")],
     workspace: OwnedWorkspace,
     user: CurrentUser,
     db: DbSession,
