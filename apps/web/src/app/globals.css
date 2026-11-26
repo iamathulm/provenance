@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Fonts + shadcn semantic colors, all resolved from Provenance tokens (tokens.css).
+ * `--color-primary` stays the brand orange from tokens.css; shadcn's `bg-primary` uses it.
+ */
+@theme inline {
+  --font-display: var(--font-bricolage);
+  --font-heading: var(--font-bricolage);
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-surface-card);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-surface-card);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary-foreground: var(--color-on-primary);
+  --color-secondary: var(--color-surface-bone);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-surface-bone);
+  --color-muted-foreground: var(--color-mute);
+  --color-accent: var(--color-surface-bone);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: var(--color-badge-error);
+  --color-border: var(--color-hairline);
+  --color-input: var(--color-hairline);
+  --color-ring: var(--color-ring-focus);
+
+  --color-sidebar: var(--color-surface-bone);
+  --color-sidebar-foreground: var(--color-ink);
+  --color-sidebar-primary: var(--color-surface-dark);
+  --color-sidebar-primary-foreground: var(--color-on-dark);
+  --color-sidebar-accent: var(--color-canvas);
+  --color-sidebar-accent-foreground: var(--color-ink);
+  --color-sidebar-border: var(--color-hairline);
+  --color-sidebar-ring: var(--color-ring-focus);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
