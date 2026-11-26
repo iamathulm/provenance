@@ -13,6 +13,7 @@ from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
 from provenance.core.config import Settings
@@ -93,3 +94,19 @@ async def app(settings: Settings) -> AsyncIterator[FastAPI]:
 async def client(app: FastAPI) -> AsyncIterator[AsyncClient]:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as http:
         yield http
+
+
+@pytest.fixture
+def client_factory(app: FastAPI) -> Callable[[], AsyncClient]:
+    """Independent clients (separate cookie jars) for multi-user scenarios."""
+
+    def make() -> AsyncClient:
+        return AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
+
+    return make
+
+
+@pytest.fixture
+async def db(app: FastAPI) -> AsyncIterator[AsyncSession]:
+    async with app.state.session_factory() as session:
+        yield session
