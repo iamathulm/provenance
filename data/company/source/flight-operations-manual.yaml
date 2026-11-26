@@ -1,0 +1,30 @@
+filename: flight-operations-safety-manual.pdf
+title: Flight Operations Safety Manual
+sections:
+  - heading: Flight Operations Safety Manual
+    level: 1
+    paragraphs:
+      - This manual governs all test, demonstration and commercial flights of Kestrel Ridge aircraft. Revision 7, effective 1 June 2026, approved by the Head of Flight Operations.
+  - heading: Weather limits
+    level: 2
+    paragraphs:
+      - The Talon X2 may be flown in sustained winds up to 12 metres per second with gusts up to 15 metres per second. The Harrier Mini is limited to sustained winds of 9 metres per second.
+      - The approved operating temperature range for both aircraft is minus 10 to plus 45 degrees Celsius. Flights in precipitation are permitted only for the Talon X2, which is rated IP54.
+  - heading: Altitude and line of sight
+    level: 2
+    paragraphs:
+      - Flights must stay below 120 metres above ground level and within visual line of sight of the pilot, unless a beyond visual line of sight waiver has been granted for the specific operation.
+      - Commercial Talon X2 operations require a two-person crew consisting of a remote pilot and a visual observer.
+  - heading: Battery management
+    level: 2
+    paragraphs:
+      - The aircraft must begin returning home when battery charge reaches 25 percent. If charge falls to 15 percent, the pilot must land immediately at the nearest safe location.
+      - Batteries showing swelling, damage or a temperature above 60 degrees Celsius must be removed from service and quarantined in the fireproof battery locker.
+  - heading: Pre-flight checklist
+    level: 2
+    paragraphs:
+      - Before every flight the crew must confirm the airspace authorisation, check the weather against the limits in this manual, inspect propellers and arms, confirm both batteries are above 95 percent, calibrate the compass if the site has changed, verify the return-to-home altitude, test the GroundLink control link, and brief the visual observer.
+  - heading: Incident reporting
+    level: 2
+    paragraphs:
+      - Any crash, flyaway, loss of control link longer than the return-to-home timeout, or injury must be reported using the flight incident form within 24 hours. The aircraft and its logs must be preserved for investigation.

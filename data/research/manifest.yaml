@@ -1,0 +1,63 @@
+# Research-paper demo corpus: CC BY 4.0 / CC0 arXiv papers of at most 20 pages.
+# Licenses come from arXiv metadata; versions and SHA-256 are pinned.
+# Regenerate with `provenance fetch-research --refresh`.
+papers:
+- arxiv_id: '2309.15217'
+  version: v2
+  title: 'Ragas: Automated Evaluation of Retrieval Augmented Generation'
+  license: CC BY 4.0
+  pages: 8
+  sha256: 6c24762a3f277fd120ed1adf34b01420ecf92f18ff6d1b5435fa0a09cb804ecb
+  url: https://arxiv.org/abs/2309.15217v2
+- arxiv_id: '2311.09476'
+  version: v2
+  title: 'ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation
+    Systems'
+  license: CC BY 4.0
+  pages: 17
+  sha256: 16f092b08cce88da551a15a978b51721199e93dc95df406089813411fa51ebec
+  url: https://arxiv.org/abs/2311.09476v2
+- arxiv_id: '2401.05856'
+  version: v1
+  title: Seven Failure Points When Engineering a Retrieval Augmented Generation System
+  license: CC BY 4.0
+  pages: 6
+  sha256: e5f7855c1233955890ed9fc58b5f554f8409a97f257181d5bd0b5278162dd1fd
+  url: https://arxiv.org/abs/2401.05856v1
+- arxiv_id: '2403.14403'
+  version: v2
+  title: 'Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models
+    through Question Complexity'
+  license: CC0 1.0
+  pages: 15
+  sha256: 12d262c682626c26a98bdafc7ec5dc6af3fae8247d26d4f2c712b1599dafce62
+  url: https://arxiv.org/abs/2403.14403v2
+- arxiv_id: '2212.03533'
+  version: v2
+  title: Text Embeddings by Weakly-Supervised Contrastive Pre-training
+  license: CC BY 4.0
+  pages: 17
+  sha256: 2963a8af050d983f287edef210a525a69b7071847978451399ccaa3ac584be70
+  url: https://arxiv.org/abs/2212.03533v2
+- arxiv_id: '2312.06648'
+  version: v3
+  title: 'Dense X Retrieval: What Retrieval Granularity Should We Use?'
+  license: CC BY 4.0
+  pages: 19
+  sha256: 307d756e825845e1b8c60306151c5c53d95d025d5352e3afd22030208911d3d1
+  url: https://arxiv.org/abs/2312.06648v3
+- arxiv_id: '2402.03216'
+  version: v5
+  title: 'M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text
+    Embeddings Through Self-Knowledge Distillation'
+  license: CC BY 4.0
+  pages: 18
+  sha256: eb38e53565da260dc1f3d49708f45441936447a7f3c7d7ef025ff62ea3e1e575
+  url: https://arxiv.org/abs/2402.03216v5
+- arxiv_id: '2310.07554'
+  version: v3
+  title: A Multi-Task Embedder For Retrieval Augmented LLMs
+  license: CC BY 4.0
+  pages: 17
+  sha256: 12d2a0f4fc4ca07861e3dcb56ed25c7cb2e57205de6e9ff95b91d8513230a4a1
+  url: https://arxiv.org/abs/2310.07554v3

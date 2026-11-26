@@ -1,0 +1,27 @@
+filename: groundlink-4-2-release-notes.docx
+title: GroundLink 4.2 Release Notes
+sections:
+  - heading: GroundLink 4.2 Release Notes
+    level: 1
+    paragraphs:
+      - GroundLink is the Kestrel Ridge fleet management and flight control software. Version 4.2 was released on 15 September 2026. It requires aircraft firmware 3.8 or later.
+  - heading: New features
+    level: 2
+    paragraphs:
+      - A visual geofence editor lets operators draw no-fly zones directly on the map and share them across a fleet.
+      - Offline maps can be downloaded for areas up to 50 square kilometres for use without mobile coverage.
+      - Battery health reports now show cycle counts and internal resistance trends for every battery in the fleet.
+  - heading: Changed behaviour
+    level: 2
+    paragraphs:
+      - The default lost-link timeout has been reduced from 30 seconds to 20 seconds. After 20 seconds without a control signal the aircraft starts its return-to-home sequence. Operators can configure the timeout between 10 and 60 seconds.
+      - The default return-to-home altitude remains 60 metres.
+  - heading: Fixed issues
+    level: 2
+    paragraphs:
+      - Fixed an issue where telemetry export failed for flights longer than 45 minutes.
+      - Fixed incorrect wind speed units in the pre-flight weather panel when the account locale was set to imperial units.
+  - heading: Known issues
+    level: 2
+    paragraphs:
+      - Offline map downloads may stall on Android tablets with less than 2 gigabytes of free storage.

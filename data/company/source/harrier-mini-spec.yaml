@@ -1,0 +1,24 @@
+filename: harrier-mini-product-specification.docx
+title: Harrier Mini Product Specification
+sections:
+  - heading: Harrier Mini Product Specification
+    level: 1
+    paragraphs:
+      - The Harrier Mini is a compact survey drone for construction progress tracking and agriculture. Document version 1.6, issued 3 March 2026 by Product Management.
+  - heading: Flight performance
+    level: 2
+    paragraphs:
+      - Maximum flight time is 34 minutes. Maximum payload is 0.4 kilograms and maximum speed is 58 kilometres per hour. Control range is 5 kilometres.
+      - The Harrier Mini is limited to sustained winds of 9 metres per second.
+  - heading: Physical characteristics
+    level: 2
+    paragraphs:
+      - Take-off weight is 1.2 kilograms and the aircraft is rated IP43. It fits in a standard backpack when folded.
+  - heading: Mapping capabilities
+    level: 2
+    paragraphs:
+      - The integrated 20-megapixel mapping camera with a mechanical shutter achieves a ground sampling distance of 1.4 centimetres at 50 metres altitude. Real-time kinematic positioning is available as an add-on module.
+  - heading: Warranty
+    level: 2
+    paragraphs:
+      - The Harrier Mini includes a 12-month limited warranty. Batteries are covered for 6 months or 200 charge cycles, whichever comes first.
