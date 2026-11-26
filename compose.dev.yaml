@@ -4,7 +4,7 @@ name: provenance-dev
 
 services:
   postgres:
-    image: postgres:17.12-alpine
+    image: postgres:18.7-alpine
     environment:
       POSTGRES_USER: provenance
       POSTGRES_PASSWORD: provenance
