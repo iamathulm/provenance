@@ -76,7 +76,7 @@ _RULES: list[tuple[PiiKind, re.Pattern[str], Callable[[str], bool]]] = [
         # Whole digit run only: no digit-separator before, no separator+digit after.
         re.compile(
             r"(?<![\w.+])(?<!\d[ .-])(?:\+\d{1,3}[ .-]?)?(?:\(\d{1,4}\)[ .-]?)?"
-            r"\d{1,4}(?:[ .-]\d{1,4}){1,5}(?![ .-]?\d)(?!\w)"
+            r"\d{1,4}(?:[ .-]\d{1,4}){1,5}(?![ .-]?\d)(?![\w:])"
         ),
         _phone_valid,
     ),

@@ -66,7 +66,9 @@ def _operations() -> list[Operation]:
 
 ALL_OPERATIONS = _operations()
 PROTECTED = [op for op in ALL_OPERATIONS if (op.method, op.path) not in PUBLIC_OPERATIONS]
-WORKSPACE_SCOPED = [op for op in PROTECTED if "workspace_id" in op.path_params]
+# Any protected route addressing an object by ID must hide foreign objects, whether or not the
+# ID sits under a workspace path, so a future `/v1/files/{file_id}` cannot skip the check.
+OBJECT_SCOPED = [op for op in PROTECTED if any(p.endswith("_id") for p in op.path_params)]
 
 
 @dataclass(frozen=True)
@@ -142,7 +144,7 @@ async def test_protected_routes_require_authentication(
     assert response.status_code == 401
 
 
-@pytest.mark.parametrize("op", WORKSPACE_SCOPED, ids=lambda op: op.id)
+@pytest.mark.parametrize("op", OBJECT_SCOPED, ids=lambda op: op.id)
 async def test_foreign_ids_return_404_without_leaking(
     op: Operation,
     tenant_a: TenantA,

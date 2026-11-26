@@ -29,10 +29,24 @@ def _route_template(scope: Scope) -> str:
     (e.g. /v1/workspaces/{workspace_id}); never concrete IDs or query strings."""
     if scope.get("route") is None:
         return "unmatched"
-    path: str = scope["path"]
-    for name, value in scope.get("path_params", {}).items():
-        path = path.replace(str(value), f"{{{name}}}")
-    return path
+    names_by_value = {
+        _normalized(str(value)): name for name, value in scope.get("path_params", {}).items()
+    }
+    segments = [
+        f"{{{names_by_value[_normalized(segment)]}}}"
+        if _normalized(segment) in names_by_value
+        else segment
+        for segment in scope["path"].split("/")
+    ]
+    return "/".join(segments)
+
+
+def _normalized(segment: str) -> str:
+    """Canonical form so `ABC…` / unhyphenated UUIDs match their parsed path parameter."""
+    try:
+        return str(uuid.UUID(segment))
+    except ValueError:
+        return segment.lower()
 
 
 class CorrelationIdMiddleware:

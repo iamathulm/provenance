@@ -39,6 +39,8 @@ def test_detects_pii(text: str, kind: str) -> None:
     [
         "version 1.20.2 released",
         "released on 2026-11-26",
+        "logged at 2026-11-26 10:20:30",
+        "logged at 2026-11-26T10:20:30Z",
         "invoice 2026-0042 total 1,250.00",
         "chunk id 3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "plain text with no personal data",

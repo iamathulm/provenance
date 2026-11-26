@@ -49,9 +49,12 @@ class Pipeline:
                 result = await stage.run(ctx, data)
         except Exception as error:
             try:
-                recovered = await stage.fallback(ctx, data, error)
+                async with asyncio.timeout(stage.timeout_s):
+                    recovered = await stage.fallback(ctx, data, error)
             except Exception as fallback_error:
                 await self._record(ctx, stage.name, "error", started, error)
+                if fallback_error is error:  # default fallback re-raised the original
+                    raise
                 raise error from fallback_error
             ctx.degraded.add(stage.name)
             await self._record(ctx, stage.name, "fallback", started, error)

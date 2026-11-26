@@ -134,3 +134,12 @@ async def test_span_has_error_class_not_message(
         await Pipeline(recorder).run_stage(ctx, BrokenFallback(), 1)
 
     assert "secret" not in repr(recorder.spans)
+
+
+async def test_default_fallback_reraises_without_self_chaining(
+    recorder: MemoryRecorder, ctx: RequestContext
+) -> None:
+    with pytest.raises(ConnectionError) as raised:
+        await Pipeline(recorder).run_stage(ctx, NoFallback(), 1)
+
+    assert raised.value.__cause__ is None

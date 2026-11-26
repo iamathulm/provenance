@@ -81,3 +81,13 @@ async def test_pipeline_spans_are_persisted(app: FastAPI, db: AsyncSession) -> N
         None,
     )
     assert span.workspace_id == ctx.workspace_id
+
+
+async def test_route_template_hides_uppercase_uuid(client: AsyncClient, db: AsyncSession) -> None:
+    await client.post("/v1/auth/demo-login", json={"account": "primary"})
+    workspace_id = (await client.post("/v1/workspaces", json={"name": "KB"})).json()["id"]
+
+    await client.get(f"/v1/workspaces/{workspace_id.upper()}")
+    log = (await db.scalars(select(RequestLog).where(RequestLog.method == "GET"))).one()
+
+    assert log.route == "/v1/workspaces/{workspace_id}"
