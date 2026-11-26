@@ -32,3 +32,6 @@ Thumbs.db
 
 # Source inputs (tracked copies live in docs/requirements/)
 references/
+
+# Local ML model cache
+.cache/

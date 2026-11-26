@@ -54,6 +54,7 @@ addopts = "-q"
 pythonpath = ["apps/api"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+markers = ["slow: needs real ML models (downloaded and cached on first run)"]
 filterwarnings = [
   "error",
   # Starlette's TestClient now recommends `httpx2`; keep `httpx` until that package is verified.
