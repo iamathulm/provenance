@@ -6,6 +6,7 @@ from typing import Annotated
 from fastapi import APIRouter, Request, Response, status
 from pydantic import BaseModel, BeforeValidator, ConfigDict, EmailStr, Field
 
+from provenance.api.dependencies import client_ip
 from provenance.auth.demo import DemoAccount, ensure_demo_user
 from provenance.auth.dependencies import SESSION_COOKIE, CurrentUser
 from provenance.auth.models import User
@@ -61,7 +62,11 @@ def _set_session_cookie(response: Response, token: str, settings: Settings) -> N
 
 
 async def _start_session(request: Request, response: Response, db: DbSession, user: User) -> None:
+    """Issue a fresh session, revoking any session the browser already holds."""
     settings: Settings = request.app.state.settings
+    previous = request.cookies.get(SESSION_COOKIE)
+    if previous:
+        await revoke_session(db, previous)
     _set_session_cookie(response, await create_session(db, user, settings), settings)
 
 
@@ -77,10 +82,11 @@ async def register(
 @router.post("/login")
 async def login(body: LoginIn, request: Request, response: Response, db: DbSession) -> UserOut:
     email = normalize_email(body.email)
-    client_ip = request.client.host if request.client else "unknown"
+    settings: Settings = request.app.state.settings
+    ip = client_ip(request, frozenset(settings.trusted_proxies))
     limiter = request.app.state.login_limiter
-    limiter.check(email, client_ip)
-    limiter.record_attempt(client_ip)
+    limiter.check(email, ip)
+    limiter.record_attempt(ip)
     try:
         user = await authenticate(db, email, body.password)
     except InvalidCredentialsError:

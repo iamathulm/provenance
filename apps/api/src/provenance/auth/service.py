@@ -54,6 +54,13 @@ async def create_session(db: AsyncSession, user: User, settings: Settings) -> st
     """Persist a new session and return the raw token (only its hash is stored)."""
     token = secrets.token_urlsafe(32)
     now = datetime.now(UTC)
+    idle_cutoff = now - timedelta(minutes=settings.session_idle_minutes)
+    await db.execute(
+        delete(AuthSession).where(
+            AuthSession.user_id == user.id,
+            (AuthSession.expires_at <= now) | (AuthSession.last_seen_at < idle_cutoff),
+        )
+    )
     db.add(
         AuthSession(
             user_id=user.id,

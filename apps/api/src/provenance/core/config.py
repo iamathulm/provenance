@@ -29,6 +29,8 @@ class Settings(BaseSettings):
     allowed_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
     max_file_bytes: int = 10 * 1024 * 1024
     file_link_ttl_s: int = 300
+    # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
+    trusted_proxies: list[str] = []
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:

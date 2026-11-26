@@ -1,12 +1,14 @@
 import hashlib
 from collections.abc import Callable
 
+from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient, Response
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
 from provenance.auth.models import AuthSession
+from provenance.auth.rate_limit import LoginRateLimiter
 from provenance.core.config import Settings
 
 PASSWORD = "correct horse battery"
@@ -188,3 +190,46 @@ async def test_allowed_origin_post_accepted(client: AsyncClient) -> None:
     )
 
     assert response.status_code == 200
+
+
+async def test_null_origin_post_rejected(client: AsyncClient) -> None:
+    response = await client.post(
+        "/v1/auth/demo-login", json={"account": "primary"}, headers={"Origin": "null"}
+    )
+
+    assert response.status_code == 403
+
+
+async def test_login_revokes_previous_browser_session(
+    client: AsyncClient, db: AsyncSession
+) -> None:
+    await register(client)
+    first_token = client.cookies["provenance_session"]
+
+    await client.post("/v1/auth/login", json={"email": "maya@example.com", "password": PASSWORD})
+    stored = (await db.execute(select(AuthSession.token_hash))).scalars().all()
+
+    assert stored == [hashlib.sha256(client.cookies["provenance_session"].encode()).hexdigest()]
+    assert hashlib.sha256(first_token.encode()).hexdigest() not in stored
+
+
+async def test_per_ip_limit_counts_forwarded_client_behind_trusted_proxy(
+    app: FastAPI, client: AsyncClient
+) -> None:
+    app.state.settings = app.state.settings.model_copy(update={"trusted_proxies": ["127.0.0.1"]})
+    app.state.login_limiter = LoginRateLimiter(max_per_ip=2)
+    attempt = {"email": "nobody@example.com", "password": "not the password"}
+
+    def from_client(ip: str) -> dict[str, str]:
+        return {"X-Forwarded-For": f"{ip}, 127.0.0.1"}
+
+    first = [
+        (await client.post("/v1/auth/login", json=attempt, headers=from_client("203.0.113.7")))
+        for _ in range(3)
+    ]
+    other_client = await client.post(
+        "/v1/auth/login", json=attempt, headers=from_client("198.51.100.9")
+    )
+
+    assert [r.status_code for r in first] == [401, 401, 429]
+    assert other_client.status_code == 401

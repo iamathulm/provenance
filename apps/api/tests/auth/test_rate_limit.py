@@ -38,3 +38,17 @@ def test_blocks_after_max_attempts_per_ip() -> None:
 
     with pytest.raises(RateLimitedError):
         limiter.check("someone-new@example.com", "10.0.0.9")
+
+
+def test_counters_for_quiet_keys_are_discarded() -> None:
+    clock = FakeClock()
+    limiter = LoginRateLimiter(window_s=900, clock=clock)
+
+    for index in range(100):
+        limiter.check(f"sprayed{index}@example.com", "10.0.0.1")
+    limiter.record_failure("maya@example.com")
+    limiter.record_attempt("10.0.0.1")
+    clock.now += 901
+    limiter.check("maya@example.com", "10.0.0.1")
+
+    assert limiter.tracked_keys() == 0
