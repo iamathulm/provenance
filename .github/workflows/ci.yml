@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: api
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+      - name: Install
+        run: uv sync --frozen
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Type check
+        run: uv run mypy apps/api/src
+      - name: Dead code
+        run: uv run vulture
+      - name: Test
+        run: uv run pytest --cov=provenance --cov-report=term-missing
+
+  web:
+    name: web
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: apps/web/.nvmrc
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+      - name: Dead code
+        run: npm run knip
+      - name: Build
+        run: npm run build
+
+  design:
+    name: design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Lint DESIGN.md
+        run: npx --yes @google/design.md@0.4.0 lint DESIGN.md < /dev/null
