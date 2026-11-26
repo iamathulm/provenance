@@ -21,6 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from provenance.core.config import Settings
 from provenance.core.context import RequestContext
 from provenance.core.pipeline import Pipeline, SpanRecorder, Stage
+from provenance.documents.locking import lock_document
 from provenance.documents.models import Chunk, Document, DocumentVersion, VersionTable
 from provenance.ingest.chunking import ChunkDraft, chunk_document
 from provenance.ingest.parsers import parse
@@ -120,30 +121,16 @@ class IndexStage(_VersionStage):
     @override
     async def run(self, ctx: RequestContext, data: VersionWork) -> VersionWork:
         await self.mark(data)
+        # Hold the document lock while replacing this version's rows and points, so a
+        # concurrent run of the same version or a purge cannot interleave and leave orphans.
+        document = await lock_document(data.db, data.document.id)
+        if document is None or document.deleted_at is not None:
+            raise DocumentGoneError
         await _clear_version(data.db, self.deps.index, data.version.id)
-        chunks = [
-            Chunk(
-                id=uuid.uuid4(),
-                version_id=data.version.id,
-                workspace_id=data.workspace.id,
-                document_id=data.document.id,
-                ordinal=draft.ordinal,
-                text=draft.text,
-                token_count=draft.token_count,
-                anchor_kind=draft.anchor.kind,
-                anchor_label=draft.anchor.label,
-                page=draft.anchor.page,
-                slide=draft.anchor.slide,
-                section_path=draft.anchor.section_path,
-                sheet=draft.anchor.sheet,
-                row_start=draft.anchor.row_start,
-                row_end=draft.anchor.row_end,
-            )
-            for draft in data.drafts
-        ]
+        chunks = [_chunk_row(data, draft) for draft in data.drafts]
         data.db.add_all(chunks)
         await _store_tables(data, self.deps.settings)
-        await data.db.commit()
+        await data.db.flush()
         await self.deps.index.upsert(
             [
                 IndexPoint(
@@ -158,6 +145,7 @@ class IndexStage(_VersionStage):
                 for chunk, dense, sparse in zip(chunks, data.dense, data.sparse, strict=True)
             ]
         )
+        await data.db.commit()
         return data
 
 
@@ -168,7 +156,10 @@ class ActivateStage(_VersionStage):
     @override
     async def run(self, ctx: RequestContext, data: VersionWork) -> VersionWork:
         assert data.parsed is not None  # noqa: S101 - set by ParseStage
-        version, document = data.version, data.document
+        document = await lock_document(data.db, data.document.id)
+        if document is None or document.deleted_at is not None:
+            raise DocumentGoneError
+        version = data.version
         codes = {warning.code for warning in data.parsed.warnings}
         version.status = "partial" if codes & PARTIAL_WARNINGS else "ready"
         version.stage = None
@@ -180,16 +171,46 @@ class ActivateStage(_VersionStage):
         version.completed_at = datetime.now(UTC)
         if document.title == document.filename and data.parsed.title:
             document.title = data.parsed.title[:255]
-        if document.deleted_at is not None:
-            await data.db.commit()
+        if not await _is_newest_ready(data.db, document, version):
+            await data.db.commit()  # a newer version is already live; this one stays inactive
             return data
-        previous = document.active_version_id
         await self.deps.index.set_version_active(version.id, True)
         document.active_version_id = version.id
         await data.db.commit()
-        if previous is not None and previous != version.id:
-            await self.deps.index.set_version_active(previous, False)
+        await self.deps.index.deactivate_other_versions(document.id, version.id)
         return data
+
+
+class DocumentGoneError(Exception):
+    """The document was deleted while its version was being indexed."""
+
+
+async def _is_newest_ready(db: AsyncSession, document: Document, version: DocumentVersion) -> bool:
+    """Only activate if no newer version of the document is already active."""
+    if document.active_version_id is None or document.active_version_id == version.id:
+        return True
+    active = await db.get_one(DocumentVersion, document.active_version_id)
+    return version.number > active.number
+
+
+def _chunk_row(data: VersionWork, draft: ChunkDraft) -> Chunk:
+    return Chunk(
+        id=uuid.uuid4(),
+        version_id=data.version.id,
+        workspace_id=data.workspace.id,
+        document_id=data.document.id,
+        ordinal=draft.ordinal,
+        text=draft.text,
+        token_count=draft.token_count,
+        anchor_kind=draft.anchor.kind,
+        anchor_label=draft.anchor.label,
+        page=draft.anchor.page,
+        slide=draft.anchor.slide,
+        section_path=draft.anchor.section_path,
+        sheet=draft.anchor.sheet,
+        row_start=draft.anchor.row_start,
+        row_end=draft.anchor.row_end,
+    )
 
 
 def _warning_json(code: str, message: str, anchor: Any) -> dict[str, Any]:
@@ -265,6 +286,13 @@ async def index_version(
     async with session_factory() as db:
         work = await _load_work(db, deps, version_id)
         if work is None or work.document.deleted_at is not None:
+            await deps.index.delete_version(version_id)
+            return
+        if work.document.active_version_id == version_id:
+            # A retry after the database switch committed but Qdrant did not finish: complete
+            # the vector-side switch instead of rebuilding (and briefly emptying) a live version.
+            await deps.index.set_version_active(version_id, True)
+            await deps.index.deactivate_other_versions(work.document.id, version_id)
             return
         work.version.status = "processing"
         work.version.error_code = work.version.error_message = None
@@ -280,6 +308,9 @@ async def index_version(
                 ActivateStage(deps),
             ):
                 work = await pipeline.run_stage(ctx, stage, work)
+        except DocumentGoneError:
+            await db.rollback()
+            await deps.index.delete_version(version_id)  # purge may already have run
         except PERMANENT_ERRORS as error:
             await db.rollback()
             await mark_version_failed(db, version_id, error.code, error.message)

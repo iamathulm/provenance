@@ -111,6 +111,28 @@ class ChunkIndex:
             wait=True,
         )
 
+    async def deactivate_other_versions(
+        self, document_id: uuid.UUID, keep_version_id: uuid.UUID
+    ) -> None:
+        """Mark every point of the document inactive except those of `keep_version_id`."""
+        await self.client.set_payload(
+            self.collection,
+            payload={"active": False},
+            points=models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="document_id", match=models.MatchValue(value=str(document_id))
+                    )
+                ],
+                must_not=[
+                    models.FieldCondition(
+                        key="version_id", match=models.MatchValue(value=str(keep_version_id))
+                    )
+                ],
+            ),
+            wait=True,
+        )
+
     async def count(self, version_id: uuid.UUID, *, active: bool | None = None) -> int:
         conditions = _match("version_id", version_id).must
         assert isinstance(conditions, list)  # noqa: S101 - built above as a list

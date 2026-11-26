@@ -17,6 +17,7 @@ from provenance.audit.models import AuditEvent
 from provenance.auth.models import User
 from provenance.core.config import Settings
 from provenance.core.errors import ConflictError, NotFoundError
+from provenance.documents.locking import lock_document
 from provenance.documents.models import Chunk, Document, DocumentVersion, VersionTable
 from provenance.ingest.jobs import INDEX_VERSION, PURGE_DOCUMENT, enqueue, requeue
 from provenance.ingest.models import Job
@@ -195,8 +196,14 @@ async def delete_document(
     document_id: uuid.UUID,
     index: ChunkIndex,
 ) -> None:
-    """Hide now (flag + deactivated vectors), purge later (job), audit both."""
-    document = await _live_document(db, workspace, document_id)
+    """Hide now (flag + deactivated vectors), purge later (job), audit both.
+
+    Commits before touching Qdrant so vectors are only hidden once the deletion is durable; the
+    document lock orders this against an in-flight activation.
+    """
+    await _live_document(db, workspace, document_id)
+    document = await lock_document(db, document_id)
+    assert document is not None  # noqa: S101 - checked live above, and we hold the lock
     document.deleted_at = datetime.now(UTC)
     db.add(_audit(workspace.id, user, "document.delete_requested", document))
     await enqueue(
@@ -206,7 +213,7 @@ async def delete_document(
         document_id=document.id,
         idempotency_key=f"{PURGE_DOCUMENT}:{document.id}",
     )
-    await db.flush()
+    await db.commit()
     await index.set_document_active(document.id, False)
 
 
@@ -237,14 +244,19 @@ async def reindex_workspace(db: AsyncSession, workspace: Workspace) -> int:
         )
     ).all()
     for document in documents:
-        latest = await _latest_version(db, document.id)
-        await _queue_version(db, document, latest.stored_file_id)
+        # Re-chunk the file users can search today; a failed newer upload is not a good source.
+        source = (
+            await db.get_one(DocumentVersion, document.active_version_id)
+            if document.active_version_id
+            else await _latest_version(db, document.id)
+        )
+        await _queue_version(db, document, source.stored_file_id)
     return len(documents)
 
 
 async def purge_document(db: AsyncSession, index: ChunkIndex, document_id: uuid.UUID) -> None:
     """Remove a deleted document's vectors, chunks, tables, originals and rows."""
-    document = await db.get(Document, document_id)
+    document = await lock_document(db, document_id)
     if document is None or document.deleted_at is None:
         return
     versions = (
