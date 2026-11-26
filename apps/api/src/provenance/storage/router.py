@@ -9,8 +9,9 @@ from fastapi import APIRouter, Query, Response
 from pydantic import BaseModel
 
 from provenance.api.dependencies import AppSettings
-from provenance.auth.dependencies import CurrentUser, DbSession
+from provenance.auth.dependencies import CurrentUser
 from provenance.core.errors import NotFoundError
+from provenance.db.engine import DbSession
 from provenance.storage.service import get_file
 from provenance.storage.signing import sign, verify
 from provenance.workspaces.dependencies import OwnedWorkspace

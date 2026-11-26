@@ -5,7 +5,8 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from provenance.auth.dependencies import CurrentUser, DbSession
+from provenance.auth.dependencies import CurrentUser
+from provenance.db.engine import DbSession
 from provenance.workspaces.models import Workspace
 from provenance.workspaces.service import get_owned_workspace
 

@@ -3,16 +3,13 @@
 from typing import Annotated
 
 from fastapi import Depends, Request
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.auth.models import User
 from provenance.auth.service import resolve_session
 from provenance.core.errors import AuthenticationError
-from provenance.db.engine import get_db_session
+from provenance.db.engine import DbSession
 
 SESSION_COOKIE = "provenance_session"
-
-DbSession = Annotated[AsyncSession, Depends(get_db_session)]
 
 
 async def current_user(request: Request, db: DbSession) -> User:

@@ -1,8 +1,9 @@
 """Async engine, session factory and the per-request session dependency."""
 
 from collections.abc import AsyncIterator
+from typing import Annotated
 
-from fastapi import Request
+from fastapi import Depends, Request
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -31,3 +32,8 @@ async def get_db_session(request: Request) -> AsyncIterator[AsyncSession]:
         except Exception:
             await session.rollback()
             raise
+
+
+# scope="function" closes the dependency (and commits) before the response is sent, so a client
+# never receives a success for a write that is not yet durable.
+DbSession = Annotated[AsyncSession, Depends(get_db_session, scope="function")]

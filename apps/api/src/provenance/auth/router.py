@@ -7,7 +7,7 @@ from fastapi import APIRouter, Request, Response, status
 from pydantic import BaseModel, BeforeValidator, ConfigDict, EmailStr, Field
 
 from provenance.auth.demo import DemoAccount, ensure_demo_user
-from provenance.auth.dependencies import SESSION_COOKIE, CurrentUser, DbSession
+from provenance.auth.dependencies import SESSION_COOKIE, CurrentUser
 from provenance.auth.models import User
 from provenance.auth.service import (
     authenticate,
@@ -18,6 +18,7 @@ from provenance.auth.service import (
 )
 from provenance.core.config import Settings
 from provenance.core.errors import InvalidCredentialsError, NotFoundError
+from provenance.db.engine import DbSession
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
