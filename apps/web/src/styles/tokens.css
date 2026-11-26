@@ -24,14 +24,18 @@
   --color-on-dark: #fcfcfc;
   --color-on-dark-mute: rgba(252, 252, 252, 0.72);
 
-  /* Brand — one primary stamp per viewport */
+  /* Brand — one primary stamp per viewport.
+   * --color-primary (bright) is for the hero band and non-text accents only;
+   * text-bearing fills and links use primary-deep for WCAG AA (see DESIGN.md). */
   --color-primary: #ea2804;
   --color-primary-deep: #c01f00;
+  --color-primary-pressed: #a31a00;
   --color-on-primary: #ffffff;
-  --color-link: #ea2804;
+  --color-link: #c01f00;
 
   /* Semantic (status always paired with icon + text) */
-  --color-badge-success: #2b9a66;
+  --color-badge-success: #1f6e4a;
+  --color-surface-success: #e3f4eb;
   --color-badge-warning: #8a5300;
   --color-surface-warning: #fff1cc;
   --color-badge-error: #b42318;
