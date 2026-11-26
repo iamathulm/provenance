@@ -57,6 +57,8 @@ asyncio_default_fixture_loop_scope = "function"
 markers = ["slow: needs real ML models (downloaded and cached on first run)"]
 filterwarnings = [
   "error",
+  # Windows without Developer Mode: model cache falls back to copies instead of symlinks.
+  "ignore:`huggingface_hub` cache-system uses symlinks:UserWarning",
   # Starlette's TestClient now recommends `httpx2`; keep `httpx` until that package is verified.
   "ignore:Using `httpx` with `starlette.testclient` is deprecated:starlette.exceptions.StarletteDeprecationWarning",
 ]
