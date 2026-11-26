@@ -22,3 +22,32 @@ Postgres + Qdrant dev containers, pre-commit, templates, ADR-0000/0001.
 - `@google/design.md lint` waits on stdin when it is not closed — always run with `< /dev/null`.
 - Next.js 16 changed APIs: read `apps/web/node_modules/next/dist/docs/` before writing web code.
 - Run commands from the repo root (`.env` is resolved relative to the working directory).
+
+## P1 — Platform core
+
+**Done:** async SQLAlchemy + Alembic (4 migrations: auth, workspaces, stored files, telemetry);
+accounts with argon2id and server-side sessions (12 h absolute / 2 h idle, hashed tokens),
+login throttling, origin checks, demo sign-in; private workspaces behind `require_workspace`
+(foreign IDs → 404); Postgres file storage with user-bound signed links; error model with
+correlation IDs; structlog JSON logs with regex PII redaction; typed `Stage`/`Pipeline` core;
+`request_logs` and `stage_spans` telemetry; OpenAPI-driven tenant isolation suite;
+`provenance migrate` / `provenance seed-demo` CLI. CI runs tests on Postgres and checks that
+migrations match the models.
+
+**Gotchas for later phases:**
+- Every new workspace-scoped route must depend on `OwnedWorkspace`; new path/query parameters
+  must be added to `KNOWN_PARAMETERS` in `tests/isolation/test_route_isolation.py`.
+- Register each new models module in `provenance/db/models.py` (`MODEL_MODULES`), then
+  `uv run alembic -c apps/api/alembic.ini revision --autogenerate -m "<name>" --rev-id 000N`
+  and delete Alembic's `# ###` comments.
+- Local DB URLs use `127.0.0.1` (on this machine `localhost` resolves to IPv6 and hangs).
+- psycopg async needs a selector event loop on Windows: tests use the
+  `pytest_asyncio_loop_factories` hook, the CLI passes `loop_factory` to `asyncio.run`.
+- Workspace `profile` is validated by a `Literal` today; P2 replaces it with the profiles loaded
+  from `profiles/*.yaml` so a new domain needs no code change.
+- Telemetry rows must never hold raw text: store IDs, timings, outcomes and error classes only.
+- P8: set `TRUSTED_PROXIES` to the web proxy's egress address(es) so login throttling keys on
+  the real client IP (otherwise every user shares the proxy's budget). `demo-login` is not
+  throttled; revisit if the cloud demo sees abuse.
+- Writes use `DbSession` (FastAPI dependency `scope="function"`), which commits before the
+  response is sent — keep using it rather than opening ad-hoc sessions in routes.
