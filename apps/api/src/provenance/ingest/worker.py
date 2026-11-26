@@ -60,8 +60,12 @@ class Worker:
 
     async def run_once(self) -> bool:
         async with self._session_factory() as db:
+            exhausted = await jobs.expire_exhausted(db)
             job = await jobs.claim_next(db, self.worker_id, self._lease_s)
             await db.commit()
+        for dead in exhausted:
+            log.warning("job_lease_exhausted", job_kind=dead.kind, attempts=dead.attempts)
+            await self._handlers[dead.kind].on_exhausted(dead)
         if job is None:
             return False
         correlation_id = f"job-{job.id.hex}"
@@ -84,6 +88,9 @@ class Worker:
             transient = not isinstance(error, handler.permanent_errors)
             async with self._session_factory() as db:
                 fresh = await db.get_one(Job, job.id)
+                if not jobs.owns(fresh, self.worker_id):
+                    log.warning("job_lease_lost", error_class=type(error).__name__)
+                    return
                 requeued = jobs.fail(fresh, error, transient=transient)
                 await db.commit()
             log.warning(
@@ -96,12 +103,23 @@ class Worker:
                 await handler.on_exhausted(job)
             return
         async with self._session_factory() as db:
-            jobs.complete(await db.get_one(Job, job.id))
+            fresh = await db.get_one(Job, job.id)
+            if not jobs.owns(fresh, self.worker_id):
+                log.warning("job_lease_lost")
+                return
+            jobs.complete(fresh)
             await db.commit()
 
     async def _keep_alive(self, job_id: uuid.UUID) -> None:
         while True:
             await asyncio.sleep(self._lease_s / 4)
-            async with self._session_factory() as db:
-                await jobs.heartbeat(db, job_id, self._lease_s)
-                await db.commit()
+            try:
+                async with self._session_factory() as db:
+                    held = await jobs.heartbeat(db, job_id, self.worker_id, self._lease_s)
+                    await db.commit()
+            except Exception as error:
+                log.warning("heartbeat_failed", error_class=type(error).__name__)
+                continue
+            if not held:
+                log.warning("job_lease_lost")
+                return

@@ -62,7 +62,11 @@ async def claim_next(
         .where(
             or_(
                 and_(Job.status == "queued", Job.run_after <= now),
-                and_(Job.status == "running", Job.locked_until < now),
+                and_(
+                    Job.status == "running",
+                    Job.locked_until < now,
+                    Job.attempts < Job.max_attempts,
+                ),
             )
         )
         .order_by(Job.run_after)
@@ -79,10 +83,42 @@ async def claim_next(
     return job
 
 
-async def heartbeat(db: AsyncSession, job_id: uuid.UUID, lease_s: int = DEFAULT_LEASE_S) -> None:
+async def expire_exhausted(db: AsyncSession) -> list[Job]:
+    """Fail jobs whose worker died holding the lease on their last allowed attempt (a job that
+    keeps crashing its worker must not be reclaimed forever)."""
+    jobs = (
+        await db.scalars(
+            select(Job)
+            .where(
+                Job.status == "running",
+                Job.locked_until < _now(),
+                Job.attempts >= Job.max_attempts,
+            )
+            .with_for_update(skip_locked=True)
+        )
+    ).all()
+    for job in jobs:
+        job.status = "failed"
+        job.last_error_class = "LeaseExpired"
+        job.locked_by = None
+        job.locked_until = None
+    return list(jobs)
+
+
+def owns(job: Job, worker_id: str) -> bool:
+    """A worker may only finish or extend a job whose lease it still holds."""
+    return job.status == "running" and job.locked_by == worker_id
+
+
+async def heartbeat(
+    db: AsyncSession, job_id: uuid.UUID, worker_id: str, lease_s: int = DEFAULT_LEASE_S
+) -> bool:
+    """Extend the lease; returns False if another worker has taken the job over."""
     job = await db.get_one(Job, job_id)
-    if job.status == "running":
-        job.locked_until = _now() + timedelta(seconds=lease_s)
+    if not owns(job, worker_id):
+        return False
+    job.locked_until = _now() + timedelta(seconds=lease_s)
+    return True
 
 
 def complete(job: Job) -> None:

@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.documents.models import Chunk, Document, DocumentVersion
 from provenance.ingest import jobs
+from provenance.ingest.indexing import ChunkStage, VersionWork
 from provenance.ingest.models import Job
 from provenance.observability.models import StageSpan
 from tests.ingest.harness import Harness
@@ -158,3 +159,60 @@ async def test_rerun_after_crash_leaves_no_duplicates(
     assert chunks == version.chunk_count == 2
     assert await harness.deps.index.count(version_id) == 2
     assert await harness.deps.index.count(version_id, active=True) == 2
+
+
+async def test_crash_looping_job_stops_at_max_attempts(harness: Harness, db: AsyncSession) -> None:
+    _, version_id = await harness.upload("runbook.txt", RUNBOOK)
+    await db.execute(
+        update(Job).values(
+            status="running",
+            attempts=5,
+            max_attempts=5,
+            locked_by="worker-that-died",
+            locked_until=datetime.now(UTC) - timedelta(seconds=1),
+        )
+    )
+    await db.commit()
+
+    processed = await harness.worker.run_until_idle()
+    job = (await db.scalars(select(Job))).one()
+    await db.refresh(job)
+    version = await db.get_one(DocumentVersion, version_id)
+    await db.refresh(version)
+
+    assert processed == 0
+    assert (job.status, job.last_error_class) == ("failed", "LeaseExpired")
+    assert (version.status, version.error_code) == ("failed", "indexing_failed")
+
+
+async def test_worker_that_lost_its_lease_does_not_complete_the_job(
+    harness: Harness, db: AsyncSession, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    await harness.upload("runbook.txt", RUNBOOK)
+    original = ChunkStage.run
+
+    async def taken_over(self: ChunkStage, ctx: object, data: VersionWork) -> VersionWork:
+        async with harness.session_factory() as other:
+            await other.execute(update(Job).values(locked_by="faster-worker"))
+            await other.commit()
+        return await original(self, ctx, data)  # type: ignore[arg-type]
+
+    monkeypatch.setattr(ChunkStage, "run", taken_over)
+
+    await harness.worker.run_until_idle()
+    job = (await db.scalars(select(Job))).one()
+    await db.refresh(job)
+
+    assert (job.status, job.locked_by) == ("running", "faster-worker")
+
+
+async def test_heartbeat_only_extends_an_owned_lease(harness: Harness) -> None:
+    await harness.upload("a.txt", b"alpha text")
+    async with harness.session_factory() as db:
+        job = await jobs.claim_next(db, "owner")
+        await db.commit()
+    assert job is not None
+
+    async with harness.session_factory() as db:
+        assert await jobs.heartbeat(db, job.id, "owner") is True
+        assert await jobs.heartbeat(db, job.id, "intruder") is False
