@@ -76,3 +76,8 @@ Formal NFR-03 report is P7.
 - `vendor-faq.txt` contains the prompt-injection paragraph for P4's context guard.
 - FastEmbed models cache in `.cache/fastembed` (~65 MB); CI caches the same directory.
 - The research PDFs are fetched (not committed); run `provenance fetch-research` before seeding.
+- Indexing, activation, delete and purge serialize on `documents.locking.lock_document`
+  (`SELECT … FOR UPDATE`). Anything new that changes which version is live must take it too.
+- Table anchors are real sheet rows / CSV file lines (header = row 1), not data-row positions.
+- Jobs: an expired lease is reclaimed only while attempts remain; `expire_exhausted` fails the
+  rest. Workers act on a job only while `jobs.owns(job, worker_id)`.
