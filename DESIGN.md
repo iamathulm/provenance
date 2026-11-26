@@ -19,8 +19,8 @@ colors:
   stone: "#BBBBBB"
   on-dark: "#FCFCFC"
   on-dark-mute: "#FCFCFCB8"
-  primary: "#EA2804"
-  primary-deep: "#C01F00"
+  brand: "#EA2804"
+  primary: "#C01F00"
   primary-pressed: "#A31A00"
   on-primary: "#FFFFFF"
   link: "#C01F00"
@@ -140,7 +140,7 @@ spacing:
   band: 160px
 components:
   button-primary:
-    backgroundColor: "{colors.primary-deep}"
+    backgroundColor: "{colors.primary}"
     textColor: "{colors.on-primary}"
     typography: "{typography.button-md}"
     rounded: "{rounded.full}"
@@ -272,12 +272,12 @@ components:
     rounded: "{rounded.none}"
     padding: 64px 32px
   hero-band:
-    backgroundColor: "{colors.primary}"
+    backgroundColor: "{colors.brand}"
     textColor: "{colors.on-primary}"
     typography: "{typography.display-xxl}"
     rounded: "{rounded.none}"
   code-tab-active-underline:
-    backgroundColor: "{colors.primary}"
+    backgroundColor: "{colors.brand}"
   inline-link:
     textColor: "{colors.link}"
   metadata-text:
@@ -308,7 +308,7 @@ components:
 Provenance is a calm research desk with editorial precision. Answers and their evidence are the
 visual focus: warm cream paper (`{colors.canvas}`) instead of white, warm charcoal ink
 (`{colors.ink}`), hairline rules instead of shadows, dark printed wells for anything technical
-(SQL, chunk IDs, scores, traces), and a single hot-orange stamp (`{colors.primary}`) per viewport.
+(SQL, chunk IDs, scores, traces), and a single hot-orange stamp (`{colors.brand}`) per viewport.
 
 Principles:
 
@@ -328,19 +328,19 @@ workspace". No glowing AI motifs, robots, gradients on work screens, or invented
 - **Surface Bone (`{colors.surface-bone}`)** is the inset step: sidebar, quoted evidence, dropzones.
 - **Surface Dark / Deep** host code wells, retrieval diagnostics, featured evaluation tiers and the footer.
 - **Ink, Body, Charcoal, Mute, Ash, Stone** form the text ladder; long answers use `{colors.body}`.
-- **Primary (`{colors.primary}`)** is a stamp: the one primary CTA per viewport, the landing hero,
-  and inline links. Never on body text, small badges or large surfaces.
+- **Brand (`{colors.brand}`)** is the stamp color: the landing hero band and non-text accents (active tab underline). The one primary CTA per viewport and inline links use the accessible `{colors.primary}`.
+  Never on body text, small badges or large surfaces.
 - **Status** colors (success, warning, error) are always paired with an icon and a text label.
 - **Highlight Citation (`{colors.highlight-citation}`)** links a citation chip to its passage.
 - **Focus ring (`{colors.ring-focus}`)**, 3px, with a 2px solid fallback where contrast requires.
 
 **Accessibility adjustments to the design brief (WCAG 2.2 AA, PRD NFR-06):**
 
-- White on `{colors.primary}` is 4.37:1 and 16px semibold is not "large text", so the
-  `button-primary` fill uses `{colors.primary-deep}` (6.11:1; pressed `{colors.primary-pressed}`
-  7.76:1). Bright `{colors.primary}` remains for the landing hero band and non-text accents
+- White on `{colors.brand}` is 4.37:1 and 16px semibold is not "large text", so the
+  `button-primary` fill uses `{colors.primary}` (6.11:1; pressed `{colors.primary-pressed}`
+  7.76:1). Bright `{colors.brand}` remains for the landing hero band and non-text accents
   (active tab underline), which only need 3:1.
-- Inline links use `{colors.link}` = primary-deep (5.71:1 on canvas; bright orange is 4.09:1).
+- Inline links use `{colors.link}` = `{colors.primary}` (5.71:1 on canvas; bright orange is 4.09:1).
 - Success badges follow the warning/error pattern — `{colors.surface-success}` with
   `{colors.badge-success}` text (5.43:1) — instead of white on mid-green (3.46:1).
 - Placeholders use `{colors.mute}`; `{colors.ash}` is reserved for non-text decoration.
@@ -395,7 +395,7 @@ only on full-bleed bands (landing hero, footer).
 - **Cards:** `model-card` for evidence hits and document rows; `collection-tile` for workspaces,
   domain profiles and metric tiles; `pricing-tier` / `pricing-tier-featured` to compare evaluation
   runs and chunking presets side by side.
-- **Code:** `code-block` with `code-tab` strip (active tab gets a 2px primary underline) for SQL,
+- **Code:** `code-block` with `code-tab` strip (active tab gets a 2px brand underline) for SQL,
   chunk JSON, rerank and RRF diagnostics, and API snippets.
 - **Status:** `badge-status` (success / warning / error variants, always icon + label) for job
   stages; `badge-tag` for formats and inline citation chips like `[report.pdf · p.4]`.
@@ -408,7 +408,7 @@ only on full-bleed bands (landing hero, footer).
 Do:
 
 - Use `{colors.canvas}` as the default background and keep white for cards and inputs.
-- Keep `{colors.primary}` to one element per viewport; demote others to `button-dark`.
+- Keep orange (the `{colors.brand}` accent or a `{colors.primary}` fill) to one element per viewport; demote others to `button-dark`.
 - Put every technical identifier in JetBrains Mono inside a dark well or mono chip.
 - Pair every status color with an icon and text; give charts an accessible data table.
 

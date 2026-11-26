@@ -5,7 +5,7 @@
 
 /*
  * Fonts + shadcn semantic colors, all resolved from Provenance tokens (tokens.css).
- * `--color-primary` stays the brand orange from tokens.css; shadcn's `bg-primary` uses it.
+ * `--color-primary` is the AA-safe orange from tokens.css; shadcn's `bg-primary` uses it.
  */
 @theme inline {
   --font-display: var(--font-bricolage);

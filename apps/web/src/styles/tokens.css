@@ -24,11 +24,12 @@
   --color-on-dark: #fcfcfc;
   --color-on-dark-mute: rgba(252, 252, 252, 0.72);
 
-  /* Brand — one primary stamp per viewport.
-   * --color-primary (bright) is for the hero band and non-text accents only;
-   * text-bearing fills and links use primary-deep for WCAG AA (see DESIGN.md). */
-  --color-primary: #ea2804;
-  --color-primary-deep: #c01f00;
+  /* Orange — at most one orange element per viewport.
+   * --color-brand (bright) is for the hero band and non-text accents only.
+   * --color-primary is the WCAG AA-safe fill for the primary CTA and links (see DESIGN.md);
+   * shadcn's bg-primary resolves to it. */
+  --color-brand: #ea2804;
+  --color-primary: #c01f00;
   --color-primary-pressed: #a31a00;
   --color-on-primary: #ffffff;
   --color-link: #c01f00;

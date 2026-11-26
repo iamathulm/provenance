@@ -2,7 +2,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const css = readFileSync(join(__dirname, "tokens.css"), "utf8");
+const tokensCss = readFileSync(join(__dirname, "tokens.css"), "utf8");
+const globalsCss = readFileSync(join(__dirname, "..", "app", "globals.css"), "utf8");
+
+const declares = (css: string, token: string) => new RegExp(String.raw`${token}\s*:`).test(css);
 
 const REQUIRED_TOKENS = [
   "--color-canvas",
@@ -21,8 +24,8 @@ const REQUIRED_TOKENS = [
   "--color-stone",
   "--color-on-dark",
   "--color-on-dark-mute",
+  "--color-brand",
   "--color-primary",
-  "--color-primary-deep",
   "--color-primary-pressed",
   "--color-on-primary",
   "--color-link",
@@ -51,19 +54,33 @@ const REQUIRED_TOKENS = [
   "--spacing-band",
 ];
 
+const FONT_TOKENS = ["--font-display", "--font-sans", "--font-mono"];
+
 describe("design tokens", () => {
   it.each(REQUIRED_TOKENS)("declares %s", (token) => {
-    expect(css).toMatch(new RegExp(`${token}\s*:`));
+    expect(declares(tokensCss, token)).toBe(true);
   });
 
-  it("uses the exact brand values from the design brief", () => {
-    expect(css).toMatch(/--color-primary:\s*#ea2804;/);
-    expect(css).toMatch(/--color-canvas:\s*#f9f7f3;/);
+  it.each(FONT_TOKENS)("maps font role %s in globals.css", (token) => {
+    expect(declares(globalsCss, token)).toBe(true);
   });
 
-  it("uses WCAG AA-compliant values for text-bearing brand and status colors", () => {
-    expect(css).toMatch(/--color-primary-deep:\s*#c01f00;/);
-    expect(css).toMatch(/--color-link:\s*#c01f00;/);
-    expect(css).toMatch(/--color-badge-success:\s*#1f6e4a;/);
+  it("matches declarations with whitespace before the colon", () => {
+    expect(declares("--color-ink : #202020;", "--color-ink")).toBe(true);
+  });
+
+  it("uses the exact surface and brand values from the design brief", () => {
+    expect(tokensCss).toMatch(/--color-canvas:\s*#f9f7f3;/);
+    expect(tokensCss).toMatch(/--color-brand:\s*#ea2804;/);
+  });
+
+  it("uses WCAG AA-compliant values for text-bearing orange and status colors", () => {
+    expect(tokensCss).toMatch(/--color-primary:\s*#c01f00;/);
+    expect(tokensCss).toMatch(/--color-link:\s*#c01f00;/);
+    expect(tokensCss).toMatch(/--color-badge-success:\s*#1f6e4a;/);
+  });
+
+  it("never lets shadcn remap the primary color away from the token", () => {
+    expect(declares(globalsCss, "--color-primary")).toBe(false);
   });
 });
