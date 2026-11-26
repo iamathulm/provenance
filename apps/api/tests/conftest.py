@@ -2,7 +2,6 @@
 
 import asyncio
 import os
-import sys
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping
 from pathlib import Path
 
@@ -25,11 +24,10 @@ TEST_DATABASE_URL = os.environ.get(
 )
 
 
-def pytest_asyncio_loop_factories() -> Mapping[str, Callable[[], asyncio.AbstractEventLoop]] | None:
-    """psycopg's async driver cannot run on Windows' default Proactor event loop."""
-    if sys.platform == "win32":
-        return {"selector": asyncio.SelectorEventLoop}
-    return None
+def pytest_asyncio_loop_factories() -> Mapping[str, Callable[[], asyncio.AbstractEventLoop]]:
+    """Selector loop everywhere: psycopg async cannot run on Windows' default Proactor loop, and
+    it is already the default on Linux/macOS."""
+    return {"selector": asyncio.SelectorEventLoop}
 
 
 def alembic_config(database_url: str) -> Config:
