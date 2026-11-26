@@ -5,6 +5,7 @@ from importlib import import_module
 MODEL_MODULES = (
     "provenance.auth.models",
     "provenance.workspaces.models",
+    "provenance.storage.models",
 )
 
 

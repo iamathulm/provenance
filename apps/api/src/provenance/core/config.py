@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     session_ttl_hours: int = 12
     session_idle_minutes: int = 120
     allowed_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    max_file_bytes: int = 10 * 1024 * 1024
+    file_link_ttl_s: int = 300
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:
