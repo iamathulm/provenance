@@ -6,7 +6,7 @@ Build a production-style capstone that ingests supported documents into private 
 
 ### Definition of done
 
-A reviewer can run the documented deployment and complete the core workflow; all mandatory FR/NFR gates pass or are explicitly marked failed; evaluation reports and data/config versions are reproducible; two domains meet their separate thresholds; threat/isolation, failure-injection, load, accessibility, unit, integration and end-to-end tests have documented results; CI builds and tests, CD deploys and smoke tests; README includes architecture, setup, operational runbook, known limits, data handling, quota/cost accounting and recovery. 
+A reviewer can run the documented deployment and complete the core workflow; all mandatory FR/NFR gates pass or are explicitly marked failed; evaluation reports and data/config versions are reproducible; two domains meet their separate thresholds; threat/isolation, failure-injection, load, accessibility, unit, integration and end-to-end tests have documented results; CI builds and tests, CD deploys and smoke tests; README includes architecture, setup, operational runbook, known limits, data handling, quota/cost accounting and recovery.
 
 # Target users and personas
 
