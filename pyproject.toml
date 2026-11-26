@@ -23,6 +23,7 @@ dev = [
   "vulture>=2.13",
   "pre-commit>=4",
   "pytest-asyncio>=1.5",
+  "types-pyyaml>=6.0.12.20261122",
 ]
 
 [tool.ruff]

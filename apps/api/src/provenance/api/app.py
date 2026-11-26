@@ -15,6 +15,7 @@ from provenance.observability.logging import configure_logging
 from provenance.observability.middleware import CorrelationIdMiddleware
 from provenance.observability.origin import OriginCheckMiddleware
 from provenance.observability.telemetry import TelemetryRecorder
+from provenance.profiles.loader import load_profiles
 
 APP_VERSION = version("provenance-api")
 
@@ -35,6 +36,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Provenance API", version=APP_VERSION, lifespan=lifespan)
     app.state.settings = resolved
     app.state.login_limiter = LoginRateLimiter()
+    app.state.profiles = load_profiles(resolved.profiles_dir)
     register_error_handlers(app)
     # Last added runs first: correlation IDs wrap everything, including origin rejections.
     app.add_middleware(OriginCheckMiddleware, allowed_origins=resolved.allowed_origins)

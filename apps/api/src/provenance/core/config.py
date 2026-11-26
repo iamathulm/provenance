@@ -1,11 +1,13 @@
 """Application settings, validated at startup from environment variables and `.env`."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal, Self
 
 from pydantic import SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+REPO_ROOT = Path(__file__).resolve().parents[5]
 DEV_SESSION_SECRET = "dev-only-insecure-session-secret-change-me"  # noqa: S105 - placeholder, rejected in production
 
 
@@ -31,6 +33,7 @@ class Settings(BaseSettings):
     file_link_ttl_s: int = 300
     # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
     trusted_proxies: list[str] = []
+    profiles_dir: Path = REPO_ROOT / "profiles"
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:

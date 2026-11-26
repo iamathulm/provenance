@@ -1,0 +1,9 @@
+# Company documents: policies, runbooks, specs, decks and spreadsheets.
+name: company
+display_name: Company documents
+description: Policies, runbooks, product specs, slide decks and spreadsheets.
+chunking:
+  target_tokens: 350
+  overlap_tokens: 50
+  max_tokens: 500
+  table_rows_per_chunk: 20
