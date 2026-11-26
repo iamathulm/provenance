@@ -1,4 +1,5 @@
 import re
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -16,13 +17,22 @@ COMPANY_FILES = REPO_ROOT / "data" / "company" / "files"
 COMMITTED = sorted(COMPANY_FILES.iterdir())
 
 
+def _content(path: Path) -> object:
+    """What a file says, independent of the compressor: Office files are ZIP packages whose
+    deflate bytes differ between zlib builds (Windows vs Linux), so compare their members."""
+    if not zipfile.is_zipfile(path):
+        return path.read_bytes()
+    with zipfile.ZipFile(path) as archive:
+        return [(name, archive.read(name)) for name in archive.namelist()]
+
+
 def test_build_is_deterministic_and_committed_files_are_current(tmp_path: Path) -> None:
     first = build(COMPANY_SOURCE, tmp_path / "a")
     second = build(COMPANY_SOURCE, tmp_path / "b")
 
     assert [p.read_bytes() for p in first] == [p.read_bytes() for p in second]
     assert [p.name for p in first] == [p.name for p in COMMITTED]
-    stale = [p.name for p in first if p.read_bytes() != (COMPANY_FILES / p.name).read_bytes()]
+    stale = [p.name for p in first if _content(p) != _content(COMPANY_FILES / p.name)]
     assert not stale, f"Rebuild with `provenance build-company-corpus`: {stale}"
 
 
