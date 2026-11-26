@@ -1,27 +1,17 @@
 import asyncio
 import uuid
-from collections.abc import Callable
-from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import override
 
 import pytest
-from fastapi import FastAPI
 from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from provenance.core.config import Settings
 from provenance.documents.models import Chunk, Document, DocumentVersion
-from provenance.documents.service import upload_document
 from provenance.ingest import jobs
-from provenance.ingest.handlers import build_handlers
-from provenance.ingest.indexing import IndexingDeps
 from provenance.ingest.models import Job
-from provenance.ingest.worker import Worker
 from provenance.observability.models import StageSpan
-from provenance.retrieval.index import ChunkIndex
-from provenance.seed import seed_demo
-from provenance.workspaces.models import Workspace
+from tests.ingest.harness import Harness
 from tests.ingest.samples import pdf_bytes
 from tests.retrieval.fakes import FakeEmbedder
 
@@ -37,40 +27,6 @@ class FailingEmbedder(FakeEmbedder):
     def embed_dense(self, texts: list[str]) -> list[list[float]]:
         msg = "embedding service unavailable"
         raise ConnectionError(msg)
-
-
-@dataclass
-class Harness:
-    session_factory: Callable[[], AsyncSession]
-    deps: IndexingDeps
-    worker: Worker
-    workspace_id: uuid.UUID
-
-    async def upload(self, filename: str, content: bytes) -> tuple[uuid.UUID, uuid.UUID]:
-        async with self.session_factory() as db:
-            workspace = await db.get_one(Workspace, self.workspace_id)
-            document = await upload_document(
-                db, workspace, None, filename, content, self.deps.settings
-            )
-            await db.commit()
-            version_id = await db.scalar(
-                select(DocumentVersion.id).where(DocumentVersion.document_id == document.id)
-            )
-            assert version_id is not None
-            return document.id, version_id
-
-
-@pytest.fixture
-async def harness(app: FastAPI, chunk_index: ChunkIndex, settings: Settings) -> Harness:
-    await seed_demo(app.state.session_factory)
-    async with app.state.session_factory() as db:
-        workspace_id = await db.scalar(select(Workspace.id).where(Workspace.name == "Company KB"))
-    assert workspace_id is not None
-    deps = IndexingDeps(
-        settings, app.state.profiles, FakeEmbedder(), chunk_index, app.state.telemetry
-    )
-    worker = Worker(app.state.session_factory, build_handlers(app.state.session_factory, deps))
-    return Harness(app.state.session_factory, deps, worker, workspace_id)
 
 
 async def test_upload_indexes_to_ready_and_activates(harness: Harness, db: AsyncSession) -> None:

@@ -4,7 +4,9 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from importlib.metadata import version
 
+import structlog
 from fastapi import FastAPI
+from qdrant_client import AsyncQdrantClient
 
 from provenance.api.v1 import router as v1_router
 from provenance.auth.rate_limit import LoginRateLimiter
@@ -16,8 +18,10 @@ from provenance.observability.middleware import CorrelationIdMiddleware
 from provenance.observability.origin import OriginCheckMiddleware
 from provenance.observability.telemetry import TelemetryRecorder
 from provenance.profiles.loader import load_profiles
+from provenance.retrieval.index import ChunkIndex
 
 APP_VERSION = version("provenance-api")
+log = structlog.get_logger()
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -30,7 +34,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         engine = create_engine_from_settings(resolved)
         app.state.session_factory = session_factory(engine)
         app.state.telemetry = TelemetryRecorder(app.state.session_factory)
+        qdrant = AsyncQdrantClient(url=resolved.qdrant_url)
+        app.state.chunk_index = ChunkIndex(
+            qdrant, resolved.qdrant_collection, resolved.embedding_dimension
+        )
+        try:
+            await app.state.chunk_index.ensure_collection()
+        except Exception as error:
+            log.warning("vector_store_unavailable", error_class=type(error).__name__)
         yield
+        await qdrant.close()
         await engine.dispose()
 
     app = FastAPI(title="Provenance API", version=APP_VERSION, lifespan=lifespan)

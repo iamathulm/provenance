@@ -13,6 +13,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.ingest.models import Job
 
+INDEX_VERSION = "index_version"
+PURGE_DOCUMENT = "purge_document"
+
 DEFAULT_LEASE_S = 60
 MAX_BACKOFF_S = 60
 
@@ -99,3 +102,13 @@ def fail(job: Job, error: Exception, *, transient: bool) -> bool:
         return True
     job.status = "failed"
     return False
+
+
+def requeue(job: Job) -> None:
+    """Give a failed job a fresh set of attempts (user-initiated retry)."""
+    job.status = "queued"
+    job.attempts = 0
+    job.run_after = _now()
+    job.locked_by = None
+    job.locked_until = None
+    job.last_error_class = None
