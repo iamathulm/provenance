@@ -1,0 +1,13 @@
+filename: warranty-claims-2026.csv
+title: Warranty claims 2026
+# Rows are generated deterministically by scripts/build_company_corpus.py from these parameters.
+generated:
+  kind: warranty_claims
+  seed: 7
+  rows: 60
+  start: 2026-01-05
+  end: 2026-09-28
+  products: [Talon X2, Harrier Mini]
+  product_weights: [55, 45]
+  failure_modes: [battery swelling, motor failure, gimbal fault, compass error, water ingress, arm crack]
+  failure_weights: [30, 15, 15, 15, 10, 15]

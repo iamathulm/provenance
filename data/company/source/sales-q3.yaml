@@ -1,0 +1,16 @@
+filename: sales-q3-2026.xlsx
+title: Sales Q3 2026
+sheets:
+  By region:
+    columns: [region, talon_x2_units, harrier_mini_units, revenue_usd]
+    rows:
+      - [North America, 220, 560, 9568000]
+      - [Europe Middle East Africa, 110, 330, 5152000]
+      - [Asia Pacific, 64, 190, 2944000]
+      - [Latin America, 18, 50, 736000]
+  By month:
+    columns: [month, revenue_usd, new_customers]
+    rows:
+      - [2026-07, 5600000, 41]
+      - [2026-08, 6100000, 38]
+      - [2026-09, 6700000, 47]

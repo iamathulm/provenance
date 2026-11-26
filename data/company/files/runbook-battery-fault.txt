@@ -1,0 +1,18 @@
+# Runbook: In-flight battery fault
+
+Owner: Flight Operations. Applies to Talon X2 and Harrier Mini.
+
+## Symptoms
+GroundLink shows a red battery warning, a sudden drop of more than 10 percent charge in under a minute, or a cell voltage imbalance alert.
+
+## Immediate actions
+Land within 90 seconds at the nearest safe location. Do not continue the mission, even if the remaining charge looks sufficient.
+Never hot-swap batteries in flight or with the aircraft powered on. Power the aircraft off before removing any battery.
+
+## After landing
+Swap both batteries for fully charged packs before the next flight.
+Place the faulty pack in the fireproof battery locker if it is swollen, damaged or hotter than 60 degrees Celsius.
+Log the event in GroundLink under Fleet, Battery Health, and attach the flight log.
+
+## Returns
+Open a return merchandise authorisation through the support portal for any battery that triggered this runbook. Batteries under warranty are replaced within 5 business days.

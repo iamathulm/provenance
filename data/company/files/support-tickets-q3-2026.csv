@@ -1,0 +1,121 @@
+ticket_id,opened,product,category,severity,status,hours_to_resolve
+KR-00001,2026-07-16,Harrier Mini,how-to,S3,resolved,22
+KR-00002,2026-09-15,Harrier Mini,how-to,S3,resolved,39
+KR-00003,2026-09-14,Talon X2,connectivity,S3,open,
+KR-00004,2026-07-13,Harrier Mini,hardware,S3,resolved,21
+KR-00005,2026-08-20,GroundLink,how-to,S3,resolved,40
+KR-00006,2026-09-20,Harrier Mini,connectivity,S2,resolved,18
+KR-00007,2026-07-19,Harrier Mini,battery,S4,resolved,59
+KR-00008,2026-08-16,GroundLink,firmware,S3,resolved,15
+KR-00009,2026-08-24,Harrier Mini,firmware,S3,resolved,41
+KR-00010,2026-08-03,Sentinel Dock pilot,firmware,S4,resolved,15
+KR-00011,2026-09-12,Talon X2,billing,S2,resolved,25
+KR-00012,2026-07-14,Talon X2,how-to,S4,resolved,27
+KR-00013,2026-09-19,Harrier Mini,how-to,S4,resolved,81
+KR-00014,2026-08-02,Talon X2,how-to,S3,resolved,40
+KR-00015,2026-09-28,Harrier Mini,connectivity,S3,resolved,25
+KR-00016,2026-07-02,Harrier Mini,firmware,S1,resolved,10
+KR-00017,2026-09-01,Harrier Mini,firmware,S3,resolved,39
+KR-00018,2026-08-25,GroundLink,connectivity,S3,resolved,14
+KR-00019,2026-08-26,Harrier Mini,firmware,S3,resolved,19
+KR-00020,2026-08-24,Talon X2,connectivity,S4,resolved,75
+KR-00021,2026-08-17,Harrier Mini,firmware,S2,resolved,4
+KR-00022,2026-07-12,GroundLink,battery,S1,resolved,5
+KR-00023,2026-08-01,Harrier Mini,connectivity,S2,open,
+KR-00024,2026-09-20,Harrier Mini,hardware,S3,open,
+KR-00025,2026-09-01,Harrier Mini,firmware,S3,resolved,16
+KR-00026,2026-09-15,Talon X2,hardware,S4,resolved,29
+KR-00027,2026-09-14,GroundLink,firmware,S3,resolved,20
+KR-00028,2026-08-18,GroundLink,battery,S1,resolved,7
+KR-00029,2026-09-21,Talon X2,firmware,S3,resolved,28
+KR-00030,2026-09-26,Talon X2,how-to,S3,resolved,44
+KR-00031,2026-09-18,Harrier Mini,firmware,S4,resolved,55
+KR-00032,2026-08-28,Talon X2,connectivity,S3,resolved,20
+KR-00033,2026-09-21,Harrier Mini,how-to,S4,open,
+KR-00034,2026-08-27,Harrier Mini,hardware,S4,resolved,14
+KR-00035,2026-07-17,GroundLink,how-to,S3,resolved,16
+KR-00036,2026-07-21,Talon X2,firmware,S3,resolved,13
+KR-00037,2026-08-19,Talon X2,firmware,S3,resolved,34
+KR-00038,2026-08-06,Harrier Mini,battery,S3,resolved,41
+KR-00039,2026-08-05,Talon X2,how-to,S4,resolved,70
+KR-00040,2026-09-21,GroundLink,how-to,S3,resolved,19
+KR-00041,2026-07-04,Harrier Mini,hardware,S3,resolved,42
+KR-00042,2026-07-28,Harrier Mini,hardware,S2,resolved,10
+KR-00043,2026-09-11,Harrier Mini,battery,S3,resolved,24
+KR-00044,2026-07-13,Harrier Mini,billing,S4,resolved,35
+KR-00045,2026-09-21,Talon X2,how-to,S3,resolved,26
+KR-00046,2026-08-10,Talon X2,how-to,S2,resolved,28
+KR-00047,2026-08-02,Talon X2,battery,S3,open,
+KR-00048,2026-07-16,Sentinel Dock pilot,how-to,S2,resolved,14
+KR-00049,2026-08-28,Harrier Mini,how-to,S3,resolved,28
+KR-00050,2026-09-16,Sentinel Dock pilot,how-to,S2,resolved,25
+KR-00051,2026-08-17,GroundLink,connectivity,S4,resolved,57
+KR-00052,2026-07-08,Talon X2,hardware,S4,resolved,49
+KR-00053,2026-07-16,Harrier Mini,battery,S3,resolved,29
+KR-00054,2026-07-26,Talon X2,hardware,S3,resolved,15
+KR-00055,2026-07-05,Harrier Mini,hardware,S2,resolved,4
+KR-00056,2026-08-24,Talon X2,connectivity,S3,resolved,34
+KR-00057,2026-09-23,Harrier Mini,hardware,S2,resolved,21
+KR-00058,2026-09-26,GroundLink,connectivity,S3,resolved,9
+KR-00059,2026-08-05,Sentinel Dock pilot,battery,S3,resolved,48
+KR-00060,2026-09-14,Talon X2,how-to,S2,resolved,30
+KR-00061,2026-09-04,Harrier Mini,billing,S4,resolved,19
+KR-00062,2026-09-23,Talon X2,battery,S4,resolved,40
+KR-00063,2026-09-25,Harrier Mini,how-to,S3,resolved,31
+KR-00064,2026-07-30,GroundLink,connectivity,S3,resolved,37
+KR-00065,2026-09-20,GroundLink,hardware,S3,resolved,27
+KR-00066,2026-07-25,Harrier Mini,battery,S2,resolved,15
+KR-00067,2026-09-05,Harrier Mini,battery,S4,resolved,59
+KR-00068,2026-09-08,Harrier Mini,how-to,S4,resolved,14
+KR-00069,2026-09-07,Harrier Mini,hardware,S2,resolved,16
+KR-00070,2026-08-18,GroundLink,hardware,S3,resolved,40
+KR-00071,2026-07-14,Talon X2,connectivity,S2,resolved,5
+KR-00072,2026-09-14,GroundLink,connectivity,S3,resolved,26
+KR-00073,2026-08-15,Sentinel Dock pilot,hardware,S2,resolved,23
+KR-00074,2026-09-21,GroundLink,how-to,S3,resolved,42
+KR-00075,2026-07-22,Talon X2,battery,S4,open,
+KR-00076,2026-07-04,GroundLink,hardware,S4,resolved,12
+KR-00077,2026-08-17,Harrier Mini,hardware,S2,resolved,11
+KR-00078,2026-07-17,Talon X2,how-to,S2,resolved,6
+KR-00079,2026-08-18,Talon X2,firmware,S3,resolved,39
+KR-00080,2026-07-16,Talon X2,how-to,S3,resolved,45
+KR-00081,2026-08-14,Talon X2,firmware,S2,resolved,13
+KR-00082,2026-08-03,Talon X2,firmware,S4,resolved,54
+KR-00083,2026-08-11,GroundLink,firmware,S4,resolved,34
+KR-00084,2026-07-26,Harrier Mini,connectivity,S4,resolved,56
+KR-00085,2026-08-22,Talon X2,firmware,S4,resolved,84
+KR-00086,2026-09-23,Talon X2,battery,S4,resolved,46
+KR-00087,2026-08-26,Talon X2,connectivity,S3,resolved,17
+KR-00088,2026-09-10,Harrier Mini,hardware,S4,resolved,63
+KR-00089,2026-07-03,Harrier Mini,battery,S3,resolved,39
+KR-00090,2026-09-25,Harrier Mini,firmware,S4,resolved,38
+KR-00091,2026-08-24,GroundLink,billing,S3,resolved,8
+KR-00092,2026-08-04,Talon X2,hardware,S3,resolved,34
+KR-00093,2026-08-30,Talon X2,billing,S4,resolved,93
+KR-00094,2026-07-16,Talon X2,billing,S3,resolved,37
+KR-00095,2026-09-04,Talon X2,hardware,S3,resolved,42
+KR-00096,2026-07-02,Sentinel Dock pilot,how-to,S4,resolved,38
+KR-00097,2026-09-16,Talon X2,firmware,S3,resolved,41
+KR-00098,2026-09-26,Talon X2,how-to,S3,resolved,10
+KR-00099,2026-07-24,Talon X2,how-to,S3,resolved,38
+KR-00100,2026-09-23,Talon X2,firmware,S3,resolved,39
+KR-00101,2026-08-11,Harrier Mini,battery,S4,open,
+KR-00102,2026-08-16,Talon X2,connectivity,S3,resolved,33
+KR-00103,2026-08-08,Harrier Mini,battery,S2,open,
+KR-00104,2026-09-21,GroundLink,connectivity,S3,resolved,38
+KR-00105,2026-09-17,Harrier Mini,connectivity,S2,resolved,14
+KR-00106,2026-09-23,Sentinel Dock pilot,how-to,S3,resolved,19
+KR-00107,2026-08-02,Harrier Mini,how-to,S4,resolved,92
+KR-00108,2026-07-14,Talon X2,connectivity,S4,resolved,66
+KR-00109,2026-09-04,Talon X2,how-to,S4,resolved,74
+KR-00110,2026-07-18,Talon X2,how-to,S3,resolved,33
+KR-00111,2026-09-07,Talon X2,firmware,S3,resolved,17
+KR-00112,2026-07-19,Harrier Mini,battery,S2,resolved,25
+KR-00113,2026-07-05,GroundLink,battery,S3,resolved,42
+KR-00114,2026-09-27,Talon X2,battery,S3,resolved,19
+KR-00115,2026-09-26,Harrier Mini,firmware,S2,resolved,4
+KR-00116,2026-08-08,Harrier Mini,firmware,S2,resolved,27
+KR-00117,2026-08-22,Harrier Mini,battery,S2,resolved,4
+KR-00118,2026-07-08,Harrier Mini,how-to,S2,resolved,12
+KR-00119,2026-08-12,Talon X2,how-to,S4,resolved,66
+KR-00120,2026-09-23,Talon X2,connectivity,S3,resolved,39

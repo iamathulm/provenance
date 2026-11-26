@@ -23,6 +23,9 @@ dev = [
   "vulture>=2.13",
   "pre-commit>=4",
   "pytest-asyncio>=1.5",
+  "types-pyyaml>=6.0.12.20261122",
+  "types-openpyxl>=3.1.5.20261122",
+  "pyarrow-stubs>=20.0.0.20260819",
 ]
 
 [tool.ruff]
@@ -33,6 +36,7 @@ src = ["apps/api/src", "apps/api/tests"]
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "N", "S", "PT", "ARG", "ERA"]
 ignore = []
+allowed-confusables = ["–", "·"]  # deliberate typography in citation labels
 
 [tool.ruff.lint.per-file-ignores]
 "apps/api/tests/**" = ["S101", "S105", "S106"]
@@ -42,6 +46,7 @@ python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
 mypy_path = "apps/api/src"
+untyped_calls_exclude = ["pymupdf"]  # PyMuPDF ships no type hints
 
 [tool.pytest.ini_options]
 testpaths = ["apps/api/tests"]
@@ -49,8 +54,11 @@ addopts = "-q"
 pythonpath = ["apps/api"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+markers = ["slow: needs real ML models (downloaded and cached on first run)"]
 filterwarnings = [
   "error",
+  # Windows without Developer Mode: model cache falls back to copies instead of symlinks.
+  "ignore:`huggingface_hub` cache-system uses symlinks:UserWarning",
   # Starlette's TestClient now recommends `httpx2`; keep `httpx` until that package is verified.
   "ignore:Using `httpx` with `starlette.testclient` is deprecated:starlette.exceptions.StarletteDeprecationWarning",
 ]

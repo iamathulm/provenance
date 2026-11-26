@@ -1,0 +1,15 @@
+filename: headcount-by-team-2026-q3.xlsx
+title: Headcount by team, Q3 2026
+sheets:
+  Headcount:
+    columns: [team, headcount, open_roles, primary_location]
+    rows:
+      - [Engineering, 118, 9, Tacoma]
+      - [Manufacturing, 74, 4, Tacoma]
+      - [Flight Operations, 36, 2, Tacoma]
+      - [Sales, 44, 6, Remote]
+      - [Customer Support, 28, 3, Austin]
+      - [Product, 12, 1, Tacoma]
+      - [People Operations, 9, 0, Tacoma]
+      - [Finance, 11, 1, Tacoma]
+      - [IT and Security, 10, 2, Austin]

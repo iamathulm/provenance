@@ -1,0 +1,34 @@
+filename: travel-and-expense-policy.pdf
+title: Travel and Expense Policy
+sections:
+  - heading: Travel and Expense Policy
+    level: 1
+    paragraphs:
+      - This policy covers business travel and reimbursable expenses for all Kestrel Ridge Systems employees. It is owned by Finance and was last revised on 15 July 2026.
+  - heading: Booking travel
+    level: 2
+    paragraphs:
+      - All flights, hotels and rail must be booked through the company travel portal, Navan. Bookings made elsewhere are reimbursed only if they cost less than the cheapest comparable option in Navan.
+      - Economy class is standard for flights under 6 hours. Premium economy is allowed for flights of 6 hours or longer. Business class requires written approval from a vice president.
+  - heading: Hotels
+    level: 2
+    paragraphs:
+      - The nightly hotel cap is 220 US dollars in most locations and 260 US dollars in New York, San Francisco, London and Tokyo. Amounts above the cap need manager approval before booking.
+  - heading: Meals and per diem
+    level: 2
+    paragraphs:
+      - The meal per diem is 60 US dollars per day for domestic travel and 85 US dollars per day for international travel. Per diem is not paid for meals provided by a conference or customer.
+      - Alcohol is not reimbursable, except at client dinners approved in advance by a director.
+  - heading: Mileage
+    level: 2
+    paragraphs:
+      - Use of a personal vehicle for business travel is reimbursed at 0.67 US dollars per mile. Commuting between home and the regular office is not reimbursable.
+  - heading: Submitting expenses
+    level: 2
+    paragraphs:
+      - Receipts are required for every expense above 25 US dollars. Expense reports must be submitted within 30 days of the expense. Approved expenses are reimbursed in the next biweekly payroll cycle.
+      - Reports submitted more than 90 days after the expense are not reimbursed.
+  - heading: Corporate cards
+    level: 2
+    paragraphs:
+      - Employees who travel more than four times per year may request a corporate card with a monthly limit of 5,000 US dollars. Personal purchases on a corporate card are a policy violation.

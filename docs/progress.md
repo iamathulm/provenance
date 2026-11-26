@@ -51,3 +51,33 @@ migrations match the models.
   throttled; revisit if the cloud demo sees abuse.
 - Writes use `DbSession` (FastAPI dependency `scope="function"`), which commits before the
   response is sent — keep using it rather than opening ad-hoc sessions in routes.
+
+## P2 — Ingestion + corpora
+
+**Done:** domain profiles as YAML (`profiles/`), content-based upload validation, parsers for
+PDF/DOCX/PPTX/TXT/CSV/XLSX with page/slide/section/row anchors, profile-driven chunking, local
+FastEmbed dense + BM25 embeddings, Qdrant chunk index, Postgres job queue + worker
+(`provenance worker`), document API (upload, list, detail, replace, retry, delete + purge, chunk
+preview), profile-change reindexing, Kestrel Ridge company corpus (21 files) and 8 CC BY/CC0
+research papers, `provenance seed-demo --with-corpora`.
+
+**Measured (local, Windows laptop CPU, real models):** 29 documents → 311 chunks over 475
+pages/slides/sections/rows, indexed in ~63 s end to end (first run includes model loading).
+Formal NFR-03 report is P7.
+
+**Gotchas for later phases:**
+- Retrieval must trust Postgres (`documents.active_version_id`, `deleted_at`) and use the Qdrant
+  `active` payload only as a pre-filter; activation flips Qdrant first, then Postgres.
+- Chunk text is cleaned of control characters in `chunking.clean`; any new text path into
+  Postgres must do the same.
+- Table data for the SQL path is in `version_tables` → Parquet in `stored_files`.
+- Speaker notes are never indexed; the Q3 deck notes contain a "Peregrine Aero" line that must
+  never appear in answers (useful negative test in P4).
+- `vendor-faq.txt` contains the prompt-injection paragraph for P4's context guard.
+- FastEmbed models cache in `.cache/fastembed` (~65 MB); CI caches the same directory.
+- The research PDFs are fetched (not committed); run `provenance fetch-research` before seeding.
+- Indexing, activation, delete and purge serialize on `documents.locking.lock_document`
+  (`SELECT … FOR UPDATE`). Anything new that changes which version is live must take it too.
+- Table anchors are real sheet rows / CSV file lines (header = row 1), not data-row positions.
+- Jobs: an expired lease is reclaimed only while attempts remain; `expire_exhausted` fails the
+  rest. Workers act on a job only while `jobs.owns(job, worker_id)`.

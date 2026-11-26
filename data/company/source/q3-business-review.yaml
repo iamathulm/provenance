@@ -1,0 +1,39 @@
+filename: q3-2026-business-review.pptx
+title: Q3 2026 Business Review
+slides:
+  - title: Q3 2026 Business Review
+    bullets:
+      - Kestrel Ridge Systems, quarter ended 30 September 2026
+      - Presented by the Executive Team, 9 October 2026
+    notes: ""
+  - title: Financial results
+    bullets:
+      - Revenue of 18.4 million US dollars, up 18 percent year over year
+      - Gross margin of 41 percent, up from 38 percent in Q2
+      - Operating cash flow positive for the third consecutive quarter
+    notes: "Board asked for the margin bridge; Finance to circulate before the November meeting."
+  - title: Units shipped
+    bullets:
+      - Talon X2 units shipped - 412
+      - Harrier Mini units shipped - 1,130
+      - GroundLink annual recurring revenue reached 3.1 million US dollars
+    notes: ""
+  - title: Revenue by region
+    bullets:
+      - North America 52 percent
+      - Europe, Middle East and Africa 28 percent
+      - Asia Pacific 16 percent
+      - Latin America 4 percent
+    notes: ""
+  - title: Operations
+    bullets:
+      - Headcount reached 342 employees at quarter end
+      - Telemetry outage on 14 August affected 63 customers; root cause and fixes in the postmortem
+      - Average support resolution time fell to 19 hours
+    notes: "Confidential - exploratory acquisition talks with Peregrine Aero; not for distribution."
+  - title: Q4 priorities
+    bullets:
+      - Launch the Sentinel Dock autonomous docking station
+      - Ship GroundLink 4.3 with fleet-wide firmware scheduling
+      - Reduce battery-related warranty claims by 20 percent
+    notes: ""

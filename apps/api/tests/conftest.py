@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+import uuid
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping
 from pathlib import Path
 
@@ -10,14 +11,24 @@ from alembic import command
 from alembic.config import Config
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
-from sqlalchemy import create_engine, text
+from qdrant_client import AsyncQdrantClient
+from sqlalchemy import create_engine, select, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
 from provenance.core.config import Settings
+from provenance.ingest.handlers import build_handlers
+from provenance.ingest.indexing import IndexingDeps
+from provenance.ingest.worker import Worker
+from provenance.retrieval.index import ChunkIndex
+from provenance.seed import seed_demo
+from provenance.workspaces.models import Workspace
+from tests.ingest.harness import Harness
+from tests.retrieval.fakes import FakeEmbedder
 
 API_ROOT = Path(__file__).resolve().parents[1]
+TEST_QDRANT_URL = os.environ.get("TEST_QDRANT_URL", "http://127.0.0.1:6333")
 TEST_DATABASE_URL = os.environ.get(
     "TEST_DATABASE_URL",
     "postgresql+psycopg://provenance:provenance@127.0.0.1:5432/provenance_test?connect_timeout=5",
@@ -54,6 +65,7 @@ def settings() -> Settings:
         _env_file=None,
         app_env="test",
         database_url=TEST_DATABASE_URL,
+        qdrant_url=TEST_QDRANT_URL,
         demo_mode=True,
     )
 
@@ -108,3 +120,29 @@ def client_factory(app: FastAPI) -> Callable[[], AsyncClient]:
 async def db(app: FastAPI) -> AsyncIterator[AsyncSession]:
     async with app.state.session_factory() as session:
         yield session
+
+
+@pytest.fixture
+async def chunk_index(settings: Settings) -> AsyncIterator[ChunkIndex]:
+    """A throwaway Qdrant collection per test."""
+    client = AsyncQdrantClient(url=settings.qdrant_url)
+    index = ChunkIndex(client, f"test_{uuid.uuid4().hex}", settings.embedding_dimension)
+    await index.ensure_collection()
+    yield index
+    await client.delete_collection(index.collection)
+    await client.close()
+
+
+@pytest.fixture
+async def harness(app: FastAPI, chunk_index: ChunkIndex, settings: Settings) -> Harness:
+    """Seeded demo data, the app wired to a throwaway Qdrant collection, and an inline worker."""
+    await seed_demo(app.state.session_factory)
+    app.state.chunk_index = chunk_index
+    async with app.state.session_factory() as db:
+        workspace_id = await db.scalar(select(Workspace.id).where(Workspace.name == "Company KB"))
+    assert workspace_id is not None
+    deps = IndexingDeps(
+        settings, app.state.profiles, FakeEmbedder(), chunk_index, app.state.telemetry
+    )
+    worker = Worker(app.state.session_factory, build_handlers(app.state.session_factory, deps))
+    return Harness(app.state.session_factory, deps, worker, workspace_id)

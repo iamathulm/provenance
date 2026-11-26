@@ -1,0 +1,31 @@
+filename: sentinel-dock-launch-plan.pptx
+title: Sentinel Dock Launch Plan
+slides:
+  - title: Sentinel Dock Launch Plan
+    bullets:
+      - Autonomous docking and charging station for the Talon X2
+      - Product Marketing, October 2026
+    notes: ""
+  - title: What Sentinel Dock does
+    bullets:
+      - Houses one Talon X2 and swaps both batteries automatically in under 3 minutes
+      - Weatherproof enclosure rated IP55, operating from minus 20 to plus 50 degrees Celsius
+      - Schedules recurring inspection missions without an on-site pilot, subject to waivers
+    notes: ""
+  - title: Launch timeline
+    bullets:
+      - Pilot programme with 6 customers from November 2026
+      - General availability on 3 February 2027
+      - Trade show debut at the Commercial UAV Expo in March 2027
+    notes: ""
+  - title: Pricing
+    bullets:
+      - List price 24,500 US dollars per dock
+      - GroundLink Autonomy subscription required at 4,800 US dollars per dock per year
+      - Pilot customers receive 30 percent off the first year of subscription
+    notes: "Sales may discount hardware up to 10 percent without VP approval."
+  - title: Risks
+    bullets:
+      - Regulatory approval for remote operations varies by country
+      - Battery supplier lead times are currently 14 weeks
+    notes: ""

@@ -1,0 +1,24 @@
+filename: vendor-onboarding-guide.docx
+title: Vendor Onboarding Guide
+sections:
+  - heading: Vendor Onboarding Guide
+    level: 1
+    paragraphs:
+      - This guide explains how new suppliers are approved and paid. It is owned by Procurement; questions go to procurement@kestrelridge.example.
+  - heading: Approval steps
+    level: 2
+    paragraphs:
+      - A business sponsor submits a vendor request in the procurement portal. Procurement then collects a W-9 or equivalent tax form, proof of insurance and a completed security questionnaire.
+      - Vendors that will process Restricted data also require a security review by the Security team, which takes up to 10 business days.
+  - heading: Insurance requirements
+    level: 2
+    paragraphs:
+      - Vendors must hold general liability insurance of at least 2 million US dollars per occurrence. Vendors performing on-site work must also provide workers' compensation coverage.
+  - heading: Payment terms
+    level: 2
+    paragraphs:
+      - Standard payment terms are net 45 days from receipt of a valid invoice. Invoices must reference a purchase order number. Bank account details are only accepted through the procurement portal and are verified by phone before the first payment.
+  - heading: Renewal
+    level: 2
+    paragraphs:
+      - Vendor approvals are reviewed every 24 months. Vendors with no purchase orders in 18 months are deactivated.

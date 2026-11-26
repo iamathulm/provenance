@@ -1,0 +1,15 @@
+# Runbook: Lost control link
+
+Owner: Flight Operations. Applies to all aircraft running GroundLink.
+
+## What the aircraft does
+When the control link is lost, the aircraft hovers and waits for the lost-link timeout. On GroundLink 4.2 and later the default timeout is 20 seconds; on earlier versions it is 30 seconds. After the timeout the aircraft climbs to the return-to-home altitude, 60 metres by default, and flies home.
+
+## Pilot actions
+Keep the controller pointed toward the aircraft and move to higher ground if possible.
+Do not power-cycle the controller during the timeout; it restarts the link negotiation.
+Brief the visual observer to track the aircraft and call out obstacles.
+
+## If the aircraft does not return
+Note the last known position from GroundLink and notify the flight operations lead immediately.
+A loss of link longer than the timeout must be reported on the flight incident form within 24 hours.

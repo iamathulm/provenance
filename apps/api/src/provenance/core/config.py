@@ -1,11 +1,13 @@
 """Application settings, validated at startup from environment variables and `.env`."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal, Self
 
 from pydantic import SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+REPO_ROOT = Path(__file__).resolve().parents[5]
 DEV_SESSION_SECRET = "dev-only-insecure-session-secret-change-me"  # noqa: S105 - placeholder, rejected in production
 
 
@@ -28,9 +30,17 @@ class Settings(BaseSettings):
     session_idle_minutes: int = 120
     allowed_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
     max_file_bytes: int = 10 * 1024 * 1024
+    qdrant_collection: str = "chunks"
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embedding_dimension: int = 384
+    sparse_model: str = "Qdrant/bm25"
+    fastembed_cache_dir: Path | None = REPO_ROOT / ".cache" / "fastembed"
+    max_pages: int = 200
+    max_table_rows: int = 50_000
     file_link_ttl_s: int = 300
     # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
     trusted_proxies: list[str] = []
+    profiles_dir: Path = REPO_ROOT / "profiles"
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:

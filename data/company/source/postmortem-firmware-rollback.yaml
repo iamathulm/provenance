@@ -1,0 +1,19 @@
+filename: postmortem-2026-06-firmware-rollback.txt
+title: "Postmortem: Harrier Mini firmware 3.9.1 rollback"
+text: |
+  # Postmortem: Harrier Mini firmware 3.9.1 rollback
+
+  Severity: SEV-2. Author: Embedded Software. Date of incident: 18 June 2026.
+
+  ## Summary
+  Firmware 3.9.1 for the Harrier Mini caused the compass to repeat its calibration routine on start-up, preventing take-off. A total of 214 aircraft installed the update before it was paused. Firmware was rolled back to 3.9.0 within 6 hours.
+
+  ## Root cause
+  A change to magnetometer filtering was tested only on Talon X2 hardware, which uses a different sensor. The Harrier Mini test rig was out of service that week and the release checklist did not block on it.
+
+  ## Customer impact
+  Affected customers could not fly their Harrier Mini aircraft for up to 6 hours. Twelve customers received service credits.
+
+  ## Action items
+  Require a passing hardware-in-the-loop run on every aircraft model before release. Owner: Embedded Software. Done.
+  Release firmware in stages, starting with 5 percent of the fleet for 24 hours. Owner: Release Engineering. Done.

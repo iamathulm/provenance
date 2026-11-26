@@ -1,0 +1,15 @@
+sku,product,category,unit,list_price_usd
+TX2-AIR,Talon X2 aircraft,aircraft,each,18900
+HM1-AIR,Harrier Mini aircraft,aircraft,each,6400
+SDK-01,Sentinel Dock,dock,each,24500
+TX2-BAT,Talon X2 smart battery 22000 mAh,battery,each,1150
+HM1-BAT,Harrier Mini battery,battery,each,240
+TX2-HUB,Talon X2 charging hub,accessory,each,890
+HM1-RTK,Harrier Mini RTK module,accessory,each,1200
+TX2-PROP,Talon X2 propeller set,spare part,set of 4,95
+HM1-PROP,Harrier Mini propeller set,spare part,set of 4,35
+GL-PRO,GroundLink Pro licence,software,per aircraft per year,1800
+GL-AUTO,GroundLink Autonomy subscription,software,per dock per year,4800
+KC-TX2,Kestrel Care for Talon X2,service plan,per aircraft per year,2100
+KC-HM1,Kestrel Care for Harrier Mini,service plan,per aircraft per year,690
+TRN-PILOT,Pilot training course,training,per person,1450
