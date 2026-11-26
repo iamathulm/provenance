@@ -46,3 +46,8 @@ migrations match the models.
 - Workspace `profile` is validated by a `Literal` today; P2 replaces it with the profiles loaded
   from `profiles/*.yaml` so a new domain needs no code change.
 - Telemetry rows must never hold raw text: store IDs, timings, outcomes and error classes only.
+- P8: set `TRUSTED_PROXIES` to the web proxy's egress address(es) so login throttling keys on
+  the real client IP (otherwise every user shares the proxy's budget). `demo-login` is not
+  throttled; revisit if the cloud demo sees abuse.
+- Writes use `DbSession` (FastAPI dependency `scope="function"`), which commits before the
+  response is sent — keep using it rather than opening ad-hoc sessions in routes.
