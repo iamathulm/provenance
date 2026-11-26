@@ -70,3 +70,11 @@ def test_empty_blocks_dropped() -> None:
     chunks = chunk_document(doc(Block("   ", Anchor.for_page(1))), CONFIG)
 
     assert chunks == []
+
+
+def test_control_characters_are_removed() -> None:
+    chunks = chunk_document(
+        doc(Block("Recall\x00 at k\x0b equals 0.9.\tDone", Anchor.for_page(1))), CONFIG
+    )
+
+    assert [c.text for c in chunks] == ["Recall at k equals 0.9.\tDone"]

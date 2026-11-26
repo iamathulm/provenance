@@ -17,6 +17,7 @@ from provenance.core.config import REPO_ROOT, get_settings
 from provenance.db.engine import create_engine_from_settings, session_factory
 from provenance.demo import company_corpus, research_corpus
 from provenance.ingest.runtime import build_worker
+from provenance.observability.logging import configure_logging
 from provenance.seed import seed_demo, upload_corpus
 
 ALEMBIC_INI = Path(__file__).resolve().parents[2] / "alembic.ini"
@@ -108,6 +109,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--refresh", action="store_true", help="re-resolve versions and licenses from arXiv"
     )
     args = parser.parse_args(argv)
+    configure_logging(get_settings())
 
     match args.command:
         case "migrate":

@@ -14,6 +14,12 @@ from provenance.ingest.parsers.base import Anchor, Block, ParsedDocument
 from provenance.profiles.loader import ChunkingConfig
 
 _SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
+# Control characters (NUL breaks Postgres text columns); newlines and tabs are kept.
+_CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
+
+
+def clean(text: str) -> str:
+    return _CONTROL.sub("", text)
 
 
 @dataclass(frozen=True)
@@ -63,9 +69,9 @@ def chunk_document(parsed: ParsedDocument, config: ChunkingConfig) -> list[Chunk
     for (anchor, is_table), group in groupby(parsed.blocks, key=lambda b: (b.anchor, b.is_table)):
         blocks: list[Block] = list(group)
         if is_table:
-            texts.extend((b.text, anchor) for b in blocks)
+            texts.extend((clean(b.text), anchor) for b in blocks)
         else:
-            joined = " ".join(b.text for b in blocks)
+            joined = clean(" ".join(b.text for b in blocks))
             texts.extend((window, anchor) for window in _windows(joined, config))
     return [
         ChunkDraft(ordinal, text, count_tokens(text), anchor)
