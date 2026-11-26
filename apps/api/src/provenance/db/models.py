@@ -1,6 +1,14 @@
 """Registry of ORM modules so Alembic sees every table."""
 
+from importlib import import_module
+
+MODEL_MODULES = (
+    "provenance.auth.models",
+    "provenance.workspaces.models",
+)
+
 
 def import_all_models() -> None:
     """Import each domain's models module for its side effect of registering tables."""
-    import provenance.auth.models  # noqa: F401
+    for module in MODEL_MODULES:
+        import_module(module)
