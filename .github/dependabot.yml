@@ -14,6 +14,11 @@ updates:
     groups:
       web:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # Major upgrades (TypeScript, ESLint, Node types, Next.js) are deliberate, tested changes.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
