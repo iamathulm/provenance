@@ -3,6 +3,7 @@
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from provenance.core.context import correlation_id_var
 
@@ -73,6 +74,21 @@ async def _handle_validation_error(_: Request, exc: Exception) -> JSONResponse:
     return error_response(422, "validation_error", f"Invalid request fields: {', '.join(fields)}")
 
 
+_HTTP_ERROR_CODES = {404: "not_found", 405: "method_not_allowed"}
+
+
+async def _handle_http_exception(_: Request, exc: Exception) -> JSONResponse:
+    """Framework-raised errors (unknown route, wrong method) in the standard error shape."""
+    assert isinstance(exc, StarletteHTTPException)  # noqa: S101 - registered only for this type
+    code = _HTTP_ERROR_CODES.get(exc.status_code, "http_error")
+    message = exc.detail if isinstance(exc.detail, str) else "Request failed."
+    response = error_response(exc.status_code, code, message)
+    if exc.headers:
+        response.headers.update(exc.headers)
+    return response
+
+
 def register_error_handlers(app: FastAPI) -> None:
     app.add_exception_handler(AppError, _handle_app_error)
     app.add_exception_handler(RequestValidationError, _handle_validation_error)
+    app.add_exception_handler(StarletteHTTPException, _handle_http_exception)

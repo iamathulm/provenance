@@ -73,3 +73,19 @@ async def test_unhandled_error_is_generic_500(error_client: AsyncClient) -> None
     assert response.json()["error"]["code"] == "internal_error"
     assert response.json()["error"]["correlation_id"] == response.headers["x-request-id"]
     assert "hunter2" not in response.text
+
+
+async def test_unknown_route_uses_standard_error_shape(error_client: AsyncClient) -> None:
+    response = await error_client.get("/v1/does-not-exist")
+
+    assert response.status_code == 404
+    assert response.json()["error"]["code"] == "not_found"
+    assert response.json()["error"]["correlation_id"] == response.headers["x-request-id"]
+
+
+async def test_wrong_method_uses_standard_error_shape(error_client: AsyncClient) -> None:
+    response = await error_client.delete("/healthz")
+
+    assert response.status_code == 405
+    assert response.json()["error"]["code"] == "method_not_allowed"
+    assert "allow" in response.headers
