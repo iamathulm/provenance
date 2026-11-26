@@ -6,6 +6,7 @@ MODEL_MODULES = (
     "provenance.auth.models",
     "provenance.workspaces.models",
     "provenance.storage.models",
+    "provenance.observability.models",
 )
 
 

@@ -1,3 +1,6 @@
+from collections.abc import AsyncIterator
+
+import pytest
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 from pydantic import BaseModel
@@ -30,11 +33,18 @@ def build_app(settings: Settings) -> FastAPI:
     return app
 
 
-async def test_app_error_shape(settings: Settings) -> None:
-    async with AsyncClient(
-        transport=ASGITransport(app=build_app(settings)), base_url="http://test"
-    ) as client:
-        response = await client.get("/boom/not-found")
+@pytest.fixture
+async def error_client(settings: Settings) -> AsyncIterator[AsyncClient]:
+    app = build_app(settings)
+    async with (
+        app.router.lifespan_context(app),
+        AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client,
+    ):
+        yield client
+
+
+async def test_app_error_shape(error_client: AsyncClient) -> None:
+    response = await error_client.get("/boom/not-found")
 
     assert response.status_code == 404
     assert response.json() == {
@@ -46,11 +56,8 @@ async def test_app_error_shape(settings: Settings) -> None:
     }
 
 
-async def test_validation_error_hides_values(settings: Settings) -> None:
-    async with AsyncClient(
-        transport=ASGITransport(app=build_app(settings)), base_url="http://test"
-    ) as client:
-        response = await client.post("/boom/validate", json={"secret_field": "do-not-echo-me"})
+async def test_validation_error_hides_values(error_client: AsyncClient) -> None:
+    response = await error_client.post("/boom/validate", json={"secret_field": "do-not-echo-me"})
 
     body = response.json()
     assert response.status_code == 422
@@ -59,11 +66,8 @@ async def test_validation_error_hides_values(settings: Settings) -> None:
     assert "do-not-echo-me" not in response.text
 
 
-async def test_unhandled_error_is_generic_500(settings: Settings) -> None:
-    async with AsyncClient(
-        transport=ASGITransport(app=build_app(settings)), base_url="http://test"
-    ) as client:
-        response = await client.get("/boom/crash")
+async def test_unhandled_error_is_generic_500(error_client: AsyncClient) -> None:
+    response = await error_client.get("/boom/crash")
 
     assert response.status_code == 500
     assert response.json()["error"]["code"] == "internal_error"

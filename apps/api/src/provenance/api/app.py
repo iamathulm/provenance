@@ -14,6 +14,7 @@ from provenance.db.engine import create_engine_from_settings, session_factory
 from provenance.observability.logging import configure_logging
 from provenance.observability.middleware import CorrelationIdMiddleware
 from provenance.observability.origin import OriginCheckMiddleware
+from provenance.observability.telemetry import TelemetryRecorder
 
 APP_VERSION = version("provenance-api")
 
@@ -27,6 +28,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         engine = create_engine_from_settings(resolved)
         app.state.session_factory = session_factory(engine)
+        app.state.telemetry = TelemetryRecorder(app.state.session_factory)
         yield
         await engine.dispose()
 
