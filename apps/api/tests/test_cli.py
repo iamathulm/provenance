@@ -1,6 +1,7 @@
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
+from qdrant_client import QdrantClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,7 +10,7 @@ from provenance.cli import main
 from provenance.core.config import get_settings
 from provenance.seed import seed_demo
 from provenance.workspaces.models import Workspace
-from tests.conftest import TEST_DATABASE_URL
+from tests.conftest import TEST_DATABASE_URL, TEST_QDRANT_URL
 
 
 async def test_seed_demo_is_idempotent(app: FastAPI, db: AsyncSession) -> None:
@@ -57,3 +58,16 @@ def test_unknown_command_exits_with_usage_error() -> None:
         main(["launch-rockets"])
 
     assert exit_info.value.code == 2
+
+
+def test_worker_until_idle_exits_on_empty_queue(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("DATABASE_URL", TEST_DATABASE_URL)
+    monkeypatch.setenv("QDRANT_URL", TEST_QDRANT_URL)
+    monkeypatch.setenv("QDRANT_COLLECTION", "test_cli_worker")
+    get_settings.cache_clear()
+
+    try:
+        assert main(["worker", "--until-idle"]) == 0
+    finally:
+        get_settings.cache_clear()
+        QdrantClient(url=TEST_QDRANT_URL).delete_collection("test_cli_worker")

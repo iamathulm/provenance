@@ -1,0 +1,34 @@
+filename: information-security-policy.pdf
+title: Information Security Policy
+sections:
+  - heading: Information Security Policy
+    level: 1
+    paragraphs:
+      - This policy sets the minimum security requirements for everyone with access to Kestrel Ridge Systems information or systems, including contractors. It is owned by the Security team and reviewed every six months; this revision is dated 3 August 2026.
+  - heading: Accounts and passwords
+    level: 2
+    paragraphs:
+      - Passwords must be at least 14 characters long and must be stored in the company password manager, 1Password. Password reuse across services is prohibited.
+      - Multi-factor authentication is mandatory for all accounts. Administrators of production systems must use a hardware security key.
+  - heading: Data classification
+    level: 2
+    paragraphs:
+      - Information is classified as Public, Internal, Confidential or Restricted. Customer flight logs, imagery and telemetry are Restricted and may only be stored in approved customer data systems.
+      - Restricted data must never be pasted into external AI tools, personal email or unapproved file sharing services.
+  - heading: Devices
+    level: 2
+    paragraphs:
+      - Company laptops must use full-disk encryption and lock automatically after 5 minutes of inactivity. Operating system updates must be installed within 14 days of release.
+  - heading: Data retention
+    level: 2
+    paragraphs:
+      - Customer telemetry and flight logs are retained for 24 months and then deleted, unless a customer contract specifies a different period.
+  - heading: Reporting security incidents
+    level: 2
+    paragraphs:
+      - Suspected security incidents, including lost devices and suspicious emails, must be reported within 1 hour of discovery in the sec-incidents Slack channel or to security@kestrelridge.example.
+      - Do not attempt to investigate an incident yourself or delete evidence.
+  - heading: Training
+    level: 2
+    paragraphs:
+      - All employees complete security awareness training during onboarding and a phishing simulation every quarter.

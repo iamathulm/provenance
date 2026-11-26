@@ -1,0 +1,9 @@
+# Research papers: long-form argument, dense terminology, results tables.
+name: research
+display_name: Research papers
+description: Academic papers with long sections, citations and result tables.
+chunking:
+  target_tokens: 450
+  overlap_tokens: 80
+  max_tokens: 650
+  table_rows_per_chunk: 15

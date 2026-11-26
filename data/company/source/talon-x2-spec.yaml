@@ -1,0 +1,30 @@
+filename: talon-x2-product-specification.docx
+title: Talon X2 Product Specification
+sections:
+  - heading: Talon X2 Product Specification
+    level: 1
+    paragraphs:
+      - The Talon X2 is a heavy-lift inspection drone for utilities, mining and infrastructure customers. Document version 2.3, issued 12 May 2026 by Product Management.
+  - heading: Flight performance
+    level: 2
+    paragraphs:
+      - Maximum flight time is 48 minutes without payload and 31 minutes at the maximum payload of 3.5 kilograms. Maximum horizontal speed is 72 kilometres per hour.
+      - Control and video range with the GroundLink radio is 8 kilometres in unobstructed conditions. The aircraft holds position in sustained winds up to 12 metres per second.
+  - heading: Physical characteristics
+    level: 2
+    paragraphs:
+      - Take-off weight without payload is 6.2 kilograms. The airframe folds to 58 by 42 by 31 centimetres for transport. The aircraft is rated IP54 for dust and water ingress.
+  - heading: Power system
+    level: 2
+    paragraphs:
+      - The Talon X2 uses two 22,000 mAh smart batteries. Batteries must not be hot-swapped in flight; both batteries are replaced together after landing with the aircraft powered off.
+      - A full charge takes 75 minutes with the standard charging hub.
+  - heading: Sensors and payloads
+    level: 2
+    paragraphs:
+      - The standard gimbal carries a 48-megapixel visual camera and a 640 by 512 radiometric thermal camera. Omnidirectional obstacle sensing operates at speeds up to 50 kilometres per hour.
+      - Third-party payloads connect through the open payload port and are supported from GroundLink version 4.1 onwards.
+  - heading: Warranty
+    level: 2
+    paragraphs:
+      - The Talon X2 includes a 24-month limited warranty on the airframe and 12 months on batteries. The optional Kestrel Care plan extends airframe coverage to 36 months.

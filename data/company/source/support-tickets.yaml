@@ -1,0 +1,15 @@
+filename: support-tickets-q3-2026.csv
+title: Support tickets Q3 2026
+# Rows are generated deterministically by scripts/build_company_corpus.py from these parameters.
+generated:
+  kind: support_tickets
+  seed: 2026
+  rows: 120
+  start: 2026-07-01
+  end: 2026-09-30
+  products: [Talon X2, Harrier Mini, GroundLink, Sentinel Dock pilot]
+  product_weights: [40, 35, 20, 5]
+  categories: [battery, connectivity, firmware, hardware, billing, how-to]
+  category_weights: [22, 18, 16, 14, 8, 22]
+  severities: [S1, S2, S3, S4]
+  severity_weights: [5, 20, 45, 30]

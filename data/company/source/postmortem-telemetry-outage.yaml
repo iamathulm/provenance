@@ -1,0 +1,23 @@
+filename: postmortem-2026-08-14-telemetry-outage.txt
+title: "Postmortem: Telemetry ingestion outage, 14 August 2026"
+text: |
+  # Postmortem: Telemetry ingestion outage, 14 August 2026
+
+  Severity: SEV-2. Author: Platform Engineering. Status: actions in progress.
+
+  ## Summary
+  From 09:12 to 11:59 UTC on 14 August 2026, a total of 2 hours and 47 minutes, GroundLink could not ingest live telemetry. Flights continued safely, but 63 customers saw stale maps and missing flight logs for that window.
+
+  ## Root cause
+  The TLS certificate on the telemetry gateway expired. Automatic renewal had been disabled during a load balancer migration in July and was never re-enabled.
+
+  ## Detection
+  The first alert came from a customer support ticket at 09:41, 29 minutes after the outage began. Certificate expiry was not monitored.
+
+  ## Resolution
+  The on-call engineer issued a new certificate and restarted the gateway. Telemetry buffered on aircraft was back-filled within 6 hours, so no flight logs were permanently lost.
+
+  ## Action items
+  Re-enable automatic certificate renewal on all gateways. Owner: Platform Engineering. Done.
+  Alert when any certificate is within 14 days of expiry. Owner: SRE. Due 30 September 2026.
+  Add a synthetic telemetry check that pages on-call within 5 minutes. Owner: SRE. Due 15 October 2026.

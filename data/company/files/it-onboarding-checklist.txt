@@ -1,0 +1,16 @@
+# IT onboarding checklist
+
+Owner: IT. Every new employee completes these steps in their first week.
+
+## Day one
+Collect your laptop from the IT desk or confirm delivery for remote starts.
+Set up 1Password and enrol a second factor for multi-factor authentication.
+Join Slack and the announcements, it-help and sec-incidents channels.
+
+## First week
+Complete security awareness training in the learning portal.
+Request GroundLink sandbox access through the it-help channel if your role works with flight data.
+Confirm that full-disk encryption is enabled; IT checks this automatically within 48 hours.
+
+## Getting help
+Open a ticket in the it-help channel. The IT desk responds within 4 business hours.

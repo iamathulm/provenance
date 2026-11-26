@@ -18,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
 from provenance.core.config import Settings
+from provenance.documents.service import upload_document
 from provenance.storage.service import put_file
 from provenance.storage.signing import sign
 from provenance.workspaces.models import Workspace
@@ -29,7 +30,7 @@ PUBLIC_OPERATIONS = {
     ("POST", "/v1/auth/logout"),
     ("POST", "/v1/auth/demo-login"),
 }
-KNOWN_PARAMETERS = {"workspace_id", "file_id", "expires", "signature"}
+KNOWN_PARAMETERS = {"workspace_id", "file_id", "document_id", "expires", "signature"}
 PROBE_BODY = {"name": "isolation probe"}
 
 
@@ -77,6 +78,7 @@ class TenantA:
     workspace_id: uuid.UUID
     workspace_name: str
     file_id: uuid.UUID
+    document_id: uuid.UUID
 
 
 @pytest.fixture
@@ -92,8 +94,18 @@ async def tenant_a(client: AsyncClient, db: AsyncSession, settings: Settings) ->
         b"tenant A bytes",
         settings,
     )
+    document = await upload_document(
+        db,
+        await db.get_one(Workspace, uuid.UUID(workspace["id"])),
+        None,
+        "tenant-a-strategy.txt",
+        b"Tenant A acquisition plan.",
+        settings,
+    )
     await db.commit()
-    return TenantA(uuid.UUID(user["id"]), uuid.UUID(workspace["id"]), name, stored.id)
+    return TenantA(
+        uuid.UUID(user["id"]), uuid.UUID(workspace["id"]), name, stored.id, document.document.id
+    )
 
 
 def _values(tenant: TenantA, settings: Settings) -> dict[str, Any]:
@@ -106,6 +118,7 @@ def _values(tenant: TenantA, settings: Settings) -> dict[str, Any]:
     return {
         "workspace_id": tenant.workspace_id,
         "file_id": tenant.file_id,
+        "document_id": tenant.document_id,
         "expires": link.expires,
         "signature": link.signature,
     }
@@ -157,7 +170,13 @@ async def test_foreign_ids_return_404_without_leaking(
         response = await _call(tenant_b, op, _values(tenant_a, settings))
 
     assert response.status_code == 404
-    for secret in (str(tenant_a.workspace_id), str(tenant_a.file_id), tenant_a.workspace_name):
+    for secret in (
+        str(tenant_a.workspace_id),
+        str(tenant_a.file_id),
+        str(tenant_a.document_id),
+        tenant_a.workspace_name,
+        "acquisition plan",
+    ):
         assert secret not in response.text
     assert b"tenant A bytes" not in response.content
 
