@@ -45,7 +45,9 @@ def test_corpus_covers_every_supported_format() -> None:
 def test_every_file_validates_and_parses(path: Path) -> None:
     profile = load_profiles(REPO_ROOT / "profiles")["company"]
 
-    parsed = parse(validate_upload(path.name, path.read_bytes(), Settings(_env_file=None)), profile)
+    settings = Settings(_env_file=None)
+    validated = validate_upload(path.name, path.read_bytes(), settings)
+    parsed = parse(validated, profile, max_table_rows=settings.max_table_rows)
 
     assert parsed.blocks
     assert not [w for w in parsed.warnings if w.code.startswith("low_text")]
@@ -55,7 +57,9 @@ def test_deck_speaker_notes_stay_out_of_the_index() -> None:
     path = COMPANY_FILES / "q3-2026-business-review.pptx"
     profile = load_profiles(REPO_ROOT / "profiles")["company"]
 
-    parsed = parse(validate_upload(path.name, path.read_bytes(), Settings(_env_file=None)), profile)
+    settings = Settings(_env_file=None)
+    validated = validate_upload(path.name, path.read_bytes(), settings)
+    parsed = parse(validated, profile, max_table_rows=settings.max_table_rows)
 
     assert "Peregrine" not in " ".join(block.text for block in parsed.blocks)
 

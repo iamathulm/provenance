@@ -158,12 +158,16 @@ def _check_xlsx_rows(content: bytes, settings: Settings) -> None:
         workbook = load_workbook(io.BytesIO(content), read_only=True, data_only=True)
     except (zipfile.BadZipFile, KeyError, ValueError, OSError) as error:
         raise _corrupt() from error
+    # Count rows by reading them: a sheet's declared <dimension> is supplied by the file itself.
+    rows = 0
     try:
-        rows = sum(max((sheet.max_row or 1) - 1, 0) for sheet in workbook.worksheets)
+        for sheet in workbook.worksheets:
+            for _ in sheet.iter_rows(min_row=2, values_only=True):
+                rows += 1
+                if rows > settings.max_table_rows:
+                    raise _too_many_rows(settings)
     finally:
         workbook.close()
-    if rows > settings.max_table_rows:
-        raise _too_many_rows(settings)
 
 
 def _check_text(kind: FileKind, content: bytes, settings: Settings) -> None:
@@ -176,6 +180,17 @@ def _check_text(kind: FileKind, content: bytes, settings: Settings) -> None:
             "not_utf8", "The file is not UTF-8 text. Re-save it with UTF-8 encoding."
         ) from error
     if kind == "csv":
-        data_rows = sum(1 for _ in csv.reader(io.StringIO(text))) - 1
+        try:
+            data_rows = sum(1 for _ in csv.reader(io.StringIO(text), csv_dialect(text))) - 1
+        except csv.Error as error:
+            raise _corrupt() from error
         if data_rows > settings.max_table_rows:
             raise _too_many_rows(settings)
+
+
+def csv_dialect(text: str) -> type[csv.Dialect]:
+    """The dialect both validation and parsing use for a CSV file."""
+    try:
+        return csv.Sniffer().sniff(text[:4096], delimiters=",;\t|")
+    except csv.Error:
+        return csv.excel

@@ -1,3 +1,5 @@
+import io
+import zipfile
 from pathlib import Path
 
 import pyarrow as pa
@@ -6,7 +8,7 @@ import pytest
 from provenance.core.config import Settings
 from provenance.ingest.parsers import parse
 from provenance.ingest.parsers.base import ParsedDocument, ParseFailedError
-from provenance.ingest.validation import validate_upload
+from provenance.ingest.validation import UploadRejectedError, validate_upload
 from provenance.profiles.loader import DomainProfile, load_profiles
 from tests.ingest.samples import docx_bytes, pdf_bytes, pptx_bytes, xlsx_bytes
 
@@ -17,7 +19,9 @@ def company() -> DomainProfile:
 
 
 def run(filename: str, content: bytes, profile: DomainProfile) -> ParsedDocument:
-    return parse(validate_upload(filename, content, Settings(_env_file=None)), profile)
+    settings = Settings(_env_file=None)
+    validated = validate_upload(filename, content, settings)
+    return parse(validated, profile, max_table_rows=settings.max_table_rows)
 
 
 def test_pdf_page_anchors_and_low_text_warning(company: DomainProfile) -> None:
@@ -110,9 +114,13 @@ def test_csv_row_anchors_with_repeated_header(company: DomainProfile) -> None:
     cards = [b for b in parsed.blocks if b.text.startswith("Table pricing:")]
     groups = [b for b in parsed.blocks if b not in cards]
     assert len(cards) == 1
-    assert [(g.anchor.row_start, g.anchor.row_end) for g in groups] == [(1, 20), (21, 40), (41, 45)]
+    assert [(g.anchor.row_start, g.anchor.row_end) for g in groups] == [
+        (2, 21),
+        (22, 41),
+        (42, 46),
+    ]  # file lines; header is line 1
     assert all("Columns: sku, price" in g.text for g in groups)
-    assert "Row 21: sku: S21; price: 210" in groups[1].text
+    assert "Row 22: sku: S21; price: 210" in groups[1].text
     table = parsed.tables[0]
     assert table.rows.schema.field("price").type == pa.int64()
     assert table.rows.num_rows == 45
@@ -141,5 +149,38 @@ def test_xlsx_values_and_row_anchors(company: DomainProfile) -> None:
     assert table.schema.field("revenue").type == pa.int64()
     assert table.schema.field("margin").type == pa.float64()
     group = parsed.blocks[-1]
-    assert group.anchor.label == "Q3 · rows 1–2"
-    assert "Row 2: region: APAC; revenue: 98000; margin: 0.27" in group.text
+    assert group.anchor.label == "Q3 · rows 2–4"
+    assert "Row 4: region: APAC; revenue: 98000; margin: 0.27" in group.text
+
+
+def test_table_row_limit_is_enforced_while_reading(company: DomainProfile) -> None:
+    rows: list[list[object]] = [["h"], *([[i] for i in range(5)])]
+    settings = Settings(_env_file=None)
+    validated = validate_upload("big.xlsx", xlsx_bytes({"S": rows}), settings)
+
+    with pytest.raises(ParseFailedError) as raised:
+        parse(validated, company, max_table_rows=3)
+
+    assert raised.value.code == "too_many_rows"
+
+
+def test_malformed_office_file_is_a_permanent_corrupt_file(company: DomainProfile) -> None:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("[Content_Types].xml", "<Types/>")
+        archive.writestr("word/document.xml", "<w:document><unclosed>")
+    validated = validate_upload("broken.docx", buffer.getvalue(), Settings(_env_file=None))
+
+    with pytest.raises(ParseFailedError) as raised:
+        parse(validated, company, max_table_rows=100)
+
+    assert raised.value.code == "corrupt_file"
+
+
+def test_unreadable_csv_is_rejected_cleanly() -> None:
+    huge_field = b'name,notes\nA,"' + b"x" * 200_000 + b'"\n'
+
+    with pytest.raises(UploadRejectedError) as raised:
+        validate_upload("notes.csv", huge_field, Settings(_env_file=None))
+
+    assert raised.value.code == "corrupt_file"

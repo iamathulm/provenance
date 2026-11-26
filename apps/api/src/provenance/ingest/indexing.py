@@ -7,6 +7,7 @@ retrieval trusts, so readers never see a document disappear mid-swap.
 """
 
 import asyncio
+import functools
 import io
 import uuid
 from collections.abc import Callable
@@ -82,8 +83,15 @@ class ParseStage(_VersionStage):
     @override
     async def run(self, ctx: RequestContext, data: VersionWork) -> VersionWork:
         await self.mark(data)
-        validated = validate_upload(data.stored.filename, data.stored.content, self.deps.settings)
-        data.parsed = await asyncio.to_thread(parse, validated, data.profile)
+        settings = self.deps.settings
+        validated = await asyncio.to_thread(
+            validate_upload, data.stored.filename, data.stored.content, settings
+        )
+        data.parsed = await asyncio.to_thread(
+            functools.partial(parse, max_table_rows=settings.max_table_rows),
+            validated,
+            data.profile,
+        )
         return data
 
 
@@ -95,7 +103,7 @@ class ChunkStage(_VersionStage):
     async def run(self, ctx: RequestContext, data: VersionWork) -> VersionWork:
         await self.mark(data)
         assert data.parsed is not None  # noqa: S101 - set by ParseStage
-        data.drafts = chunk_document(data.parsed, data.profile.chunking)
+        data.drafts = await asyncio.to_thread(chunk_document, data.parsed, data.profile.chunking)
         return data
 
 
