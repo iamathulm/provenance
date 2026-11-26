@@ -22,6 +22,7 @@ dev = [
   "mypy>=1.13",
   "vulture>=2.13",
   "pre-commit>=4",
+  "pytest-asyncio>=1.5",
 ]
 
 [tool.ruff]
@@ -45,6 +46,9 @@ mypy_path = "apps/api/src"
 [tool.pytest.ini_options]
 testpaths = ["apps/api/tests"]
 addopts = "-q"
+pythonpath = ["apps/api"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
   "error",
   # Starlette's TestClient now recommends `httpx2`; keep `httpx` until that package is verified.
