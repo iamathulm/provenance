@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT SUM(headcount) AS total_headcount FROM t_headcount_teams;\"}",
+  "usage": {
+    "prompt_tokens": 289,
+    "completion_tokens": 77
+  }
+}
