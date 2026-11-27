@@ -155,7 +155,7 @@ async def evaluate(
                     matched, len(item.gold), RECALL_K, requires_all=requires_all
                 ),
                 "mrr_at_10": mrr_at_k(matched, RANK_K),
-                "ndcg_at_10": ndcg_at_k(matched, len(item.gold) if requires_all else 1, RANK_K),
+                "ndcg_at_10": ndcg_at_k(matched, len(item.gold), RANK_K, requires_all=requires_all),
                 "doc_recall_at_5": _doc_recall(item, [f for f, _ in hits]),
             }
         results.append(scored)

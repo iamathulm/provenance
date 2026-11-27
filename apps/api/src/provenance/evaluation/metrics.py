@@ -25,16 +25,18 @@ def mrr_at_k(matched: Matches, k: int) -> float:
     return 0.0
 
 
-def ndcg_at_k(matched: Matches, gold_count: int, k: int) -> float:
-    """`gold_count`: distinct gold anchors a perfect ranking holds (1 for any-of items)."""
+def ndcg_at_k(matched: Matches, gold_count: int, k: int, *, requires_all: bool) -> float:
+    """Any-of items have one relevant result (the first alternative found); all-of items need
+    every gold anchor, each earning gain once."""
+    wanted = gold_count if requires_all else 1
     seen: set[int] = set()
     dcg = 0.0
     for rank, hit in enumerate(matched[:k], start=1):
         new = hit - seen
-        if new:
+        if new and len(seen) < wanted:
             dcg += 1.0 / math.log2(rank + 1)
-            seen |= new
-    ideal = sum(1.0 / math.log2(rank + 1) for rank in range(1, min(gold_count, k) + 1))
+            seen |= new if requires_all else hit
+    ideal = sum(1.0 / math.log2(rank + 1) for rank in range(1, min(wanted, k) + 1))
     return dcg / ideal if ideal else 0.0
 
 

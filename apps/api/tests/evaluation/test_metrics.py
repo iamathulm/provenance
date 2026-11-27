@@ -21,12 +21,12 @@ def test_mrr_uses_first_relevant_rank() -> None:
 
 
 def test_ndcg_counts_each_gold_once() -> None:
-    perfect = ndcg_at_k([G0, G1], 2, 10)
-    duplicate = ndcg_at_k([G0, G0, G1], 2, 10)
+    perfect = ndcg_at_k([G0, G1], 2, 10, requires_all=True)
+    duplicate = ndcg_at_k([G0, G0, G1], 2, 10, requires_all=True)
 
     assert perfect == pytest.approx(1.0)
     assert duplicate < perfect
-    assert ndcg_at_k([NONE], 1, 10) == 0.0
+    assert ndcg_at_k([NONE], 1, 10, requires_all=False) == 0.0
 
 
 def test_bootstrap_is_deterministic_and_brackets_the_mean() -> None:
@@ -40,5 +40,6 @@ def test_bootstrap_is_deterministic_and_brackets_the_mean() -> None:
     assert bootstrap_ci([1.0, 1.0]) == (1.0, 1.0)
 
 
-def test_ndcg_any_of_item_is_perfect_with_one_alternative() -> None:
-    assert ndcg_at_k([G0], 1, 10) == pytest.approx(1.0)
+def test_ndcg_any_of_counts_only_the_first_alternative() -> None:
+    assert ndcg_at_k([G0, G1], 2, 10, requires_all=False) == pytest.approx(1.0)
+    assert ndcg_at_k([NONE, G1, G0], 2, 10, requires_all=False) == pytest.approx(1 / 1.585, 1e-3)
