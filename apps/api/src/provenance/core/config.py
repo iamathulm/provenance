@@ -33,6 +33,13 @@ class Settings(BaseSettings):
     # off: call Groq; replay: answer only from recorded cassettes; record: call Groq and save.
     llm_cassettes: Literal["off", "replay", "record"] = "off"
     llm_cassette_dir: Path = REPO_ROOT / "eval" / "cassettes"
+    answer_max_tokens: int = 450
+    context_max_sources: int = 6
+    context_max_words: int = 1_800  # ~2.4K tokens: one answer must fit the free 8K tokens/minute
+    citation_support_min: float = 0.5  # FlashRank score a cited sentence needs
+    citation_lexical_min: float = 0.6  # word-overlap fallback when the reranker is unavailable
+    # Below this top rerank score the workspace has nothing on the question: abstain, no LLM call.
+    relevance_floor: float = 0.02
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     demo_mode: bool = True
 

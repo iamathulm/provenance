@@ -55,6 +55,7 @@ class QueryResult:
     rows: list[list[Value]]
     row_refs: list[RowRef]
     truncated: bool
+    tables: list[TableEntry]  # the workspace tables the query read
 
 
 def _json_value(value: object) -> Value:
@@ -113,7 +114,7 @@ async def run_query(
     truncated = len(rows) > settings.sql_max_rows
     values = [[_json_value(v) for v in row] for row in rows[: settings.sql_max_rows]]
     refs = _row_refs(used[0], columns, values) if len(used) == 1 else []
-    return QueryResult(guarded.sql, columns, values, refs, truncated)
+    return QueryResult(guarded.sql, columns, values, refs, truncated, used)
 
 
 def _row_refs(entry: TableEntry, columns: list[str], rows: list[list[Value]]) -> list[RowRef]:
