@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     citation_support_min: float = 0.5  # FlashRank score a cited sentence needs
     citation_lexical_min: float = 0.6  # word-overlap fallback when the reranker is unavailable
     # Below this top rerank score the workspace has nothing on the question: abstain, no LLM call.
-    relevance_floor: float = 0.02
+    relevance_floor: float = 0.05  # every answerable golden question scored >= 0.08
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     demo_mode: bool = True
 
