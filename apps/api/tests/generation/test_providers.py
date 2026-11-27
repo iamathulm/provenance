@@ -125,3 +125,25 @@ def test_json_schema_requests_structured_output() -> None:
 
     assert body["response_format"]["json_schema"]["schema"] == {"type": "object"}  # type: ignore[index]
     assert body["include_reasoning"] is False
+
+
+async def test_structured_output_calls_are_not_streamed() -> None:
+    sent: list[dict[str, object]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(request.content))
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": '{"answerable": true, "sql": "SELECT 1"}'}}],
+                "usage": {"prompt_tokens": 80, "completion_tokens": 12},
+            },
+        )
+
+    request = ChatRequest("sql", REQUEST.messages, 100, json_schema={"type": "object"})
+    completion = await complete(provider(handler), request, "openai/gpt-oss-20b")
+
+    assert json.loads(completion.text) == {"answerable": True, "sql": "SELECT 1"}
+    assert completion.usage == Usage(80, 12)
+    assert sent[0]["stream"] is False
+    assert "stream_options" not in sent[0]

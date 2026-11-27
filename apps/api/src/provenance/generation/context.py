@@ -50,7 +50,9 @@ def _near_duplicate(text: str, kept: list[set[str]]) -> bool:
     return False
 
 
-def pack_chunks(hits: Sequence[Hit], *, max_sources: int, max_words: int) -> list[Source]:
+def pack_chunks(
+    hits: Sequence[Hit], *, max_sources: int, max_words: int, first_number: int = 1
+) -> list[Source]:
     sources: list[Source] = []
     kept: list[set[str]] = []
     words_used = 0
@@ -65,7 +67,7 @@ def pack_chunks(hits: Sequence[Hit], *, max_sources: int, max_words: int) -> lis
         words_used += size
         sources.append(
             Source(
-                id=f"S{len(sources) + 1}",
+                id=f"S{first_number + len(sources)}",
                 kind="chunk",
                 title=hit.document.title,
                 location=hit.chunk.anchor_label,

@@ -46,7 +46,8 @@ class ChatRequest:
             "messages": [{"role": m.role, "content": m.content} for m in self.messages],
             "max_completion_tokens": self.max_tokens,
             "temperature": self.temperature,
-            "stream": True,
+            # Groq does not stream structured outputs, so JSON-schema calls arrive in one piece.
+            "stream": self.json_schema is None,
             **MODEL_OPTIONS.get(model, {}),
         }
         if self.json_schema is not None:
@@ -131,17 +132,24 @@ class GroqProvider:
     async def stream(self, request: ChatRequest, model: str) -> AsyncIterator[Delta]:
         if not self._api_key:
             raise LLMUnavailableError(NO_KEY_MESSAGE)
+        body = request.body(model)
+        if body["stream"]:
+            body["stream_options"] = {"include_usage": True}
         try:
             async with self._client.stream(
                 "POST",
                 "/chat/completions",
-                json=request.body(model) | {"stream_options": {"include_usage": True}},
+                json=body,
                 headers={"Authorization": f"Bearer {self._api_key}"},
                 timeout=self._timeout,
             ) as response:
                 if response.status_code != httpx.codes.OK:
                     await response.aread()
                     raise _http_error(response)
+                if not body["stream"]:
+                    await response.aread()
+                    yield _parse_whole(response)
+                    return
                 async for line in response.aiter_lines():
                     delta = _parse_sse(line)
                     if delta is not None:
@@ -164,6 +172,21 @@ def _http_error(response: httpx.Response) -> AppError:
     return LLMFailedError(f"The language model returned HTTP {response.status_code}. Try again.")
 
 
+def _usage(raw: Mapping[str, Any] | None) -> Usage | None:
+    if not raw:
+        return None
+    return Usage(int(raw.get("prompt_tokens", 0)), int(raw.get("completion_tokens", 0)))
+
+
+def _parse_whole(response: httpx.Response) -> Delta:
+    try:
+        payload = response.json()
+        text = payload["choices"][0]["message"].get("content") or ""
+    except (ValueError, KeyError, IndexError, TypeError) as error:
+        raise LLMFailedError("The language model sent a malformed response.") from error
+    return Delta(text, _usage(payload.get("usage")) or Usage())
+
+
 def _parse_sse(line: str) -> Delta | None:
     if not line.startswith("data:"):
         return None
@@ -178,10 +201,5 @@ def _parse_sse(line: str) -> Delta | None:
         raise LLMFailedError("The language model reported an error mid-answer. Try again.")
     choices = chunk.get("choices") or []
     text = ((choices[0].get("delta") or {}).get("content") or "") if choices else ""
-    raw_usage = chunk.get("usage") or (chunk.get("x_groq") or {}).get("usage")
-    usage = (
-        Usage(int(raw_usage.get("prompt_tokens", 0)), int(raw_usage.get("completion_tokens", 0)))
-        if raw_usage
-        else None
-    )
+    usage = _usage(chunk.get("usage") or (chunk.get("x_groq") or {}).get("usage"))
     return Delta(text, usage) if text or usage else None
