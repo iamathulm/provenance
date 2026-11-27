@@ -4,9 +4,12 @@ Models are loaded lazily on first use and cached on disk; the Docker image bakes
 """
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
 
 from provenance.core.config import Settings
+
+if TYPE_CHECKING:
+    from fastembed import SparseTextEmbedding, TextEmbedding
 
 
 @dataclass(frozen=True)
@@ -22,6 +25,10 @@ class Embedder(Protocol):
 
     def embed_sparse(self, texts: list[str]) -> list[SparseEmbedding]: ...
 
+    def embed_query_dense(self, text: str) -> list[float]: ...
+
+    def embed_query_sparse(self, text: str) -> SparseEmbedding: ...
+
 
 class FastEmbedder:
     """FastEmbed (ONNX) implementation. Calls are CPU-bound: run them off the event loop."""
@@ -36,21 +43,36 @@ class FastEmbedder:
         self._dense: object | None = None
         self._sparse: object | None = None
 
-    def embed_dense(self, texts: list[str]) -> list[list[float]]:
+    def _dense_model(self) -> "TextEmbedding":
         from fastembed import TextEmbedding
 
         if self._dense is None:
             self._dense = TextEmbedding(self._dense_model_name, cache_dir=self._cache_dir)
         model: TextEmbedding = self._dense  # type: ignore[assignment]
-        return [vector.tolist() for vector in model.embed(texts)]
+        return model
 
-    def embed_sparse(self, texts: list[str]) -> list[SparseEmbedding]:
+    def _sparse_model(self) -> "SparseTextEmbedding":
         from fastembed import SparseTextEmbedding
 
         if self._sparse is None:
             self._sparse = SparseTextEmbedding(self._sparse_model_name, cache_dir=self._cache_dir)
         model: SparseTextEmbedding = self._sparse  # type: ignore[assignment]
+        return model
+
+    def embed_dense(self, texts: list[str]) -> list[list[float]]:
+        return [vector.tolist() for vector in self._dense_model().embed(texts)]
+
+    def embed_sparse(self, texts: list[str]) -> list[SparseEmbedding]:
         return [
             SparseEmbedding(item.indices.tolist(), item.values.tolist())
-            for item in model.embed(texts)
+            for item in self._sparse_model().embed(texts)
         ]
+
+    def embed_query_dense(self, text: str) -> list[float]:
+        vector: list[float] = next(iter(self._dense_model().query_embed(text))).tolist()
+        return vector
+
+    def embed_query_sparse(self, text: str) -> SparseEmbedding:
+        """BM25 query vectors weight each query term once; IDF is applied by Qdrant."""
+        item = next(iter(self._sparse_model().query_embed(text)))
+        return SparseEmbedding(item.indices.tolist(), item.values.tolist())

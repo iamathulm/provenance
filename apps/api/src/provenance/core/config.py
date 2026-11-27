@@ -35,6 +35,13 @@ class Settings(BaseSettings):
     embedding_dimension: int = 384
     sparse_model: str = "Qdrant/bm25"
     fastembed_cache_dir: Path | None = REPO_ROOT / ".cache" / "fastembed"
+    reranker_model: str = "ms-marco-MiniLM-L-12-v2"
+    flashrank_cache_dir: Path = REPO_ROOT / ".cache" / "flashrank"
+    search_candidates: int = 40
+    rerank_candidates: int = 20
+    rerank_timeout_s: float = 3.0
+    sql_max_rows: int = 200
+    sql_timeout_s: float = 5.0
     max_pages: int = 200
     max_table_rows: int = 50_000
     file_link_ttl_s: int = 300
