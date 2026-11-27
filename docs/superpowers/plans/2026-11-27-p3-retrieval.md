@@ -20,8 +20,8 @@
 - **Tables:** every CSV/XLSX table Parquet carries a `_row` column (the spreadsheet row number the user sees). SQL names are `t_<slug>` unique per workspace (document filename stem + sheet). Only the active, non-deleted version's tables are registered, in a fresh in-memory DuckDB connection with `enable_external_access=false` and locked configuration.
 - **SQL guard (sqlglot, DuckDB dialect):** exactly one statement; a query (`SELECT`/`UNION`/CTE) at the root; no DDL/DML/`PRAGMA`/`SET`/`ATTACH`/`COPY`/`INSTALL`/`LOAD`/commands; every table reference is a registered table or a CTE; no table-valued or file functions (`read_*`, `*_scan`, `glob`, `query`, …); outer `LIMIT` forced to ≤ 200; 5 s execution timeout (interrupt). Rejections are `sql_rejected` 422 with the reason.
 - **Router (rules, no LLM):** `table` when the question has aggregate intent and a table chunk ranks in the top 5; `both` when only one of those holds and the workspace has tables; otherwise `docs`. Returns reasons.
-- **Golden sets:** `eval/golden/{company,research}/{dev,test}.yaml`, ≥ 50 items per domain: ≥ 30 answerable (factual, multi-hop, table), ≥ 10 unanswerable, ≥ 5 adversarial. Each answerable item lists gold `{file, anchor}`; anchors are matched by page/slide number, section-path prefix, or row-range overlap.
-- **Metrics:** anchor-level recall@5, MRR@10, nDCG@10 (binary relevance), document-level recall@5, router accuracy; answerable items only for ranking metrics. 95% CIs by seeded bootstrap (1000 resamples, stdlib `random`). Proposed targets recall@5 ≥ 0.80, MRR@10 ≥ 0.65 (gated on the `test` split, default mode).
+- **Golden sets:** `eval/golden/{company,research}/{dev,test}.yaml`, ≥ 50 items per domain: ≥ 30 answerable (factual, multi-hop, table), ≥ 10 unanswerable, ≥ 5 adversarial. Each answerable item lists gold `{file, evidence}`: a hit matches when it comes from the file and contains the evidence phrase after normalization (robust to chunking changes); `requires: all` marks multi-hop items.
+- **Metrics:** anchor-level recall@5, MRR@10, nDCG@10 (binary relevance), document-level recall@5, router accuracy; answerable items only for ranking metrics. 95% CIs by seeded bootstrap (1000 resamples, stdlib `random`). Proposed targets recall@5 ≥ 0.80, MRR@10 ≥ 0.65 are reported; the CI gate uses regression floors just under the committed `test` baseline (default mode).
 - **Reproducibility:** each report records git SHA, golden-set SHA-256, profile SHA-256, model ids, mode, split and timestamp.
 
 ## Review Focus
@@ -88,7 +88,7 @@
 
 **Interfaces — Produces:**
 - `TableEntry(sql_name, table_id, document_id, version_id, document_title, sheet, columns, row_count)`; `load_catalog(db, workspace_id) -> list[TableEntry]`.
-- `run_query(db, workspace_id, sql, settings) -> QueryResult(sql, columns, rows, row_refs, truncated)`; `row_refs` = `{sql_name, row}` when `_row` is selected or derivable (single-table, non-aggregate queries add `_row` automatically).
+- `run_query(db, workspace_id, sql, settings) -> QueryResult(sql, columns, rows, row_refs, truncated)`; `row_refs` = `{sql_name, document_id, sheet, row}` when a single-table query selects `_row`.
 - `GET /v1/workspaces/{id}/tables`; `POST /v1/workspaces/{id}/tables/query` `{sql}`.
 - [ ] Tests: aggregate over sales sheet is exact; `_row` refs match spreadsheet rows; other tenant's tables unknown; deleted document's table gone; replaced document exposes only the new version; timeout interrupts; external access disabled even if the guard were bypassed.
 - [ ] Commit `feat(structured): workspace-scoped DuckDB tables with row references`.

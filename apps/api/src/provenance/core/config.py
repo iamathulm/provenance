@@ -33,12 +33,15 @@ class Settings(BaseSettings):
     qdrant_collection: str = "chunks"
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_dimension: int = 384
+    # BGE v1.5 retrieval instruction, prepended to queries only (documents are embedded as-is).
+    embedding_query_prefix: str = "Represent this sentence for searching relevant passages: "
     sparse_model: str = "Qdrant/bm25"
     fastembed_cache_dir: Path | None = REPO_ROOT / ".cache" / "fastembed"
     reranker_model: str = "ms-marco-MiniLM-L-12-v2"
     flashrank_cache_dir: Path = REPO_ROOT / ".cache" / "flashrank"
     search_candidates: int = 40
     rerank_candidates: int = 20
+    rerank_max_tokens: int = 256  # truncation per passage; latency grows faster than linearly
     rerank_timeout_s: float = 3.0
     sql_max_rows: int = 200
     sql_timeout_s: float = 5.0

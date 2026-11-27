@@ -36,6 +36,7 @@ class FastEmbedder:
     def __init__(self, settings: Settings) -> None:
         self.dimension = settings.embedding_dimension
         self._dense_model_name = settings.embedding_model
+        self._query_prefix = settings.embedding_query_prefix
         self._sparse_model_name = settings.sparse_model
         self._cache_dir = (
             str(settings.fastembed_cache_dir) if settings.fastembed_cache_dir else None
@@ -69,7 +70,8 @@ class FastEmbedder:
         ]
 
     def embed_query_dense(self, text: str) -> list[float]:
-        vector: list[float] = next(iter(self._dense_model().query_embed(text))).tolist()
+        query = self._query_prefix + text
+        vector: list[float] = next(iter(self._dense_model().query_embed(query))).tolist()
         return vector
 
     def embed_query_sparse(self, text: str) -> SparseEmbedding:

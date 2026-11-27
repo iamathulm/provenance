@@ -7,6 +7,7 @@ counts, a documented approximation of model tokens.
 """
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from itertools import groupby
 
@@ -19,7 +20,8 @@ _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 
 
 def clean(text: str) -> str:
-    return _CONTROL.sub("", text)
+    """NFKC (PDF ligatures like "ﬁ" become "fi", so keyword search matches) minus control chars."""
+    return _CONTROL.sub("", unicodedata.normalize("NFKC", text))
 
 
 @dataclass(frozen=True)

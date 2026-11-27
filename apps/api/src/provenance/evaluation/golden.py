@@ -1,12 +1,13 @@
 """Golden sets: versioned questions with the evidence a correct retrieval must surface.
 
 A gold entry names a corpus file and, usually, an evidence phrase. A retrieved chunk matches when
-it comes from that file and contains the phrase after normalization (case, whitespace, punctuation
-and PDF line-break hyphens ignored), so gold labels survive chunking and parser changes.
+it comes from that file and contains the phrase after normalization (case, whitespace, punctuation,
+PDF ligatures and line-break hyphens ignored), so gold labels survive chunking and parser changes.
 """
 
 import hashlib
 import re
+import unicodedata
 from pathlib import Path
 from typing import Literal
 
@@ -61,7 +62,8 @@ class GoldenSet(BaseModel):
 
 
 def normalize(text: str) -> str:
-    return re.sub(r"[^0-9a-z]+", "", text.lower())
+    """NFKC first, so PDF ligatures such as "ﬁ" compare equal to "fi"."""
+    return re.sub(r"[^0-9a-z]+", "", unicodedata.normalize("NFKC", text).lower())
 
 
 def golden_path(domain: Domain, split: Split, directory: Path = GOLDEN_DIR) -> Path:

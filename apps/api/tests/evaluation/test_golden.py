@@ -56,6 +56,7 @@ def test_evidence_matching_ignores_case_punctuation_and_pdf_hyphenation() -> Non
     assert not anchor.matches("other.pdf", "Retrieval Augmented Generation Assessment")
     assert GoldAnchor(file="paper.pdf").matches("paper.pdf", "anything")
     assert normalize("8,192 to- kens") == normalize("8192 tokens")
+    assert normalize("the ﬁreproof locker") == normalize("the fireproof locker")
 
 
 def test_mismatched_header_is_rejected(tmp_path: Path) -> None:

@@ -22,6 +22,7 @@ class FlashRanker:
     def __init__(self, settings: Settings) -> None:
         self._model_name = settings.reranker_model
         self._cache_dir = str(settings.flashrank_cache_dir)
+        self._max_tokens = settings.rerank_max_tokens
         self._ranker: Ranker | None = None
 
     def score(self, query: str, passages: list[str]) -> list[float]:
@@ -30,7 +31,9 @@ class FlashRanker:
         if not passages:
             return []
         if self._ranker is None:
-            self._ranker = Ranker(model_name=self._model_name, cache_dir=self._cache_dir)
+            self._ranker = Ranker(
+                model_name=self._model_name, cache_dir=self._cache_dir, max_length=self._max_tokens
+            )
         request = RerankRequest(
             query=query, passages=[{"id": i, "text": p} for i, p in enumerate(passages)]
         )
