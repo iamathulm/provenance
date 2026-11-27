@@ -11,6 +11,7 @@ from qdrant_client import AsyncQdrantClient
 
 from provenance.api.v1 import router as v1_router
 from provenance.auth.rate_limit import LoginRateLimiter
+from provenance.conversations.limits import QuestionRateLimiter
 from provenance.core.config import Settings, get_settings
 from provenance.core.errors import register_error_handlers
 from provenance.db.engine import create_engine_from_settings, session_factory
@@ -57,6 +58,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Provenance API", version=APP_VERSION, lifespan=lifespan)
     app.state.settings = resolved
     app.state.login_limiter = LoginRateLimiter()
+    app.state.question_limiter = QuestionRateLimiter(
+        resolved.questions_per_minute, resolved.questions_per_hour
+    )
     app.state.profiles = load_profiles(resolved.profiles_dir)
     app.state.embedder = FastEmbedder(resolved)  # models load lazily on first search
     app.state.reranker = FlashRanker(resolved)

@@ -25,7 +25,13 @@ from provenance.core.config import Settings
 from provenance.core.context import RequestContext
 from provenance.core.errors import AppError
 from provenance.core.pipeline import SpanRecorder, StageOutcome
-from provenance.generation.citations import ABSTENTION, CitedSource, split_sentences, verify
+from provenance.generation.citations import (
+    ABSTENTION,
+    CitedSource,
+    split_sentences,
+    strip_citations,
+    verify,
+)
 from provenance.generation.client import LLMClient, StreamEnd
 from provenance.generation.context import Source, pack_chunks, rows_source
 from provenance.generation.prompts import Prompt
@@ -198,7 +204,7 @@ class Answerer:
             yield StageEvent("querying tables")
             try:
                 async with self._span(ctx, "answer_sql"):
-                    sql = await generate_sql(
+                    proposed = await generate_sql(
                         self._deps.llm,
                         ctx,
                         self._deps.sql_prompt,
@@ -206,8 +212,9 @@ class Answerer:
                         checked.question,
                         tables,
                     )
-                    if sql is not None:
-                        rows = await run_query(db, workspace_id, sql, settings)
+                    if proposed is not None:
+                        rows = await run_query(db, workspace_id, proposed, settings)
+                        sql = rows.sql  # only SQL that actually ran is reported
             except AppError as error:
                 ctx.degraded.add("sql")
                 notices.append(f"Table lookup skipped: {error.message}")
@@ -322,6 +329,7 @@ class _GuardedStream:
         self._sources = sources
         self._forbidden = forbidden
         self._pending = ""
+        self._previous = ""
         self._parts: list[str] = []
         self.decisions: list[GuardrailDecision] = []
         self.blocked = False
@@ -348,7 +356,11 @@ class _GuardedStream:
         for sentence in sentences:
             if self.blocked:
                 break
+            # Check with the previous sentence too, so an echo split across a boundary is caught.
             check = check_output(sentence, self._sources, self._forbidden)
+            if check_output(f"{self._previous} {sentence}", self._sources, self._forbidden).blocked:
+                check.blocked = True
+            self._previous = sentence
             self.decisions += [d for d in check.decisions if d not in self.decisions]
             if check.blocked:
                 self.blocked = True
@@ -363,5 +375,6 @@ def _history(history: Sequence[Exchange]) -> str:
     lines = ["Earlier in this conversation (for context only; cite only the sources above):"]
     for exchange in history[-_HISTORY_TURNS:]:
         lines.append(f"Q: {exchange.question}")
-        lines.append(f"A: {exchange.answer[:_HISTORY_CHARS]}")
+        answer = strip_citations(exchange.answer)  # old [Sn] ids mean other sources now
+        lines.append(f"A: {answer[:_HISTORY_CHARS]}")
     return "\n".join(lines) + "\n\n"

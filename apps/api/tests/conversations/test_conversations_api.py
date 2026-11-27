@@ -7,6 +7,7 @@ from httpx import AsyncClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from provenance.conversations.limits import QuestionRateLimiter
 from provenance.generation.client import LLMClient
 from provenance.generation.limiter import ModelLimits, TokenLimiter
 from provenance.generation.providers import LLMRateLimitedError, LLMUnavailableError
@@ -152,3 +153,16 @@ async def test_no_key_mode_explains_how_to_enable_answers(
     assert events[-1][0] == "error"
     assert events[-1][1]["code"] == "llm_unavailable"
     assert "GROQ_API_KEY" in events[-1][1]["message"]
+
+
+async def test_questions_are_rate_limited_per_user(
+    app: FastAPI, client: AsyncClient, harness: Harness, conversation: str
+) -> None:
+    use_llm(app, harness, "Land within 90 seconds and swap the pack [S1].")
+    app.state.question_limiter = QuestionRateLimiter(per_minute=1, per_hour=10)
+
+    await ask(client, conversation, QUESTION)
+    refused = await client.post(f"{conversation}/messages", json={"question": QUESTION})
+
+    assert refused.status_code == 429
+    assert refused.json()["error"]["code"] == "rate_limited"

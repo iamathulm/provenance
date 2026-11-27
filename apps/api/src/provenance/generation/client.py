@@ -13,7 +13,6 @@ from dataclasses import dataclass
 from typing import Literal, Protocol
 
 from provenance.core.context import RequestContext
-from provenance.core.errors import AppError
 from provenance.generation.limiter import TokenLimiter
 from provenance.generation.providers import (
     ChatRequest,
@@ -87,7 +86,7 @@ class LLMClient:
                 if emitted or not remaining:
                     raise
                 continue
-            except AppError as error:
+            except Exception as error:
                 status: CallStatus = (
                     "unavailable" if isinstance(error, LLMUnavailableError) else "failed"
                 )

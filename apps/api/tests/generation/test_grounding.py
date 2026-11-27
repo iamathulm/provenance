@@ -143,3 +143,18 @@ def test_numbers_restated_from_the_question_and_model_spacing() -> None:
 
     assert restated.text == "There were 3 support tickets with severity S1 in Q3 2026 [S1]"
     assert invented.abstained
+
+
+def test_quantities_from_the_question_do_not_vouch_for_a_claim() -> None:
+    policy = chunk("S1", "The nightly hotel cap is 260 US dollars in London.")
+
+    result = verify(
+        "Yes, the London hotel cap is 300 US dollars [S1].",
+        [policy],
+        question="Is the London hotel cap 300 US dollars?",
+        scorer=overlap_scorer,
+        support_min=0.3,
+        lexical_min=0.6,
+    )
+
+    assert result.abstained

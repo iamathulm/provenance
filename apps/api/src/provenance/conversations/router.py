@@ -5,9 +5,10 @@
 database session because the response outlives the request's dependency-scoped session.
 """
 
+import asyncio
 import json
 import uuid
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Callable
 from datetime import datetime
 from typing import Any
 
@@ -15,6 +16,7 @@ import structlog
 from fastapi import APIRouter, Request, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.answers.pipeline import (
     AnswerDeps,
@@ -115,6 +117,22 @@ def _sse(event: str, data: object) -> str:
     return f"event: {event}\ndata: {json.dumps(data, default=str)}\n\n"
 
 
+async def _store_interrupted(
+    session_factory: Callable[[], AsyncSession], conversation_id: uuid.UUID, ctx: RequestContext
+) -> None:
+    async with session_factory() as session:
+        session.add(
+            Message(
+                conversation_id=conversation_id,
+                role="assistant",
+                content="The answer was interrupted before it finished.",
+                status="error",
+                correlation_id=ctx.correlation_id,
+            )
+        )
+        await session.commit()
+
+
 def _answerer(request: Request, settings: Settings) -> Answerer:
     state = request.app.state
     return Answerer(
@@ -169,6 +187,7 @@ async def ask(
     settings: AppSettings,
 ) -> StreamingResponse:
     conversation = await get_conversation(db, workspace, user, conversation_id)
+    request.app.state.question_limiter.check_and_record(user.id)
     ctx = RequestContext(correlation_id_var.get(), user_id=user.id, workspace_id=workspace.id)
     answerer = _answerer(request, settings)
     session_factory = request.app.state.session_factory
@@ -195,6 +214,10 @@ async def ask(
                         await session.commit()
                         await telemetry.record_guardrails(ctx, event.answer.guardrails)
                         yield _sse("final", _message_out(message).model_dump(mode="json"))
+            except asyncio.CancelledError:
+                # The client went away mid-answer: leave a record so the question is not orphaned.
+                await asyncio.shield(_store_interrupted(session_factory, conversation_id, ctx))
+                raise
             except Exception as error:
                 await session.rollback()
                 if isinstance(error, AppError):

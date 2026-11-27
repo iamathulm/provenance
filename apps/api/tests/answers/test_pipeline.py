@@ -188,6 +188,7 @@ async def test_bad_sql_degrades_to_documents(harness: Harness, db: AsyncSession)
 
     assert answer.degraded == ["sql"]
     assert answer.notices[0].startswith("Table lookup skipped: The SQL was rejected")
+    assert answer.sql is None  # rejected SQL is never reported as the query that ran
 
 
 async def test_rate_limited_model_fails_over(harness: Harness, db: AsyncSession) -> None:
@@ -222,4 +223,6 @@ async def test_history_is_context_not_a_source(harness: Harness, db: AsyncSessio
         [Exchange("When to land?", "Within 90 seconds [S1].")],
     )
 
-    assert "Q: When to land?" in provider.prompts("answer")[0]
+    prompt = provider.prompts("answer")[0]
+    assert "Q: When to land?" in prompt
+    assert "A: Within 90 seconds ." in prompt  # stale [S1] marker stripped

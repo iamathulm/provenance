@@ -108,7 +108,7 @@ def cited_ids(sentence: str) -> list[str]:
     return ids
 
 
-def _claim(sentence: str) -> str:
+def strip_citations(sentence: str) -> str:
     return _CITATION.sub("", sentence).strip()
 
 
@@ -125,6 +125,15 @@ def _numbers(text: str) -> set[str]:
     return {n.replace(",", "") for n in _NUMBER.findall(text)}
 
 
+_IDENTIFIER = re.compile(r"\b[A-Za-z]+-?(\d+)\b|\b((?:19|20)\d\d)\b")
+
+
+def _identifier_numbers(question: str) -> set[str]:
+    """Digits a claim may restate from the question: names like S1, Q3, X2 and years, never
+    bare quantities, so "Is the cap 300 dollars?" cannot vouch for a claim of 300 dollars."""
+    return {a or b for a, b in _IDENTIFIER.findall(question)}
+
+
 def _supported(
     claim: str,
     sources: Sequence[Source],
@@ -135,9 +144,9 @@ def _supported(
 ) -> float | None:
     """The claim's support score if it clears the bar for the method used, else None.
 
-    Numbers a claim restates from the question ("S1 tickets in Q3 2026") need no source."""
+    Identifiers a claim restates from the question ("S1 tickets in Q3 2026") need no source."""
     claimed = _numbers(claim)
-    if claimed - _numbers(question) - _numbers(" ".join(s.text for s in sources)):
+    if claimed - _identifier_numbers(question) - _numbers(" ".join(s.text for s in sources)):
         return None
     rows = [s for s in sources if s.kind == "rows"]
     if any(claimed & _numbers(s.text) for s in rows):
@@ -179,7 +188,7 @@ def verify(
     removed = 0
     for sentence in split_sentences(answer):
         cited_sources = [by_id[i] for i in cited_ids(sentence) if i in by_id]
-        claim = _claim(sentence)
+        claim = strip_citations(sentence)
         if not cited_sources or not claim:
             removed += 1
             continue
