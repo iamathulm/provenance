@@ -89,22 +89,26 @@ def _document_out(view: DocumentView) -> DocumentOut:
     )
 
 
+def anchor_out(chunk: Chunk) -> AnchorOut:
+    return AnchorOut(
+        kind=chunk.anchor_kind,
+        label=chunk.anchor_label,
+        page=chunk.page,
+        slide=chunk.slide,
+        section_path=chunk.section_path,
+        sheet=chunk.sheet,
+        row_start=chunk.row_start,
+        row_end=chunk.row_end,
+    )
+
+
 def _chunk_out(chunk: Chunk) -> ChunkOut:
     return ChunkOut(
         id=chunk.id,
         ordinal=chunk.ordinal,
         text=chunk.text,
         token_count=chunk.token_count,
-        anchor=AnchorOut(
-            kind=chunk.anchor_kind,
-            label=chunk.anchor_label,
-            page=chunk.page,
-            slide=chunk.slide,
-            section_path=chunk.section_path,
-            sheet=chunk.sheet,
-            row_start=chunk.row_start,
-            row_end=chunk.row_end,
-        ),
+        anchor=anchor_out(chunk),
     )
 
 
