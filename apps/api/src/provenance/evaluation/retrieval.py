@@ -14,6 +14,8 @@ from dataclasses import dataclass, field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from provenance.auth.demo import DEMO_ACCOUNTS
+from provenance.auth.models import User
 from provenance.core.context import RequestContext
 from provenance.documents.models import Chunk, Document
 from provenance.evaluation.golden import Domain, GoldenItem, GoldenSet
@@ -26,6 +28,13 @@ from provenance.workspaces.models import Workspace
 DEMO_WORKSPACE: dict[Domain, str] = {"company": "Company KB", "research": "Research Papers"}
 RECALL_K, RANK_K = 5, 10
 RANKING_METRICS = ("recall_at_5", "mrr_at_10", "ndcg_at_10", "doc_recall_at_5")
+
+
+class NullRecorder:
+    """Evaluation traffic is synthetic: keep it out of the telemetry that analytics reads."""
+
+    async def record(self, *_: object) -> None:
+        return None
 
 
 class GoldMissingError(Exception):
@@ -64,7 +73,9 @@ class RetrievalReport:
 
 async def workspace_for(db: AsyncSession, domain: Domain) -> uuid.UUID:
     workspace_id = await db.scalar(
-        select(Workspace.id).where(Workspace.name == DEMO_WORKSPACE[domain])
+        select(Workspace.id)
+        .join(User, User.id == Workspace.owner_id)
+        .where(Workspace.name == DEMO_WORKSPACE[domain], User.email == DEMO_ACCOUNTS["primary"][0])
     )
     if workspace_id is None:
         name = DEMO_WORKSPACE[domain]
@@ -132,7 +143,7 @@ async def evaluate(
         latency = (time.perf_counter() - started) * 1000
         rerank_modes[result.rerank_mode] += 1
         hits = [(hit.document.filename, hit.chunk.text) for hit in result.hits]
-        route = route_query(item.question, [hit.chunk for hit in result.hits], has_tables)
+        route = route_query(item.question, result.ranked_chunks, has_tables)
         scored = ItemResult(
             item.id, item.category, item.route, route.kind, latency, [f for f, _ in hits[:3]]
         )
@@ -144,7 +155,7 @@ async def evaluate(
                     matched, len(item.gold), RECALL_K, requires_all=requires_all
                 ),
                 "mrr_at_10": mrr_at_k(matched, RANK_K),
-                "ndcg_at_10": ndcg_at_k(matched, len(item.gold), RANK_K),
+                "ndcg_at_10": ndcg_at_k(matched, len(item.gold) if requires_all else 1, RANK_K),
                 "doc_recall_at_5": _doc_recall(item, [f for f, _ in hits]),
             }
         results.append(scored)

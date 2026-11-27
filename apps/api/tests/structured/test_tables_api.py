@@ -1,6 +1,7 @@
 from collections.abc import Callable
 
 import pytest
+from fastapi import FastAPI
 from httpx import AsyncClient
 
 from tests.ingest.harness import Harness
@@ -47,7 +48,7 @@ async def test_aggregate_is_exact(client: AsyncClient, tables: str) -> None:
     assert body["columns"] == ["total"]
     assert body["rows"] == [[400]]
     assert body["row_refs"] == []
-    assert body["sql"].endswith("LIMIT 200")
+    assert body["sql"].endswith("LIMIT 201")  # max rows + 1 to detect truncation
 
 
 async def test_row_refs_point_at_spreadsheet_rows(client: AsyncClient, tables: str) -> None:
@@ -118,3 +119,19 @@ async def test_replaced_spreadsheet_exposes_only_new_version(
     response = await client.post(f"{tables}/query", json={"sql": "SELECT price FROM t_prices"})
 
     assert response.json()["rows"] == [[1300]]
+
+
+async def test_truncated_only_when_rows_were_cut(
+    app: FastAPI, client: AsyncClient, tables: str, harness: Harness
+) -> None:
+    app.state.settings = harness.deps.settings.model_copy(update={"sql_max_rows": 2})
+
+    complete = await client.post(f"{tables}/query", json={"sql": "SELECT * FROM t_prices"})
+    cut = await client.post(f"{tables}/query", json={"sql": "SELECT * FROM t_sales_q3_q3"})
+
+    assert (len(complete.json()["rows"]), complete.json()["truncated"]) == (2, False)
+    assert (len(cut.json()["rows"]), cut.json()["truncated"]) == (2, True)
+
+
+async def test_listing_names_the_row_column(client: AsyncClient, tables: str) -> None:
+    assert {t["row_column"] for t in (await client.get(tables)).json()} == {"_row"}

@@ -11,6 +11,7 @@ the request is marked degraded. Ablation modes (`dense`, `sparse`, `hybrid`) ski
 import asyncio
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from typing import Literal, override
 
@@ -61,6 +62,7 @@ class Hit:
 @dataclass
 class SearchResult:
     hits: list[Hit]
+    ranked_chunks: list[Chunk]  # every authorized candidate in final order, for routing
     mode: SearchMode
     rerank_mode: RerankMode
     timings_ms: dict[str, float]
@@ -177,6 +179,9 @@ class RerankStage(Stage[_Work, _Work]):
     """Cross-encoder rerank of the top fused candidates; falls back to fusion order."""
 
     name = "rerank"
+    # One shared CPU worker: a timed-out rerank keeps running in its thread, so it must not hold
+    # the default pool that embedding and SQL use. Calls still waiting are cancelled on timeout.
+    _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="rerank")
 
     def __init__(self, reranker: Reranker, candidates: int, timeout_s: float) -> None:
         self._reranker = reranker
@@ -186,8 +191,11 @@ class RerankStage(Stage[_Work, _Work]):
     @override
     async def run(self, ctx: RequestContext, data: _Work) -> _Work:
         pool = data.authorized[: self._candidates]
-        scores = await asyncio.to_thread(
-            self._reranker.score, data.request.query, [chunk.text for _, chunk, _ in pool]
+        scores = await asyncio.get_running_loop().run_in_executor(
+            self._executor,
+            self._reranker.score,
+            data.request.query,
+            [chunk.text for _, chunk, _ in pool],
         )
         ranked = sorted(zip(pool, scores, strict=True), key=lambda pair: -pair[1])
         data.reranked = [(c, chunk, doc, score) for (c, chunk, doc), score in ranked]
@@ -239,4 +247,5 @@ class Searcher:
                 ordered[: request.top_k], start=1
             )
         ]
-        return SearchResult(hits, request.mode, work.rerank_mode, timings)
+        ranked = [chunk for _, chunk, _, _ in ordered]
+        return SearchResult(hits, ranked, request.mode, work.rerank_mode, timings)

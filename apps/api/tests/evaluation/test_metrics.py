@@ -38,3 +38,7 @@ def test_bootstrap_is_deterministic_and_brackets_the_mean() -> None:
     assert low <= 0.75 <= high
     assert bootstrap_ci([]) == (0.0, 0.0)
     assert bootstrap_ci([1.0, 1.0]) == (1.0, 1.0)
+
+
+def test_ndcg_any_of_item_is_perfect_with_one_alternative() -> None:
+    assert ndcg_at_k([G0], 1, 10) == pytest.approx(1.0)

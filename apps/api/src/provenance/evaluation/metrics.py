@@ -26,6 +26,7 @@ def mrr_at_k(matched: Matches, k: int) -> float:
 
 
 def ndcg_at_k(matched: Matches, gold_count: int, k: int) -> float:
+    """`gold_count`: distinct gold anchors a perfect ranking holds (1 for any-of items)."""
     seen: set[int] = set()
     dcg = 0.0
     for rank, hit in enumerate(matched[:k], start=1):

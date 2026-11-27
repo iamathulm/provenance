@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from provenance.api.dependencies import AppSettings
 from provenance.db.engine import DbSession
+from provenance.ingest.parsers.tables import ROW_COLUMN
 from provenance.structured.catalog import load_catalog
 from provenance.structured.engine import Value, run_query
 from provenance.workspaces.dependencies import OwnedWorkspace
@@ -21,6 +22,7 @@ class TableOut(BaseModel):
     filename: str
     sheet: str
     columns: list[str]
+    row_column: str = ROW_COLUMN  # select it to get row-level citations back
     row_count: int
 
 

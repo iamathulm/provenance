@@ -55,10 +55,9 @@ async def load_catalog(db: AsyncSession, workspace_id: uuid.UUID) -> list[TableE
     entries: list[TableEntry] = []
     taken: set[str] = set()
     for table, document in rows:
-        base = sql_name(document.filename, table.name)
-        name, suffix = base, 2
-        while name in taken:
-            name, suffix = f"{base}_{suffix}", suffix + 1
+        name = sql_name(document.filename, table.name)
+        if name in taken:  # same file and sheet names twice: disambiguate by document id
+            name = f"{name}_{document.id.hex[:6]}"
         taken.add(name)
         entries.append(
             TableEntry(

@@ -3,6 +3,7 @@
 Models are loaded lazily on first use and cached on disk; the Docker image bakes them in.
 """
 
+import threading
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
@@ -43,20 +44,25 @@ class FastEmbedder:
         )
         self._dense: object | None = None
         self._sparse: object | None = None
+        self._load_lock = threading.Lock()  # concurrent first calls must not load twice
 
     def _dense_model(self) -> "TextEmbedding":
         from fastembed import TextEmbedding
 
-        if self._dense is None:
-            self._dense = TextEmbedding(self._dense_model_name, cache_dir=self._cache_dir)
+        with self._load_lock:
+            if self._dense is None:
+                self._dense = TextEmbedding(self._dense_model_name, cache_dir=self._cache_dir)
         model: TextEmbedding = self._dense  # type: ignore[assignment]
         return model
 
     def _sparse_model(self) -> "SparseTextEmbedding":
         from fastembed import SparseTextEmbedding
 
-        if self._sparse is None:
-            self._sparse = SparseTextEmbedding(self._sparse_model_name, cache_dir=self._cache_dir)
+        with self._load_lock:
+            if self._sparse is None:
+                self._sparse = SparseTextEmbedding(
+                    self._sparse_model_name, cache_dir=self._cache_dir
+                )
         model: SparseTextEmbedding = self._sparse  # type: ignore[assignment]
         return model
 

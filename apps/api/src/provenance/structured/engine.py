@@ -90,7 +90,8 @@ async def run_query(
     db: AsyncSession, workspace_id: uuid.UUID, sql: str, settings: Settings
 ) -> QueryResult:
     catalog = {entry.sql_name: entry for entry in await load_catalog(db, workspace_id)}
-    guarded = guard_sql(sql, set(catalog), settings.sql_max_rows)
+    # One extra row tells a complete result of exactly `sql_max_rows` from a truncated one.
+    guarded = guard_sql(sql, set(catalog), settings.sql_max_rows + 1)
     used = [catalog[name] for name in guarded.tables]
     files = await db.execute(
         select(StoredFile.id, StoredFile.content).where(
@@ -109,11 +110,10 @@ async def run_query(
         raise SqlTimeoutError(msg) from error
     except duckdb.Error as error:
         raise SqlFailedError(f"The query failed: {str(error).splitlines()[0]}") from error
-    values = [[_json_value(v) for v in row] for row in rows]
+    truncated = len(rows) > settings.sql_max_rows
+    values = [[_json_value(v) for v in row] for row in rows[: settings.sql_max_rows]]
     refs = _row_refs(used[0], columns, values) if len(used) == 1 else []
-    return QueryResult(
-        guarded.sql, columns, values, refs, truncated=len(values) >= settings.sql_max_rows
-    )
+    return QueryResult(guarded.sql, columns, values, refs, truncated)
 
 
 def _row_refs(entry: TableEntry, columns: list[str], rows: list[list[Value]]) -> list[RowRef]:

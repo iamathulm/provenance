@@ -25,10 +25,9 @@ from provenance.evaluation.report import (
     to_json,
     to_markdown,
 )
-from provenance.evaluation.retrieval import RetrievalReport, evaluate
+from provenance.evaluation.retrieval import NullRecorder, RetrievalReport, evaluate
 from provenance.ingest.runtime import build_worker
 from provenance.observability.logging import configure_logging
-from provenance.observability.telemetry import TelemetryRecorder
 from provenance.retrieval.embeddings import FastEmbedder
 from provenance.retrieval.index import ChunkIndex
 from provenance.retrieval.rerank import FlashRanker
@@ -113,7 +112,7 @@ async def _eval(
     qdrant = AsyncQdrantClient(url=settings.qdrant_url)
     index = ChunkIndex(qdrant, settings.qdrant_collection, settings.embedding_dimension)
     searcher = Searcher(
-        FastEmbedder(settings), index, FlashRanker(settings), TelemetryRecorder(factory), settings
+        FastEmbedder(settings), index, FlashRanker(settings), NullRecorder(), settings
     )
     golden_sets = [load_golden(domain, split) for domain in domains]
     reports: list[RetrievalReport] = []
@@ -133,8 +132,9 @@ async def _eval(
     if out is not None:
         out.mkdir(parents=True, exist_ok=True)
         report_json = json.dumps(to_json(reports, metadata), indent=2) + "\n"
-        (out / f"retrieval-{split}.json").write_text(report_json, encoding="utf-8")
-        (out / f"retrieval-{split}.md").write_text(markdown, encoding="utf-8")
+        for name, content in (("json", report_json), ("md", markdown)):
+            path = out / f"retrieval-{split}.{name}"
+            path.write_text(content, encoding="utf-8", newline="\n")  # same bytes on every OS
     if check is None:
         return 0
     failures = check_thresholds(reports, load_thresholds(check))

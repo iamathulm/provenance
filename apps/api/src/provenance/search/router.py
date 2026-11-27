@@ -81,7 +81,7 @@ async def search(
         SearchRequest(body.query, body.mode, body.top_k, tuple(body.document_ids)),
     )
     has_tables = bool(await load_catalog(db, workspace.id))
-    route = route_query(body.query, [hit.chunk for hit in result.hits], has_tables)
+    route = route_query(body.query, result.ranked_chunks, has_tables)
     return SearchOut(
         mode=result.mode,
         rerank_mode=result.rerank_mode,
