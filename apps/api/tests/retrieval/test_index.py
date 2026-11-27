@@ -75,3 +75,40 @@ def test_fastembed_produces_dense_and_sparse_vectors(settings: Settings) -> None
     assert len(dense[0]) == settings.embedding_dimension == 384
     assert sparse[0].indices
     assert len(sparse[0].indices) == len(sparse[0].values)
+
+
+async def test_branch_searches_see_only_active_points_of_the_workspace(
+    chunk_index: ChunkIndex,
+) -> None:
+    embedder = FakeEmbedder()
+    live, stale = uuid.uuid4(), uuid.uuid4()
+    other_workspace = uuid.uuid4()
+    text = "hot swap the battery pack"
+    await chunk_index.upsert(points(live, [text], active=True))
+    await chunk_index.upsert(points(stale, [text], active=False))
+    dense, sparse = embedder.embed_dense([text])[0], embedder.embed_sparse([text])[0]
+    await chunk_index.upsert(
+        [IndexPoint(uuid.uuid4(), other_workspace, DOCUMENT, uuid.uuid4(), dense, sparse, True)]
+    )
+
+    dense_hits = await chunk_index.search_dense(WORKSPACE, dense, 10)
+    sparse_hits = await chunk_index.search_sparse(
+        WORKSPACE, embedder.embed_query_sparse("battery"), 10
+    )
+
+    expected = [uuid.uuid5(live, text)]
+    assert [hit.chunk_id for hit in dense_hits] == expected
+    assert [hit.chunk_id for hit in sparse_hits] == expected
+
+
+async def test_document_filter_narrows_both_branches(chunk_index: ChunkIndex) -> None:
+    embedder = FakeEmbedder()
+    version = uuid.uuid4()
+    await chunk_index.upsert(points(version, ["lost link procedure"], active=True))
+    query = embedder.embed_query_sparse("lost link")
+
+    narrowed = await chunk_index.search_sparse(WORKSPACE, query, 10, [uuid.uuid4()])
+    kept = await chunk_index.search_sparse(WORKSPACE, query, 10, [DOCUMENT])
+
+    assert narrowed == []
+    assert len(kept) == 1

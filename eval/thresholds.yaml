@@ -1,0 +1,14 @@
+# Retrieval regression gate: `provenance eval --split test --check eval/thresholds.yaml` exits 1
+# when the default mode (hybrid_rerank) on the held-out split drops below a floor.
+#
+# Floors sit ~0.05 under the committed baseline (eval/reports/retrieval-test.md), so a real
+# regression trips the gate while CPU-level score ties do not. They are not the quality targets:
+# NFR-01 targets are recall@5 >= 0.80 and MRR@10 >= 0.65 per domain. Company meets them; research
+# currently does not (0.75 / 0.57), which is reported, not hidden. Raise a floor whenever the
+# baseline improves.
+company:
+  recall_at_5: 0.90
+  mrr_at_10: 0.80
+research:
+  recall_at_5: 0.70
+  mrr_at_10: 0.50

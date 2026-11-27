@@ -1,9 +1,10 @@
 # Research papers: long-form argument, dense terminology, results tables.
+# Chunks stay under ~300 model tokens so the embedder (512) and reranker (256) see all of them.
 name: research
 display_name: Research papers
 description: Academic papers with long sections, citations and result tables.
 chunking:
-  target_tokens: 450
-  overlap_tokens: 80
-  max_tokens: 650
+  target_tokens: 220
+  overlap_tokens: 40
+  max_tokens: 320
   table_rows_per_chunk: 15

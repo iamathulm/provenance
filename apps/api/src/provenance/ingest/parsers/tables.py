@@ -26,6 +26,7 @@ from provenance.ingest.parsers.base import (
 from provenance.ingest.validation import csv_dialect
 
 _SAMPLE_ROWS = 3
+ROW_COLUMN = "_row"  # spreadsheet row number of each record, for row-level SQL citations
 Cell = str | int | float | bool | None
 NumberedRow = tuple[int, list[Cell]]
 
@@ -38,13 +39,15 @@ def too_many_rows(limit: int) -> ParseFailedError:
 
 def _column_names(header: list[Cell]) -> list[str]:
     names: list[str] = []
+    taken = {ROW_COLUMN}
     for index, raw in enumerate(header, start=1):
         base = re.sub(r"\s+", " ", str(raw).strip()) if raw not in (None, "") else ""
         name = base or f"column_{index}"
         candidate, suffix = name, 2
-        while candidate in names:
+        while candidate in taken:
             candidate, suffix = f"{name}_{suffix}", suffix + 1
         names.append(candidate)
+        taken.add(candidate)
     return names
 
 
@@ -95,7 +98,9 @@ def _add_table(
     width = len(columns)
     data = [(number, (list(row) + [None] * width)[:width]) for number, row in data]
     arrays = [_typed_column([row[i] for _, row in data]) for i in range(width)]
-    parsed.tables.append(ParsedTable(name, columns, pa.table(arrays, names=columns)))
+    row_numbers = pa.array([number for number, _ in data], pa.int64())
+    table = pa.table([row_numbers, *arrays], names=[ROW_COLUMN, *columns])
+    parsed.tables.append(ParsedTable(name, columns, table))
 
     sample = "\n".join(_row_text(columns, row) for _, row in data[:_SAMPLE_ROWS])
     card = f"Table {name}: {len(data)} rows. Columns: {', '.join(columns)}." + (

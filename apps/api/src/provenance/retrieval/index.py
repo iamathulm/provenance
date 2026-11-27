@@ -6,6 +6,7 @@ filter both vector branches to the caller's workspace and the active version onl
 """
 
 import uuid
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from qdrant_client import AsyncQdrantClient, models
@@ -26,6 +27,12 @@ class IndexPoint:
     dense: list[float]
     sparse: SparseEmbedding
     active: bool
+
+
+@dataclass(frozen=True)
+class ScoredPoint:
+    chunk_id: uuid.UUID
+    score: float
 
 
 def _match(field: str, value: uuid.UUID | bool) -> models.Filter:
@@ -132,6 +139,56 @@ class ChunkIndex:
             ),
             wait=True,
         )
+
+    async def search_dense(
+        self,
+        workspace_id: uuid.UUID,
+        vector: list[float],
+        limit: int,
+        document_ids: Sequence[uuid.UUID] | None = None,
+    ) -> list[ScoredPoint]:
+        return await self._search(workspace_id, vector, DENSE, limit, document_ids)
+
+    async def search_sparse(
+        self,
+        workspace_id: uuid.UUID,
+        sparse: SparseEmbedding,
+        limit: int,
+        document_ids: Sequence[uuid.UUID] | None = None,
+    ) -> list[ScoredPoint]:
+        query = models.SparseVector(indices=sparse.indices, values=sparse.values)
+        return await self._search(workspace_id, query, SPARSE, limit, document_ids)
+
+    async def _search(
+        self,
+        workspace_id: uuid.UUID,
+        query: list[float] | models.SparseVector,
+        using: str,
+        limit: int,
+        document_ids: Sequence[uuid.UUID] | None,
+    ) -> list[ScoredPoint]:
+        """One branch, pre-filtered to the workspace's active points. Postgres re-checks after."""
+        conditions: list[models.Condition] = [
+            models.FieldCondition(
+                key="workspace_id", match=models.MatchValue(value=str(workspace_id))
+            ),
+            models.FieldCondition(key="active", match=models.MatchValue(value=True)),
+        ]
+        if document_ids:
+            conditions.append(
+                models.FieldCondition(
+                    key="document_id", match=models.MatchAny(any=[str(d) for d in document_ids])
+                )
+            )
+        response = await self.client.query_points(
+            self.collection,
+            query=query,
+            using=using,
+            query_filter=models.Filter(must=conditions),
+            limit=limit,
+            with_payload=False,
+        )
+        return [ScoredPoint(uuid.UUID(str(point.id)), point.score) for point in response.points]
 
     async def count(self, version_id: uuid.UUID, *, active: bool | None = None) -> int:
         conditions = _match("version_id", version_id).must

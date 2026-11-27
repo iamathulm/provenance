@@ -1,6 +1,6 @@
 from itertools import pairwise
 
-from provenance.ingest.chunking import chunk_document, count_tokens
+from provenance.ingest.chunking import chunk_document, clean, count_tokens
 from provenance.ingest.parsers.base import Anchor, Block, ParsedDocument
 from provenance.profiles.loader import ChunkingConfig
 
@@ -78,3 +78,7 @@ def test_control_characters_are_removed() -> None:
     )
 
     assert [c.text for c in chunks] == ["Recall at k equals 0.9.\tDone"]
+
+
+def test_clean_unfolds_ligatures_and_drops_control_characters() -> None:
+    assert clean("the ﬁreproof\x00 locker\tok\n") == "the fireproof locker\tok\n"

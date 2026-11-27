@@ -25,7 +25,7 @@ from provenance.retrieval.index import ChunkIndex
 from provenance.seed import seed_demo
 from provenance.workspaces.models import Workspace
 from tests.ingest.harness import Harness
-from tests.retrieval.fakes import FakeEmbedder
+from tests.retrieval.fakes import FakeEmbedder, FakeReranker
 
 API_ROOT = Path(__file__).resolve().parents[1]
 TEST_QDRANT_URL = os.environ.get("TEST_QDRANT_URL", "http://127.0.0.1:6333")
@@ -138,11 +138,13 @@ async def harness(app: FastAPI, chunk_index: ChunkIndex, settings: Settings) -> 
     """Seeded demo data, the app wired to a throwaway Qdrant collection, and an inline worker."""
     await seed_demo(app.state.session_factory)
     app.state.chunk_index = chunk_index
+    app.state.embedder = FakeEmbedder()
+    app.state.reranker = FakeReranker()
     async with app.state.session_factory() as db:
         workspace_id = await db.scalar(select(Workspace.id).where(Workspace.name == "Company KB"))
     assert workspace_id is not None
     deps = IndexingDeps(
-        settings, app.state.profiles, FakeEmbedder(), chunk_index, app.state.telemetry
+        settings, app.state.profiles, app.state.embedder, chunk_index, app.state.telemetry
     )
     worker = Worker(app.state.session_factory, build_handlers(app.state.session_factory, deps))
     return Harness(app.state.session_factory, deps, worker, workspace_id)

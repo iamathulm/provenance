@@ -18,7 +18,9 @@ from provenance.observability.middleware import CorrelationIdMiddleware
 from provenance.observability.origin import OriginCheckMiddleware
 from provenance.observability.telemetry import TelemetryRecorder
 from provenance.profiles.loader import load_profiles
+from provenance.retrieval.embeddings import FastEmbedder
 from provenance.retrieval.index import ChunkIndex
+from provenance.retrieval.rerank import FlashRanker
 
 APP_VERSION = version("provenance-api")
 log = structlog.get_logger()
@@ -50,6 +52,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.settings = resolved
     app.state.login_limiter = LoginRateLimiter()
     app.state.profiles = load_profiles(resolved.profiles_dir)
+    app.state.embedder = FastEmbedder(resolved)  # models load lazily on first search
+    app.state.reranker = FlashRanker(resolved)
     register_error_handlers(app)
     # Last added runs first: correlation IDs wrap everything, including origin rejections.
     app.add_middleware(OriginCheckMiddleware, allowed_origins=resolved.allowed_origins)

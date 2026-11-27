@@ -1,0 +1,4437 @@
+{
+  "metadata": {
+    "created_at": "2026-11-27T05:27:38+00:00",
+    "git_sha": "d704cce52bb7bcad172680aa8cabe1ac55942973",
+    "golden_sha256": {
+      "company/dev": "3731fedef455e795fa2bd640d6e1f1763e5dfe0d7b05b20e077be49a144d8464",
+      "research/dev": "2078e7445e1f9ea53e0062ed1de9327dddd78a1b6db5f9a95916458b3877a584"
+    },
+    "profile_sha256": {
+      "company": "daa1397215c43d6c580e99a3be713b9c874b3ca9f575cddf5842c2d4038e4b0c",
+      "research": "5eb256cc4192c3efcd46eb03966d5d6cc484b21c1016b260a7e385047a670cba"
+    },
+    "models": {
+      "dense": "BAAI/bge-small-en-v1.5",
+      "sparse": "Qdrant/bm25",
+      "reranker": "ms-marco-MiniLM-L-12-v2"
+    },
+    "settings": {
+      "search_candidates": 40,
+      "rerank_candidates": 20,
+      "rerank_max_tokens": 256,
+      "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
+    }
+  },
+  "reports": [
+    {
+      "domain": "company",
+      "split": "dev",
+      "mode": "dense",
+      "items": [
+        {
+          "id": "company-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 332.7218999620527,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "runbook-battery-fault.txt",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 33.76730007585138,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.901199978776276,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.08969996962696,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 32.33909991104156,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 34.682100056670606,
+          "top_files": [
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 37.07369999028742,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.526600036770105,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 37.58870007004589,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 37.125400034710765,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-11",
+          "category": "factual",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 33.87380007188767,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.92399996705353,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 39.931399980559945,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "vendor-faq.txt",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1,
+            "ndcg_at_10": 0.2890648263178879,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.501099980436265,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "runbook-lost-link.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 35.94209998846054,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.181199989281595,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 33.36299990769476,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.98669993132353,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 33.06679998058826,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 34.864500048570335,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 34.39580008853227,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 34.683600068092346,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-23",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 36.497100023552775,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.8772153153380493,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-24",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 39.454099955037236,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-25",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "docs",
+          "latency_ms": 36.013799952343106,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {
+            "recall_at_5": 0.5,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.8315546295836225,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "company-dev-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 30.982899945229292,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.48610007762909,
+          "top_files": [
+            "vendor-faq.txt",
+            "groundlink-4-2-release-notes.docx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.449399914592505,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.36150001268834,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "groundlink-4-2-release-notes.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.0634000711143,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.38550001010299,
+          "top_files": [
+            "employee-handbook.pdf",
+            "vendor-faq.txt",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.543999957852066,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 38.79580006469041,
+          "top_files": [
+            "vendor-faq.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.9,
+          "ci_low": 0.78,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.783047619047619,
+          "ci_low": 0.6543809523809524,
+          "ci_high": 0.909047619047619
+        },
+        "ndcg_at_10": {
+          "mean": 0.8234124192573621,
+          "ci_low": 0.7273061482469645,
+          "ci_high": 0.9169121415019887
+        },
+        "doc_recall_at_5": {
+          "mean": 0.98,
+          "ci_low": 0.94,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6060606060606061,
+          "ci_low": 0.42424242424242425,
+          "ci_high": 0.7575757575757576
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8888888888888888,
+          "mrr_at_10": 0.7357142857142857,
+          "ndcg_at_10": 0.79869669647291,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.8333333333333334,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.9029233149738906,
+          "doc_recall_at_5": 0.8333333333333334,
+          "count": 3.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.8333333333333334,
+          "ndcg_at_10": 0.875,
+          "doc_recall_at_5": 1.0,
+          "count": 4.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 34.526600036770105,
+        "p95": 39.931399980559945
+      }
+    },
+    {
+      "domain": "company",
+      "split": "dev",
+      "mode": "sparse",
+      "items": [
+        {
+          "id": "company-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 239.07690006308258,
+          "top_files": [
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 17.915099975652993,
+          "top_files": [
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 17.75399991311133,
+          "top_files": [
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 19.67549999244511,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.90389998536557,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 18.94519990310073,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.94509994983673,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.567200051620603,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 19.68419994227588,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "support-tickets-q3-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.04739993531257,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-11",
+          "category": "factual",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 18.077399930916727,
+          "top_files": [
+            "price-list-2026.csv",
+            "sentinel-dock-launch-plan.pptx",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 20.33909992314875,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.94090010318905,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.105700029991567,
+          "top_files": [
+            "employee-handbook.pdf",
+            "information-security-policy.pdf",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 17.855899990536273,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "it-onboarding-checklist.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.150199950672686,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.28600005339831,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "q3-2026-business-review.pptx",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.148399936966598,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "support-tickets-q3-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 37.817300064489245,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 18.9142000162974,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 18.474999931640923,
+          "top_files": [
+            "employee-handbook.pdf",
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 20.029500010423362,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-23",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 19.876399892382324,
+          "top_files": [
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-24",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.855899969115853,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-25",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 18.919299938715994,
+          "top_files": [
+            "price-list-2026.csv",
+            "talon-x2-product-specification.docx",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.738699960522354,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.57479999307543,
+          "top_files": [
+            "vendor-faq.txt",
+            "employee-handbook.pdf",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.93469993956387,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.540100009180605,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.206900033168495,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.0859999274835,
+          "top_files": [
+            "vendor-faq.txt",
+            "it-onboarding-checklist.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.79539997410029,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.51140009239316,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "information-security-policy.pdf",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.88,
+          "ci_low": 0.76,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.8247619047619048,
+          "ci_low": 0.6866666666666668,
+          "ci_high": 0.94
+        },
+        "ndcg_at_10": {
+          "mean": 0.8571410469523834,
+          "ci_low": 0.7423782370952415,
+          "ci_high": 0.9533333333333333
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6363636363636364,
+          "ci_low": 0.45454545454545453,
+          "ci_high": 0.7878787878787878
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8333333333333334,
+          "mrr_at_10": 0.8121693121693121,
+          "ndcg_at_10": 0.8425925925925926,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 3.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.75,
+          "ndcg_at_10": 0.8154648767857288,
+          "doc_recall_at_5": 1.0,
+          "count": 4.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 19.0859999274835,
+        "p95": 37.817300064489245
+      }
+    },
+    {
+      "domain": "company",
+      "split": "dev",
+      "mode": "hybrid",
+      "items": [
+        {
+          "id": "company-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 44.3055999930948,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "flight-operations-safety-manual.pdf",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 52.34209995251149,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 50.3077000612393,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 50.42049998883158,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 51.66790005750954,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 54.439199971966445,
+          "top_files": [
+            "information-security-policy.pdf",
+            "vendor-onboarding-guide.docx",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.13269994035363,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 59.823599993251264,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 57.482699980027974,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "support-tickets-q3-2026.csv",
+            "postmortem-2026-06-firmware-rollback.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.61319992132485,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-11",
+          "category": "factual",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 61.608899966813624,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 61.023399932309985,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 56.41770001966506,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1,
+            "ndcg_at_10": 0.2890648263178879,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 55.224700015969574,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 51.509999902918935,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.58759995922446,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 59.553900035098195,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "vendor-onboarding-guide.docx",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 55.30720006208867,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 57.2949000634253,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 54.531199974007905,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 51.10989999957383,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 52.622999995946884,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-23",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 53.88779996428639,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-24",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 56.0224000364542,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-25",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 52.33310000039637,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "price-list-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.775499993003905,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.16319998726249,
+          "top_files": [
+            "vendor-faq.txt",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 48.42190002091229,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "employee-handbook.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 53.22909995447844,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 54.930999991483986,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "talon-x2-product-specification.docx",
+            "price-list-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.6283000363037,
+          "top_files": [
+            "vendor-faq.txt",
+            "employee-handbook.pdf",
+            "information-security-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.48710000887513,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 56.57929996959865,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.96,
+          "ci_low": 0.88,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.8420000000000001,
+          "ci_low": 0.722,
+          "ci_high": 0.948
+        },
+        "ndcg_at_10": {
+          "mean": 0.8799753380936077,
+          "ci_low": 0.787723345867945,
+          "ci_high": 0.9607113024322399
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6666666666666666,
+          "ci_low": 0.5151515151515151,
+          "ci_high": 0.8181818181818182
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.9444444444444444,
+          "mrr_at_10": 0.8083333333333333,
+          "ndcg_at_10": 0.8538029832649299,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 3.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.875,
+          "ndcg_at_10": 0.9077324383928644,
+          "doc_recall_at_5": 1.0,
+          "count": 4.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 52.775499993003905,
+        "p95": 61.023399932309985
+      }
+    },
+    {
+      "domain": "company",
+      "split": "dev",
+      "mode": "hybrid_rerank",
+      "items": [
+        {
+          "id": "company-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1485.5395999038592,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1279.3378999922425,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "groundlink-4-2-release-notes.docx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1239.6689999150112,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1199.01750003919,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1188.1377999670804,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1320.5986000830308,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1414.7558000404388,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1206.48830011487,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 1279.5764000620693,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1217.2562000341713,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-11",
+          "category": "factual",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 1349.8784000985324,
+          "top_files": [
+            "price-list-2026.csv",
+            "price-list-2026.csv",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1333.1038999604061,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1328.2051000278443,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.3010299956639812,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1083.720099995844,
+          "top_files": [
+            "employee-handbook.pdf",
+            "information-security-policy.pdf",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1115.9617999801412,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "it-onboarding-checklist.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 973.0939000146464,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 951.5178999863565,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "harrier-mini-product-specification.docx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 972.1952000400051,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1125.5013999762014,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1042.3659000080079,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 980.5534000042826,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 979.7370999585837,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-23",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1072.3015000112355,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-24",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1120.0187999056652,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-25",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "both",
+          "latency_ms": 1188.8868999667466,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "price-list-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-dev-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 997.2578999586403,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1043.1627000216395,
+          "top_files": [
+            "vendor-faq.txt",
+            "groundlink-4-2-release-notes.docx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 972.2375000128523,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 956.8749000318348,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1071.0168000077829,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "q3-2026-business-review.pptx",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1032.2037000441924,
+          "top_files": [
+            "vendor-faq.txt",
+            "runbook-lost-link.txt",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 983.8881000177935,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-dev-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1094.6083000162616,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.92,
+          "ci_low": 0.8,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.8644444444444445,
+          "ci_low": 0.7444444444444445,
+          "ci_high": 0.96
+        },
+        "ndcg_at_10": {
+          "mean": 0.8967638675965968,
+          "ci_low": 0.8055689350197527,
+          "ci_high": 0.9704743802857166
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.7575757575757576,
+          "ci_low": 0.6060606060606061,
+          "ci_high": 0.9090909090909091
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8888888888888888,
+          "mrr_at_10": 0.8395061728395061,
+          "ndcg_at_10": 0.8771203853524145,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 3.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.875,
+          "ndcg_at_10": 0.9077324383928644,
+          "doc_recall_at_5": 1.0,
+          "count": 4.0
+        }
+      },
+      "rerank_modes": {
+        "flashrank": 33
+      },
+      "latency_ms": {
+        "p50": 1115.9617999801412,
+        "p95": 1414.7558000404388
+      }
+    },
+    {
+      "domain": "research",
+      "split": "dev",
+      "mode": "dense",
+      "items": [
+        {
+          "id": "research-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.78249993734062,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 44.246000004932284,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 40.43839999940246,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 41.28969996236265,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 41.110799997113645,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.12580001167953,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.84740003477782,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.125,
+            "ndcg_at_10": 0.31546487678572877,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.526299986988306,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.92880002502352,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.49310003593564,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.0461999187246,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2402.03216v5.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.157500041648746,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.577200003899634,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.33999996539205,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.88980000838637,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.517700037918985,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.08170000370592,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.18457569677956817,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-dev-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 43.20749989710748,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.5,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.6131471927654584,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-dev-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 38.17359998356551,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 41.32519999984652,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 41.94959998130798,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2310.07554v3.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 43.19740005303174,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2312.06648v3.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 40.67719995509833,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 45.66310008522123,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 40.66870000679046,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 39.32380001060665,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.5833333333333334,
+          "ci_low": 0.3611111111111111,
+          "ci_high": 0.8055555555555556
+        },
+        "mrr_at_10": {
+          "mean": 0.5131172839506173,
+          "ci_low": 0.3256172839506173,
+          "ci_high": 0.7137345679012346
+        },
+        "ndcg_at_10": {
+          "mean": 0.5604145359827619,
+          "ci_low": 0.3969992510454448,
+          "ci_high": 0.7387646368394624
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9444444444444444,
+          "ci_low": 0.8611111111111112,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.625,
+          "mrr_at_10": 0.5078125,
+          "ndcg_at_10": 0.580608672384043,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.25,
+          "mrr_at_10": 0.5555555555555556,
+          "ndcg_at_10": 0.3988614447725133,
+          "doc_recall_at_5": 0.5,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 38.17359998356551,
+        "p95": 44.246000004932284
+      }
+    },
+    {
+      "domain": "research",
+      "split": "dev",
+      "mode": "sparse",
+      "items": [
+        {
+          "id": "research-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.90679998602718,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.38410003297031,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.153400070033967,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.630600082688034,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2311.09476v2.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1,
+            "ndcg_at_10": 0.2890648263178879,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.2651999425143,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.729999989271164,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.440599997527897,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.46389994211495,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.60159999039024,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.033099968917668,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.749400020577013,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2401.05856v1.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.744599984027445,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.3901000097394,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.06399997137487,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.26979995612055,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.96909999474883,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.674700033850968,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.18457569677956817,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-dev-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.341899991966784,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.8772153153380493,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.927300047129393,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 23.271999903954566,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.62140009365976,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.454799967817962,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.740100044757128,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 24.067900027148426,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2401.05856v1.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.10870000999421,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.82880009058863,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.7777777777777778,
+          "ci_low": 0.5555555555555556,
+          "ci_high": 0.9444444444444444
+        },
+        "mrr_at_10": {
+          "mean": 0.6122574955908289,
+          "ci_low": 0.42389770723104053,
+          "ci_high": 0.787037037037037
+        },
+        "ndcg_at_10": {
+          "mean": 0.6782171214474816,
+          "ci_low": 0.5227168705823882,
+          "ci_high": 0.8265164701371468
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9722222222222222,
+          "ci_low": 0.9166666666666666,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8125,
+          "mrr_at_10": 0.6193452380952381,
+          "ndcg_at_10": 0.6966323233710657,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.5,
+          "mrr_at_10": 0.5555555555555556,
+          "ndcg_at_10": 0.5308955060588088,
+          "doc_recall_at_5": 0.75,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 21.341899991966784,
+        "p95": 24.067900027148426
+      }
+    },
+    {
+      "domain": "research",
+      "split": "dev",
+      "mode": "hybrid",
+      "items": [
+        {
+          "id": "research-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 42.72659996058792,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.87400003988296,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.54049994517118,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 46.08390002977103,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.96729993540794,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.125,
+            "ndcg_at_10": 0.31546487678572877,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.52979998011142,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.35840002913028,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.98879998270422,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.10349999368191,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.10319999139756,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.14500000793487,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.12350002955645,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.03910001646727,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.348399995826185,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.46649996377528,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.34759992081672,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 49.0705999545753,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.18457569677956817,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-dev-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 50.5380000686273,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.8772153153380493,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.231299966573715,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 46.191200031898916,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.615299980156124,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2312.06648v3.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.6424999544397,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2212.03533v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.856600023806095,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.925100079737604,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.102199983783066,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 53.45930007752031,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.8333333333333334,
+          "ci_low": 0.6666666666666666,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.590895061728395,
+          "ci_low": 0.40555555555555556,
+          "ci_high": 0.7749999999999999
+        },
+        "ndcg_at_10": {
+          "mean": 0.6613946600129771,
+          "ci_low": 0.5035575421676629,
+          "ci_high": 0.8172899732743202
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9722222222222222,
+          "ci_low": 0.9166666666666666,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.875,
+          "mrr_at_10": 0.5953125,
+          "ndcg_at_10": 0.6777070542572482,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.5,
+          "mrr_at_10": 0.5555555555555556,
+          "ndcg_at_10": 0.5308955060588088,
+          "doc_recall_at_5": 0.75,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 47.925100079737604,
+        "p95": 51.35840002913028
+      }
+    },
+    {
+      "domain": "research",
+      "split": "dev",
+      "mode": "hybrid_rerank",
+      "items": [
+        {
+          "id": "research-dev-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 960.6915999902412,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 992.4162999959663,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1060.2567000314593,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 965.2888000709936,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1126.8932000966743,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1199.1221000207588,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1089.8289999458939,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1044.459500000812,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 967.5067999633029,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1058.4178999997675,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.3010299956639812,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1010.0609998917207,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 953.7454999517649,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1030.3655000170693,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 966.3691000314429,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 965.6249999534339,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1149.7798999771476,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1043.7998999841511,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-dev-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1082.353200064972,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.5,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.5912352048230277,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-dev-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 965.5660999706015,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1053.972400026396,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 973.1920999474823,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2312.06648v3.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1070.6938999937847,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2403.14403v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1280.291200033389,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2403.14403v2.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1119.9779999442399,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2310.07554v3.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1158.3919998956844,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-dev-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1161.5846999920905,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.75,
+          "ci_low": 0.5555555555555556,
+          "ci_high": 0.9166666666666666
+        },
+        "mrr_at_10": {
+          "mean": 0.5789241622574957,
+          "ci_low": 0.39087301587301587,
+          "ci_high": 0.7700617283950617
+        },
+        "ndcg_at_10": {
+          "mean": 0.6509934113076992,
+          "ci_low": 0.48509480854096526,
+          "ci_high": 0.8171299893442054
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9722222222222222,
+          "ci_low": 0.9166666666666666,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8125,
+          "mrr_at_10": 0.6200396825396826,
+          "ndcg_at_10": 0.6954153874197224,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.25,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.29561760241151386,
+          "doc_recall_at_5": 0.75,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "flashrank": 26
+      },
+      "latency_ms": {
+        "p50": 1053.972400026396,
+        "p95": 1199.1221000207588
+      }
+    }
+  ]
+}

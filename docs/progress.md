@@ -81,3 +81,38 @@ Formal NFR-03 report is P7.
 - Table anchors are real sheet rows / CSV file lines (header = row 1), not data-row positions.
 - Jobs: an expired lease is reclaimed only while attempts remain; `expire_exhausted` fails the
   rest. Workers act on a job only while `jobs.owns(job, worker_id)`.
+
+## P3 — Retrieval + structured data
+
+**Done:** query embeddings and workspace/active-filtered Qdrant branch searches; client-side RRF
+(k = 60); FlashRank reranker with labelled RRF fallback; Postgres authorization re-check before
+reranking; `POST /v1/workspaces/{id}/search` (Search Explorer diagnostics + route); `_row` column
+in table Parquet; sqlglot SQL guard; workspace-scoped DuckDB engine; `GET/POST
+/v1/workspaces/{id}/tables[/query]`; rule-based docs/table/both router; golden sets
+(`eval/golden/`, 66 company + 52 research items); `provenance eval` with ablations, bootstrap CIs,
+JSON/Markdown reports (`eval/reports/`) and the `eval/thresholds.yaml` gate in the CI `eval` job.
+
+**Measured (held-out test split, `eval/reports/retrieval-test.md`):** company hybrid_rerank
+recall@5 0.96, MRR@10 0.85 (meets NFR-01 targets); research recall@5 0.75, MRR@10 0.57 (misses
+0.80 / 0.65; misses are mostly multi-hop items needing two papers in the top 5). Reranking
+(FlashRank L-12, 20 candidates, 256 tokens) costs ~1.1 s per query on the laptop CPU and helps
+MRR on research but not company. Router accuracy on company is ~0.67. Tuning so far: BGE query
+instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev` only.
+
+**Gotchas for later phases:**
+- P4/P5 candidates for research quality: query decomposition for multi-hop questions (counts
+  against the LLM call budget) and a better router; re-run `provenance eval --split dev` first.
+- `eval/thresholds.yaml` holds regression floors under the committed baseline, not targets.
+- Build a `Searcher` per request from `app.state` (`embedder`, `chunk_index`, `reranker`,
+  `telemetry`); tests swap those for fakes in the `harness` fixture.
+- Search hits are already authorized; P4 citations may only reference chunks from a search result.
+- `structured.engine.run_query` is the only way to run SQL. Row citations come back only when
+  the query reads one table and selects `_row`; P4's SQL prompt must ask for `_row`.
+- The guard rejects functions sqlglot does not know (`exp.Anonymous`); allow-list DuckDB
+  functions there if generated SQL needs them.
+- Indexes built before P3 lack `_row` and NFKC-cleaned text (and research used 450-word
+  chunks); rebuild old local data (truncate + `seed-demo --with-corpora`).
+- Gold labels are evidence phrases; `provenance eval` fails fast if any phrase is missing from
+  the index (`GoldMissingError`). Tune on `dev`, report and gate on `test`.
+- First search after start loads FastEmbed + FlashRank from disk; the embed stage timeout is
+  60 s for that reason. P7 should warm both at startup.

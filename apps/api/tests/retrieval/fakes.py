@@ -31,3 +31,27 @@ class FakeEmbedder:
                 counts[index] = counts.get(index, 0.0) + 1.0
             embeddings.append(SparseEmbedding(sorted(counts), [counts[i] for i in sorted(counts)]))
         return embeddings
+
+    def embed_query_dense(self, text: str) -> list[float]:
+        return self.embed_dense([text])[0]
+
+    def embed_query_sparse(self, text: str) -> SparseEmbedding:
+        embedding = self.embed_sparse([text])[0]
+        return SparseEmbedding(embedding.indices, [1.0] * len(embedding.indices))
+
+
+class FakeReranker:
+    """Scores by how many query words a passage contains."""
+
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def score(self, query: str, passages: list[str]) -> list[float]:
+        self.calls += 1
+        words = set(query.lower().split())
+        return [float(len(words & set(p.lower().split()))) for p in passages]
+
+
+class FailingReranker:
+    def score(self, query: str, passages: list[str]) -> list[float]:  # noqa: ARG002 - protocol
+        raise RuntimeError("reranker model unavailable")

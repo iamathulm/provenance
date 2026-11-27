@@ -1,0 +1,4439 @@
+{
+  "metadata": {
+    "created_at": "2026-11-27T05:28:55+00:00",
+    "git_sha": "d704cce52bb7bcad172680aa8cabe1ac55942973",
+    "golden_sha256": {
+      "company/test": "27bdd78c6819a9b82e9be57018e042b5b640cfe74ceda3ee076e0b125df121fe",
+      "research/test": "9a5c03ed9bbced75170284afc3fc57fb82ae3dd2a3afe3fa2c7eb4aaef2da23a"
+    },
+    "profile_sha256": {
+      "company": "daa1397215c43d6c580e99a3be713b9c874b3ca9f575cddf5842c2d4038e4b0c",
+      "research": "5eb256cc4192c3efcd46eb03966d5d6cc484b21c1016b260a7e385047a670cba"
+    },
+    "models": {
+      "dense": "BAAI/bge-small-en-v1.5",
+      "sparse": "Qdrant/bm25",
+      "reranker": "ms-marco-MiniLM-L-12-v2"
+    },
+    "settings": {
+      "search_candidates": 40,
+      "rerank_candidates": 20,
+      "rerank_max_tokens": 256,
+      "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
+    }
+  },
+  "reports": [
+    {
+      "domain": "company",
+      "split": "test",
+      "mode": "dense",
+      "items": [
+        {
+          "id": "company-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 330.21639997605234,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 31.128200003877282,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.23499991185963,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "flight-operations-safety-manual.pdf",
+            "runbook-battery-fault.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.34519993606955,
+          "top_files": [
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 0.0
+          }
+        },
+        {
+          "id": "company-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.26670003682375,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.3010299956639812,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 32.8148000407964,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.98819996416569,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 33.224200014956295,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.23730004578829,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 34.08160002436489,
+          "top_files": [
+            "employee-handbook.pdf",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.329300069250166,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "information-security-policy.pdf",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.15799990762025,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.25720003340393,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.73019997868687,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.45479997713119,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.7569999974221,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.21880002133548,
+          "top_files": [
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.965199979022145,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 36.55149997211993,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 33.449299982748926,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 34.11220002453774,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 33.17629999946803,
+          "top_files": [
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-23",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 34.10069993697107,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-24",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "table",
+          "latency_ms": 36.20730002876371,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "q3-2026-business-review.pptx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6509209298071326,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-25",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.77640000730753,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "information-security-policy.pdf",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.16989999823272,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "vendor-faq.txt",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 33.531200024299324,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.358999993652105,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "postmortem-2026-06-firmware-rollback.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 38.41959999408573,
+          "top_files": [
+            "information-security-policy.pdf",
+            "support-tickets-q3-2026.csv",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 40.78409995418042,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "headcount-by-team-2026-q3.xlsx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.200300113298,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 33.03389996290207,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.821499932557344,
+          "top_files": [
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.92,
+          "ci_low": 0.8,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.8511111111111112,
+          "ci_low": 0.7333333333333333,
+          "ci_high": 0.9466666666666668
+        },
+        "ndcg_at_10": {
+          "mean": 0.8880378949317403,
+          "ci_low": 0.7961793264600694,
+          "ci_high": 0.9594854776271792
+        },
+        "doc_recall_at_5": {
+          "mean": 0.96,
+          "ci_low": 0.88,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.696969696969697,
+          "ci_low": 0.5454545454545454,
+          "ci_high": 0.8484848484848485
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8888888888888888,
+          "mrr_at_10": 0.8209876543209877,
+          "ndcg_at_10": 0.8638903579714653,
+          "doc_recall_at_5": 0.9444444444444444,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.75,
+          "ndcg_at_10": 0.8254604649035663,
+          "doc_recall_at_5": 1.0,
+          "count": 2.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 5.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 34.11220002453774,
+        "p95": 40.78409995418042
+      }
+    },
+    {
+      "domain": "company",
+      "split": "test",
+      "mode": "sparse",
+      "items": [
+        {
+          "id": "company-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 257.21110007725656,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.554799957200885,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.668999942950904,
+          "top_files": [
+            "flight-operations-safety-manual.pdf",
+            "sentinel-dock-launch-plan.pptx",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.683900056406856,
+          "top_files": [
+            "information-security-policy.pdf",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 19.661500002257526,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "harrier-mini-product-specification.docx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 18.784899963065982,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.42839997354895,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.743199925869703,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.129699910990894,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "flight-operations-safety-manual.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 18.712999997660518,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.774700049310923,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "information-security-policy.pdf",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.222100032493472,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "information-security-policy.pdf",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.048700109124184,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 19.451200030744076,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.340300001204014,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.499099977314472,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.22389992978424,
+          "top_files": [
+            "employee-handbook.pdf",
+            "information-security-policy.pdf",
+            "travel-and-expense-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 20.2686000848189,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "warranty-claims-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 20.168200018815696,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 19.359800033271313,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "q3-2026-business-review.pptx",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 19.26969992928207,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 19.747599959373474,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-23",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 20.423099980689585,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "it-onboarding-checklist.txt",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-24",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "table",
+          "latency_ms": 23.870899924077094,
+          "top_files": [
+            "price-list-2026.csv",
+            "price-list-2026.csv",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.9197207891481876,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-25",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.84739993046969,
+          "top_files": [
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 21.78549999371171,
+          "top_files": [
+            "vendor-faq.txt",
+            "employee-handbook.pdf",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 22.286899969913065,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "support-tickets-q3-2026.csv",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 21.999799995683134,
+          "top_files": [
+            "information-security-policy.pdf",
+            "travel-and-expense-policy.pdf",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 20.550800021737814,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "employee-handbook.pdf",
+            "headcount-by-team-2026-q3.xlsx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 20.94989991746843,
+          "top_files": [
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.6273000696674,
+          "top_files": [
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "it-onboarding-checklist.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.43720008805394,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.32429992686957,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.96,
+          "ci_low": 0.88,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.8933333333333333,
+          "ci_low": 0.7933333333333333,
+          "ci_high": 0.98
+        },
+        "ndcg_at_10": {
+          "mean": 0.907263211851644,
+          "ci_low": 0.8082119724230773,
+          "ci_high": 0.9820260217087857
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6363636363636364,
+          "ci_low": 0.48484848484848486,
+          "ci_high": 0.8181818181818182
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.9444444444444444,
+          "mrr_at_10": 0.9166666666666666,
+          "ndcg_at_10": 0.923940541865081,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.9598603945740938,
+          "doc_recall_at_5": 1.0,
+          "count": 2.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.7666666666666667,
+          "ndcg_at_10": 0.8261859507142916,
+          "doc_recall_at_5": 1.0,
+          "count": 5.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 19.747599959373474,
+        "p95": 23.870899924077094
+      }
+    },
+    {
+      "domain": "company",
+      "split": "test",
+      "mode": "hybrid",
+      "items": [
+        {
+          "id": "company-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 40.70729995146394,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.34159999154508,
+          "top_files": [
+            "employee-handbook.pdf",
+            "employee-handbook.pdf",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 46.8125999905169,
+          "top_files": [
+            "flight-operations-safety-manual.pdf",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.705600038170815,
+          "top_files": [
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 48.7050999654457,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 60.01389992889017,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 46.96659999899566,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 51.04120005853474,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 52.174100070260465,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "travel-and-expense-policy.pdf",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 47.8716999059543,
+          "top_files": [
+            "employee-handbook.pdf",
+            "travel-and-expense-policy.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 50.5731999874115,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "information-security-policy.pdf",
+            "vendor-onboarding-guide.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.698099938221276,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "talon-x2-product-specification.docx",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.40980004519224,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 48.475699964910746,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.80010005924851,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 52.12689994368702,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "groundlink-4-2-release-notes.docx",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.39339998923242,
+          "top_files": [
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 49.505500006489456,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "flight-operations-safety-manual.pdf",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.14285714285714285,
+            "ndcg_at_10": 0.3333333333333333,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 47.984000062569976,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 48.29410009551793,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 48.10919996816665,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 47.1004000864923,
+          "top_files": [
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-23",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 48.729400034062564,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-24",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "table",
+          "latency_ms": 49.56600000150502,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "price-list-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-25",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.54799995943904,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "information-security-policy.pdf",
+            "employee-handbook.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.681499971076846,
+          "top_files": [
+            "vendor-faq.txt",
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 46.71759996563196,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 47.76520002633333,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 47.94149997178465,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "information-security-policy.pdf",
+            "headcount-by-team-2026-q3.xlsx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 48.41689998283982,
+          "top_files": [
+            "employee-handbook.pdf",
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.83079994376749,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 46.15790001116693,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 50.6394999101758,
+          "top_files": [
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.96,
+          "ci_low": 0.88,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.899047619047619,
+          "ci_low": 0.7961904761904762,
+          "ci_high": 0.98
+        },
+        "ndcg_at_10": {
+          "mean": 0.9238077136190499,
+          "ci_low": 0.8438077136190499,
+          "ci_high": 0.9852371901428583
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6363636363636364,
+          "ci_low": 0.48484848484848486,
+          "ci_high": 0.8181818181818182
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.9444444444444444,
+          "mrr_at_10": 0.8597883597883598,
+          "ndcg_at_10": 0.8941773800264582,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 2.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "doc_recall_at_5": 1.0,
+          "count": 5.0
+        }
+      },
+      "rerank_modes": {
+        "off": 33
+      },
+      "latency_ms": {
+        "p50": 48.29410009551793,
+        "p95": 52.174100070260465
+      }
+    },
+    {
+      "domain": "company",
+      "split": "test",
+      "mode": "hybrid_rerank",
+      "items": [
+        {
+          "id": "company-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1207.5134000042453,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt",
+            "vendor-faq.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1086.2633999204263,
+          "top_files": [
+            "employee-handbook.pdf",
+            "talon-x2-product-specification.docx",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1069.958099978976,
+          "top_files": [
+            "flight-operations-safety-manual.pdf",
+            "groundlink-4-2-release-notes.docx",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1028.8199000060558,
+          "top_files": [
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1026.0742000536993,
+          "top_files": [
+            "talon-x2-product-specification.docx",
+            "flight-operations-safety-manual.pdf",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1169.9642000021413,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx",
+            "talon-x2-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1208.4131999872625,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "runbook-battery-fault.txt",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1128.1350000062957,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1036.3267000066116,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "travel-and-expense-policy.pdf",
+            "sentinel-dock-launch-plan.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1083.3216999890283,
+          "top_files": [
+            "employee-handbook.pdf",
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1028.6143000703305,
+          "top_files": [
+            "vendor-onboarding-guide.docx",
+            "vendor-onboarding-guide.docx",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1038.4727999335155,
+          "top_files": [
+            "runbook-battery-fault.txt",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1062.4139999272302,
+          "top_files": [
+            "runbook-lost-link.txt",
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1092.9428999079391,
+          "top_files": [
+            "harrier-mini-product-specification.docx",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1024.8832000652328,
+          "top_files": [
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1021.3223000755534,
+          "top_files": [
+            "groundlink-4-2-release-notes.docx",
+            "runbook-lost-link.txt",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-17",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1082.827299949713,
+          "top_files": [
+            "employee-handbook.pdf",
+            "q3-2026-business-review.pptx",
+            "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-18",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1120.7569999387488,
+          "top_files": [
+            "postmortem-2026-06-firmware-rollback.txt",
+            "postmortem-2026-06-firmware-rollback.txt",
+            "harrier-mini-product-specification.docx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-19",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1163.765100063756,
+          "top_files": [
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-20",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1090.6999000580981,
+          "top_files": [
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv",
+            "warranty-claims-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-21",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1319.6746000321582,
+          "top_files": [
+            "headcount-by-team-2026-q3.xlsx",
+            "headcount-by-team-2026-q3.xlsx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-22",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1304.9733999650925,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "sales-q3-2026.xlsx",
+            "sales-q3-2026.xlsx"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-23",
+          "category": "table",
+          "route_expected": "table",
+          "route_predicted": "table",
+          "latency_ms": 1034.0236999327317,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv",
+            "support-tickets-q3-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-24",
+          "category": "multi_hop",
+          "route_expected": "both",
+          "route_predicted": "table",
+          "latency_ms": 964.7680999478325,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "price-list-2026.csv",
+            "price-list-2026.csv"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-25",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 952.8112000552937,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "information-security-policy.pdf",
+            "information-security-policy.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 0.9197207891481876,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "company-test-26",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1051.3061999808997,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-27",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "table",
+          "latency_ms": 974.7950000455603,
+          "top_files": [
+            "sentinel-dock-launch-plan.pptx",
+            "sentinel-dock-launch-plan.pptx",
+            "q3-2026-business-review.pptx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-28",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 960.8186000259593,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "support-tickets-q3-2026.csv",
+            "groundlink-4-2-release-notes.docx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-29",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 987.0335999876261,
+          "top_files": [
+            "travel-and-expense-policy.pdf",
+            "information-security-policy.pdf",
+            "headcount-by-team-2026-q3.xlsx"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-30",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "both",
+          "latency_ms": 1076.099899946712,
+          "top_files": [
+            "q3-2026-business-review.pptx",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-31",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1022.8496000636369,
+          "top_files": [
+            "it-onboarding-checklist.txt",
+            "it-onboarding-checklist.txt",
+            "information-security-policy.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-32",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1012.0489000109956,
+          "top_files": [
+            "vendor-faq.txt",
+            "vendor-onboarding-guide.docx",
+            "vendor-faq.txt"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "company-test-33",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 985.0279999664053,
+          "top_files": [
+            "information-security-policy.pdf",
+            "employee-handbook.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.96,
+          "ci_low": 0.88,
+          "ci_high": 1.0
+        },
+        "mrr_at_10": {
+          "mean": 0.848,
+          "ci_low": 0.7253333333333333,
+          "ci_high": 0.948
+        },
+        "ndcg_at_10": {
+          "mean": 0.8822228017682049,
+          "ci_low": 0.7875082083027742,
+          "ci_high": 0.9576297065494266
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 0.6666666666666666,
+          "ci_low": 0.5151515151515151,
+          "ci_high": 0.8181818181818182
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.9444444444444444,
+          "mrr_at_10": 0.8444444444444444,
+          "ndcg_at_10": 0.8818883193285568,
+          "doc_recall_at_5": 1.0,
+          "count": 18.0
+        },
+        "multi_hop": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.9598603945740938,
+          "doc_recall_at_5": 1.0,
+          "count": 2.0
+        },
+        "table": {
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.8,
+          "ndcg_at_10": 0.8523719014285831,
+          "doc_recall_at_5": 1.0,
+          "count": 5.0
+        }
+      },
+      "rerank_modes": {
+        "flashrank": 33
+      },
+      "latency_ms": {
+        "p50": 1051.3061999808997,
+        "p95": 1304.9733999650925
+      }
+    },
+    {
+      "domain": "research",
+      "split": "test",
+      "mode": "dense",
+      "items": [
+        {
+          "id": "research-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.852800006978214,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 42.47190000023693,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 37.879600073210895,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 37.30260010343045,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.62929995637387,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.38909996859729,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.058299963362515,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.85870000440627,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.941300003789365,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.63570000510663,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.9127999721095,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 33.2593999337405,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.21380007825792,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 32.564900000579655,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.77760001644492,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.77510006632656,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.255599999800324,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-test-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 40.95520009286702,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-test-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.84549999888986,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2402.03216v5.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.50550004001707,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.45480000320822,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2403.14403v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.80129996407777,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2212.03533v2.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 38.35250006522983,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.36739998869598,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 35.24920006748289,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 34.97649997007102,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.6666666666666666,
+          "ci_low": 0.4444444444444444,
+          "ci_high": 0.8888888888888888
+        },
+        "mrr_at_10": {
+          "mean": 0.32499999999999996,
+          "ci_low": 0.16944444444444443,
+          "ci_high": 0.47500000000000003
+        },
+        "ndcg_at_10": {
+          "mean": 0.40850524927332965,
+          "ci_low": 0.24108005017546366,
+          "ci_high": 0.5587787865781948
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9444444444444444,
+          "ci_low": 0.8611111111111112,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.75,
+          "mrr_at_10": 0.365625,
+          "ndcg_at_10": 0.45956840543249583,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.0,
+          "mrr_at_10": 0.0,
+          "ndcg_at_10": 0.0,
+          "doc_recall_at_5": 0.5,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 35.38909996859729,
+        "p95": 40.95520009286702
+      }
+    },
+    {
+      "domain": "research",
+      "split": "test",
+      "mode": "sparse",
+      "items": [
+        {
+          "id": "research-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 24.67790001537651,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 23.432500078342855,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 23.26280006673187,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 23.918399936519563,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 23.433499969542027,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.793599938973784,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.76789997611195,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.125,
+            "ndcg_at_10": 0.31546487678572877,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 22.285799961537123,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.84929996635765,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.361200022511184,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.606499980203807,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 39.60800007916987,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 30.069499975070357,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 31.5612000413239,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.78410005196929,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.692500005476177,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.589100080542266,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5437713091520254,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.158299943432212,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.5,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.41443699955334395,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 37.88870002608746,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2311.09476v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.687200012616813,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.26389993261546,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 36.32319997996092,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2402.03216v5.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 19.43430001847446,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2403.14403v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.65489999949932,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2309.15217v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 21.71000000089407,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 20.30850003939122,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.75,
+          "ci_low": 0.5555555555555556,
+          "ci_high": 0.9444444444444444
+        },
+        "mrr_at_10": {
+          "mean": 0.5412037037037037,
+          "ci_low": 0.36018518518518516,
+          "ci_high": 0.7222222222222222
+        },
+        "ndcg_at_10": {
+          "mean": 0.6165077224599369,
+          "ci_low": 0.44644745438168165,
+          "ci_high": 0.7763582148458565
+        },
+        "doc_recall_at_5": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.75,
+          "mrr_at_10": 0.5755208333333334,
+          "ndcg_at_10": 0.6336831684733434,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.75,
+          "mrr_at_10": 0.26666666666666666,
+          "ndcg_at_10": 0.4791041543526847,
+          "doc_recall_at_5": 1.0,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 21.76789997611195,
+        "p95": 37.88870002608746
+      }
+    },
+    {
+      "domain": "research",
+      "split": "test",
+      "mode": "hybrid",
+      "items": [
+        {
+          "id": "research-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 41.788200032897294,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.664100071415305,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.58220002986491,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.022599959746,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.149900045245886,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.59040009230375,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.056299983523786,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.37880004197359,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.17619996517897,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.54879989195615,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 49.828600022010505,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.25839994009584,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.69180004950613,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 45.20290007349104,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 50.11070007458329,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.03919996973127,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 47.643200028687716,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1,
+            "ndcg_at_10": 0.17723928678404774,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-test-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.47239996585995,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 51.45889997947961,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2311.09476v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.04550006520003,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 57.30059999041259,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2312.06648v3.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 54.66699996031821,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2310.07554v3.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 53.60619991552085,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2312.06648v3.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 55.424700025469065,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 49.83560007531196,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 48.33979997783899,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.6666666666666666,
+          "ci_low": 0.4444444444444444,
+          "ci_high": 0.8888888888888888
+        },
+        "mrr_at_10": {
+          "mean": 0.4009259259259259,
+          "ci_low": 0.2287037037037037,
+          "ci_high": 0.5685185185185184
+        },
+        "ndcg_at_10": {
+          "mean": 0.4732493147987673,
+          "ci_low": 0.2944695505596527,
+          "ci_high": 0.6428706523427273
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9722222222222222,
+          "ci_low": 0.9166666666666666,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.75,
+          "mrr_at_10": 0.44479166666666664,
+          "ndcg_at_10": 0.5213280237246103,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.0,
+          "mrr_at_10": 0.05,
+          "ndcg_at_10": 0.08861964339202387,
+          "doc_recall_at_5": 0.75,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "off": 26
+      },
+      "latency_ms": {
+        "p50": 48.149900045245886,
+        "p95": 55.424700025469065
+      }
+    },
+    {
+      "domain": "research",
+      "split": "test",
+      "mode": "hybrid_rerank",
+      "items": [
+        {
+          "id": "research-test-01",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 954.1911999695003,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-02",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 965.9986000042409,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-03",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 973.6979000736028,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-04",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 991.7584999930114,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-05",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1069.8009000625461,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-06",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1039.4602000014856,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf",
+            "2309.15217v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-07",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1022.8467000415549,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.1111111111111111,
+            "ndcg_at_10": 0.3010299956639812,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-08",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 952.6879999320954,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf",
+            "2401.05856v1.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-09",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 957.6480999821797,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-10",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1047.8508999804035,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-11",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1081.83449995704,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.5,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-12",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1027.5209000101313,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-13",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 956.1943999724463,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-14",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1028.455900028348,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.25,
+            "ndcg_at_10": 0.43067655807339306,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-15",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1068.2403000537306,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-16",
+          "category": "factual",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 954.4271000195295,
+          "top_files": [
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 1.0,
+            "mrr_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-17",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 958.9644999941811,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.5,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.38685280723454163,
+            "doc_recall_at_5": 0.5
+          }
+        },
+        {
+          "id": "research-test-18",
+          "category": "multi_hop",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 965.9302999498323,
+          "top_files": [
+            "2403.14403v2.pdf",
+            "2310.07554v3.pdf",
+            "2310.07554v3.pdf"
+          ],
+          "scores": {
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.0,
+            "ndcg_at_10": 0.0,
+            "doc_recall_at_5": 1.0
+          }
+        },
+        {
+          "id": "research-test-19",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 954.3742999667302,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-20",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1074.7667999239638,
+          "top_files": [
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf",
+            "2311.09476v2.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-21",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 967.4047000007704,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2403.14403v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-22",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 954.36840003822,
+          "top_files": [
+            "2309.15217v2.pdf",
+            "2311.09476v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-23",
+          "category": "unanswerable",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1005.0414999714121,
+          "top_files": [
+            "2212.03533v2.pdf",
+            "2311.09476v2.pdf",
+            "2312.06648v3.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-24",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1058.6475000018254,
+          "top_files": [
+            "2312.06648v3.pdf",
+            "2212.03533v2.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-25",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1035.7969000469893,
+          "top_files": [
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf",
+            "2402.03216v5.pdf"
+          ],
+          "scores": {}
+        },
+        {
+          "id": "research-test-26",
+          "category": "adversarial",
+          "route_expected": "docs",
+          "route_predicted": "docs",
+          "latency_ms": 1006.1721000820398,
+          "top_files": [
+            "2401.05856v1.pdf",
+            "2311.09476v2.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "scores": {}
+        }
+      ],
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.75,
+          "ci_low": 0.5555555555555556,
+          "ci_high": 0.9166666666666666
+        },
+        "mrr_at_10": {
+          "mean": 0.566358024691358,
+          "ci_low": 0.3919753086419753,
+          "ci_high": 0.7268518518518519
+        },
+        "ndcg_at_10": {
+          "mean": 0.6315308782663506,
+          "ci_low": 0.48047239447199414,
+          "ci_high": 0.780083420838435
+        },
+        "doc_recall_at_5": {
+          "mean": 0.9722222222222222,
+          "ci_low": 0.9166666666666666,
+          "ci_high": 1.0
+        },
+        "route_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      },
+      "by_category": {
+        "factual": {
+          "recall_at_5": 0.8125,
+          "mrr_at_10": 0.6059027777777778,
+          "ndcg_at_10": 0.6862939375974856,
+          "doc_recall_at_5": 1.0,
+          "count": 16.0
+        },
+        "multi_hop": {
+          "recall_at_5": 0.25,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.19342640361727081,
+          "doc_recall_at_5": 0.75,
+          "count": 2.0
+        }
+      },
+      "rerank_modes": {
+        "flashrank": 26
+      },
+      "latency_ms": {
+        "p50": 1005.0414999714121,
+        "p95": 1074.7667999239638
+      }
+    }
+  ]
+}
