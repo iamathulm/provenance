@@ -22,6 +22,17 @@ class Settings(BaseSettings):
     )
     qdrant_url: str = "http://127.0.0.1:6333"
     groq_api_key: SecretStr | None = None
+    groq_base_url: str = "https://api.groq.com/openai/v1"
+    # Answer models in preference order; the next one is used when the first has no quota left.
+    answer_models: list[str] = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b"]
+    sql_model: str = "openai/gpt-oss-20b"
+    model_requests_per_minute: int = 30  # Groq free plan, per model
+    model_tokens_per_minute: int = 8_000
+    llm_timeout_s: float = 30.0
+    llm_max_wait_s: float = 8.0  # queue this long for free-tier quota before giving up
+    # off: call Groq; replay: answer only from recorded cassettes; record: call Groq and save.
+    llm_cassettes: Literal["off", "replay", "record"] = "off"
+    llm_cassette_dir: Path = REPO_ROOT / "eval" / "cassettes"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     demo_mode: bool = True
 
