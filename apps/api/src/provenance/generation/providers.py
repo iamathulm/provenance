@@ -24,6 +24,14 @@ MODEL_OPTIONS: Mapping[str, Mapping[str, Any]] = {
     "openai/gpt-oss-120b": {"reasoning_effort": "low", "include_reasoning": False},
     "openai/gpt-oss-20b": {"reasoning_effort": "low", "include_reasoning": False},
 }
+# Reasoning models spend hidden tokens out of the same completion budget before any answer
+# text; without headroom a capped answer can come back empty.
+REASONING_HEADROOM_TOKENS = 512
+
+
+def reasoning_headroom(model: str) -> int:
+    effort = MODEL_OPTIONS.get(model, {}).get("reasoning_effort", "none")
+    return 0 if effort == "none" else REASONING_HEADROOM_TOKENS
 
 
 @dataclass(frozen=True)
@@ -44,7 +52,7 @@ class ChatRequest:
         body: dict[str, Any] = {
             "model": model,
             "messages": [{"role": m.role, "content": m.content} for m in self.messages],
-            "max_completion_tokens": self.max_tokens,
+            "max_completion_tokens": self.max_tokens + reasoning_headroom(model),
             "temperature": self.temperature,
             # Groq does not stream structured outputs, so JSON-schema calls arrive in one piece.
             "stream": self.json_schema is None,

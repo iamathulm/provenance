@@ -29,7 +29,7 @@ from provenance.generation.citations import ABSTENTION, CitedSource, split_sente
 from provenance.generation.client import LLMClient, StreamEnd
 from provenance.generation.context import Source, pack_chunks, rows_source
 from provenance.generation.prompts import Prompt
-from provenance.generation.providers import ChatMessage, ChatRequest, Usage
+from provenance.generation.providers import ChatMessage, ChatRequest, LLMFailedError, Usage
 from provenance.guardrails.guards import (
     GuardrailDecision,
     check_context,
@@ -259,6 +259,8 @@ class Answerer:
             for sentence in streamed.flush():
                 yield TokenEvent(sentence)
         guardrails += streamed.decisions
+        if not streamed.draft.strip():
+            raise LLMFailedError("The model returned an empty answer. Ask again.")
         if streamed.blocked:
             yield FinalEvent(
                 Answer(
@@ -283,6 +285,7 @@ class Answerer:
                 verify,
                 streamed.draft,
                 sources,
+                question=checked.question,
                 scorer=self._deps.reranker.score,
                 support_min=settings.citation_support_min,
                 lexical_min=settings.citation_lexical_min,

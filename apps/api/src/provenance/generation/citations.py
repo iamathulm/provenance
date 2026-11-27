@@ -13,6 +13,7 @@ survives, the answer abstains instead of guessing.
 """
 
 import re
+import unicodedata
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 
@@ -120,25 +121,27 @@ def lexical_support(claim: str, passage: str) -> float:
     return len(words & _content_words(passage)) / len(words) if words else 0.0
 
 
-def _numbers_supported(claim: str, passage: str) -> bool:
-    found = {n.replace(",", "") for n in _NUMBER.findall(claim)}
-    available = {n.replace(",", "") for n in _NUMBER.findall(passage)}
-    return bool(found) and found <= available
+def _numbers(text: str) -> set[str]:
+    return {n.replace(",", "") for n in _NUMBER.findall(text)}
 
 
 def _supported(
     claim: str,
     sources: Sequence[Source],
+    question: str,
     scorer: Scorer | None,
     support_min: float,
     lexical_min: float,
 ) -> float | None:
-    """The claim's support score if it clears the bar for the method used, else None."""
-    if _NUMBER.search(claim) and not _numbers_supported(claim, " ".join(s.text for s in sources)):
+    """The claim's support score if it clears the bar for the method used, else None.
+
+    Numbers a claim restates from the question ("S1 tickets in Q3 2026") need no source."""
+    claimed = _numbers(claim)
+    if claimed - _numbers(question) - _numbers(" ".join(s.text for s in sources)):
         return None
     rows = [s for s in sources if s.kind == "rows"]
-    if any(_numbers_supported(claim, s.text) for s in rows):
-        return 1.0
+    if any(claimed & _numbers(s.text) for s in rows):
+        return 1.0  # the claim states a figure the SQL result computed
     passages = [s.text for s in sources if s.kind == "chunk"]
     if passages and scorer is not None:
         score = _cross_encoder(scorer, claim, passages)
@@ -160,12 +163,14 @@ def verify(
     answer: str,
     sources: Sequence[Source],
     *,
+    question: str,
     scorer: Scorer | None,
     support_min: float,
     lexical_min: float,
 ) -> VerifiedAnswer:
     """Keep supported, cited sentences; abstain when none remain. `lexical_min` applies when the
     cross-encoder is unavailable and support is measured by word overlap."""
+    answer = unicodedata.normalize("NFKC", answer)  # e.g. narrow no-break spaces from the model
     if not answer.strip() or answer.strip().upper().startswith(ABSTAIN_MARKER):
         return VerifiedAnswer(ABSTENTION, abstained=True)
     by_id = {s.id: s for s in sources}
@@ -178,7 +183,7 @@ def verify(
         if not cited_sources or not claim:
             removed += 1
             continue
-        score = _supported(claim, cited_sources, scorer, support_min, lexical_min)
+        score = _supported(claim, cited_sources, question, scorer, support_min, lexical_min)
         if score is None:
             removed += 1
             continue

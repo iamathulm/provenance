@@ -80,7 +80,9 @@ def test_citation_verifier() -> None:
         "Nobody cited this."
     )
 
-    result = verify(answer, SOURCES, scorer=overlap_scorer, support_min=0.3, lexical_min=0.6)
+    result = verify(
+        answer, SOURCES, question="", scorer=overlap_scorer, support_min=0.3, lexical_min=0.6
+    )
 
     assert result.text == (
         "Land within 90 seconds after a battery fault [S1]. "
@@ -93,7 +95,9 @@ def test_citation_verifier() -> None:
 
 @pytest.mark.parametrize("answer", ["NO_ANSWER", "", "Pilots love drones [S9].", "Unrelated [S1]."])
 def test_nothing_supported_abstains(answer: str) -> None:
-    result = verify(answer, SOURCES, scorer=overlap_scorer, support_min=0.5, lexical_min=0.6)
+    result = verify(
+        answer, SOURCES, question="", scorer=overlap_scorer, support_min=0.5, lexical_min=0.6
+    )
 
     assert result.abstained
     assert result.text == ABSTENTION
@@ -107,9 +111,35 @@ def test_reranker_failure_falls_back_to_word_overlap() -> None:
     kept = verify(
         "Land within 90 seconds at the nearest safe location [S1].",
         SOURCES,
+        question="",
         scorer=broken,
         support_min=0.99,
         lexical_min=0.6,
     )
 
     assert not kept.abstained
+
+
+def test_numbers_restated_from_the_question_and_model_spacing() -> None:
+    rows = Source("S1", "rows", "Tickets", "SQL", "num_tickets\n3", DOC)
+    question = "How many support tickets in Q3 2026 were severity S1?"
+
+    restated = verify(
+        "There were 3 support tickets with severity\u202fS1 in Q3\u202f2026 [S1]",
+        [rows],
+        question=question,
+        scorer=overlap_scorer,
+        support_min=0.5,
+        lexical_min=0.6,
+    )
+    invented = verify(
+        "There were 4 support tickets with severity S1 in Q3 2026 [S1].",
+        [rows],
+        question=question,
+        scorer=overlap_scorer,
+        support_min=0.5,
+        lexical_min=0.6,
+    )
+
+    assert restated.text == "There were 3 support tickets with severity S1 in Q3 2026 [S1]"
+    assert invented.abstained
