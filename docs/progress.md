@@ -116,3 +116,30 @@ instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev
   the index (`GoldMissingError`). Tune on `dev`, report and gate on `test`.
 - First search after start loads FastEmbed + FlashRank from disk; the embed stage timeout is
   60 s for that reason. P7 should warm both at startup.
+
+## P4 — Generation, grounding, guardrails
+
+**Done:**
+- **Models and calls:** Groq over httpx with streaming and typed failures; a free-tier token limiter with per-model failover; cassette record and replay.
+- **Grounding:** versioned prompts (`prompts/`); `<source>` packing; a citation verifier (FlashRank support plus numeric fidelity, abstains when nothing is supported).
+- **Guardrails:** local input, context and output guards, including the poisoned vendor FAQ quarantine. The answer streams one checked sentence at a time.
+- **Answer pipeline:** one model call per document answer, two per table answer; SQL errors degrade to a documents-only answer.
+- **Chat API:** conversations with SSE chat, and `GET /sources/{chunk_id}` returning 410 once a source is revoked.
+- **Telemetry:** `provider_calls` and `guardrail_events` tables.
+- **Docs:** ADR-0007 and ADR-0008, and a draft `docs/budget.md`.
+
+**Measured (live, Groq free tier, laptop):**
+- Document and table answers are correct and cited. Time to first visible text is 1.4–3.2 s; the table route makes 2 calls.
+- The poisoned FAQ is quarantined, and the speaker-note question (Peregrine Aero) abstains.
+- The relevance floor of 0.05 lets half of the unanswerable golden questions skip the model entirely.
+- **Known gap:** the verifier scores relevance, not entailment. A fluent wrong gpt-oss answer about how Ragas measures answer relevance passed. P5's RAGAS faithfulness measures this.
+
+**Gotchas for later phases:**
+- **Building an `Answerer`:** build it per request from `app.state` (`llm`, `prompts`, `embedder`, `chunk_index`, `reranker`, `telemetry`). Tests swap `app.state.llm` for an `LLMClient` around `tests/generation/fakes.ScriptedProvider`.
+- **SSE answers:** they run in their own DB session, because the request session closes before streaming starts. After a rollback, don't touch ORM attributes; use plain ids.
+- **Cassettes:**
+  - They are keyed by the full request body. Any change to a prompt, the model options or the sources invalidates them.
+  - Re-record with `RECORD_CASSETTES=1` and a key in `.env`.
+  - Never put the key in `.env.example`; gitleaks blocks the commit.
+- **Free tier:** about 2 answers per minute per model, about 4 with the fallback. P7 load tests must report Groq throttling separately.
+- **gpt-oss quirks:** it emits ` ` spaces and drops final periods (the verifier NFKC-normalizes). Its reasoning needs 512 tokens of completion headroom.
