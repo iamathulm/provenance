@@ -22,6 +22,27 @@ class Settings(BaseSettings):
     )
     qdrant_url: str = "http://127.0.0.1:6333"
     groq_api_key: SecretStr | None = None
+    groq_base_url: str = "https://api.groq.com/openai/v1"
+    # Answer models in preference order; the next one is used when the first has no quota left.
+    answer_models: list[str] = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b"]
+    sql_model: str = "openai/gpt-oss-20b"
+    model_requests_per_minute: int = 30  # Groq free plan, per model
+    model_tokens_per_minute: int = 8_000
+    llm_timeout_s: float = 30.0
+    llm_max_wait_s: float = 8.0  # queue this long for free-tier quota before giving up
+    # off: call Groq; replay: answer only from recorded cassettes; record: call Groq and save.
+    llm_cassettes: Literal["off", "replay", "record"] = "off"
+    llm_cassette_dir: Path = REPO_ROOT / "eval" / "cassettes"
+    answer_max_tokens: int = 450
+    # Per user, so one person cannot spend the shared free quota for everyone.
+    questions_per_minute: int = 5
+    questions_per_hour: int = 60
+    context_max_sources: int = 6
+    context_max_words: int = 1_800  # ~2.4K tokens: one answer must fit the free 8K tokens/minute
+    citation_support_min: float = 0.5  # FlashRank score a cited sentence needs
+    citation_lexical_min: float = 0.6  # word-overlap fallback when the reranker is unavailable
+    # Below this top rerank score the workspace has nothing on the question: abstain, no LLM call.
+    relevance_floor: float = 0.05  # every answerable golden question scored >= 0.08
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     demo_mode: bool = True
 

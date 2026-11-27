@@ -9,7 +9,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from provenance.core.context import RequestContext
 from provenance.core.pipeline import SpanRecorder, StageOutcome
 from provenance.db.base import Base
-from provenance.observability.models import RequestLog, StageSpan
+from provenance.generation.client import ProviderCall
+from provenance.guardrails.guards import GuardrailDecision
+from provenance.observability.models import (
+    GuardrailEvent,
+    ProviderCallLog,
+    RequestLog,
+    StageSpan,
+)
 
 log = structlog.get_logger()
 
@@ -56,6 +63,36 @@ class TelemetryRecorder(SpanRecorder):
                 user_id=user_id,
             )
         )
+
+    async def record_provider_call(self, ctx: RequestContext, call: ProviderCall) -> None:
+        await self._write(
+            ProviderCallLog(
+                correlation_id=ctx.correlation_id,
+                workspace_id=ctx.workspace_id,
+                provider=call.provider,
+                model=call.model,
+                purpose=call.purpose,
+                status=call.status,
+                duration_ms=call.duration_ms,
+                prompt_tokens=call.prompt_tokens,
+                completion_tokens=call.completion_tokens,
+            )
+        )
+
+    async def record_guardrails(
+        self, ctx: RequestContext, decisions: list[GuardrailDecision]
+    ) -> None:
+        for decision in decisions:
+            await self._write(
+                GuardrailEvent(
+                    correlation_id=ctx.correlation_id,
+                    workspace_id=ctx.workspace_id,
+                    name=decision.name,
+                    stage=decision.stage,
+                    action=decision.action,
+                    rule=decision.rule,
+                )
+            )
 
     async def _write(self, row: Base) -> None:
         try:

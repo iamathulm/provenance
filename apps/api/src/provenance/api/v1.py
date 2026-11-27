@@ -3,6 +3,7 @@
 from fastapi import APIRouter
 
 from provenance.auth.router import router as auth_router
+from provenance.conversations.router import router as conversations_router
 from provenance.documents.router import router as documents_router
 from provenance.profiles.router import router as profiles_router
 from provenance.search.router import router as search_router
@@ -18,3 +19,4 @@ router.include_router(storage_router)
 router.include_router(documents_router)
 router.include_router(tables_router)
 router.include_router(search_router)
+router.include_router(conversations_router)

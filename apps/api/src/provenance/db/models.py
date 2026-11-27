@@ -10,6 +10,7 @@ MODEL_MODULES = (
     "provenance.documents.models",
     "provenance.ingest.models",
     "provenance.audit.models",
+    "provenance.conversations.models",
 )
 
 
