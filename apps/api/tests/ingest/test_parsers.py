@@ -150,6 +150,7 @@ def test_xlsx_values_and_row_anchors(company: DomainProfile) -> None:
     assert table.num_rows == 2  # empty row skipped
     assert table.schema.field("revenue").type == pa.int64()
     assert table.schema.field("margin").type == pa.float64()
+    assert table.column("_row").to_pylist() == [2, 4]  # spreadsheet rows, blank row 3 skipped
     group = parsed.blocks[-1]
     assert group.anchor.label == "Q3 · rows 2–4"
     assert "Row 4: region: APAC; revenue: 98000; margin: 0.27" in group.text
