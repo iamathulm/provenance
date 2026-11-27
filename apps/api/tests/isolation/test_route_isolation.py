@@ -18,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
 from provenance.core.config import Settings
+from provenance.documents.models import Chunk
 from provenance.documents.service import upload_document
 from provenance.storage.service import put_file
 from provenance.storage.signing import sign
@@ -30,7 +31,15 @@ PUBLIC_OPERATIONS = {
     ("POST", "/v1/auth/logout"),
     ("POST", "/v1/auth/demo-login"),
 }
-KNOWN_PARAMETERS = {"workspace_id", "file_id", "document_id", "expires", "signature"}
+KNOWN_PARAMETERS = {
+    "workspace_id",
+    "file_id",
+    "document_id",
+    "conversation_id",
+    "chunk_id",
+    "expires",
+    "signature",
+}
 PROBE_BODY = {"name": "isolation probe"}
 
 
@@ -79,6 +88,8 @@ class TenantA:
     workspace_name: str
     file_id: uuid.UUID
     document_id: uuid.UUID
+    conversation_id: uuid.UUID
+    chunk_id: uuid.UUID
 
 
 @pytest.fixture
@@ -102,9 +113,29 @@ async def tenant_a(client: AsyncClient, db: AsyncSession, settings: Settings) ->
         b"Tenant A acquisition plan.",
         settings,
     )
+    chunk = Chunk(
+        version_id=document.latest.id,
+        workspace_id=uuid.UUID(workspace["id"]),
+        document_id=document.document.id,
+        ordinal=0,
+        text="Tenant A acquisition plan.",
+        token_count=4,
+        anchor_kind="none",
+        anchor_label="Tenant A",
+    )
+    db.add(chunk)
     await db.commit()
+    conversation = (
+        await client.post(f"/v1/workspaces/{workspace['id']}/conversations", json={})
+    ).json()
     return TenantA(
-        uuid.UUID(user["id"]), uuid.UUID(workspace["id"]), name, stored.id, document.document.id
+        uuid.UUID(user["id"]),
+        uuid.UUID(workspace["id"]),
+        name,
+        stored.id,
+        document.document.id,
+        uuid.UUID(conversation["id"]),
+        chunk.id,
     )
 
 
@@ -119,6 +150,8 @@ def _values(tenant: TenantA, settings: Settings) -> dict[str, Any]:
         "workspace_id": tenant.workspace_id,
         "file_id": tenant.file_id,
         "document_id": tenant.document_id,
+        "conversation_id": tenant.conversation_id,
+        "chunk_id": tenant.chunk_id,
         "expires": link.expires,
         "signature": link.signature,
     }
