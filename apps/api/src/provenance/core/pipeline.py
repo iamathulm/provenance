@@ -11,6 +11,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Protocol
 
 from provenance.core.context import RequestContext
+from provenance.observability.tracing import stage_span
 
 StageOutcome = Literal["ok", "fallback", "error"]
 
@@ -43,24 +44,25 @@ class Pipeline:
         self._recorder = recorder
 
     async def run_stage[In, Out](self, ctx: RequestContext, stage: Stage[In, Out], data: In) -> Out:
-        started = time.perf_counter()
-        try:
-            async with asyncio.timeout(stage.timeout_s):
-                result = await stage.run(ctx, data)
-        except Exception as error:
+        with stage_span(stage.name, ctx):
+            started = time.perf_counter()
             try:
                 async with asyncio.timeout(stage.timeout_s):
-                    recovered = await stage.fallback(ctx, data, error)
-            except Exception as fallback_error:
-                await self._record(ctx, stage.name, "error", started, error)
-                if fallback_error is error:  # default fallback re-raised the original
-                    raise
-                raise error from fallback_error
-            ctx.degraded.add(stage.name)
-            await self._record(ctx, stage.name, "fallback", started, error)
-            return recovered
-        await self._record(ctx, stage.name, "ok", started, None)
-        return result
+                    result = await stage.run(ctx, data)
+            except Exception as error:
+                try:
+                    async with asyncio.timeout(stage.timeout_s):
+                        recovered = await stage.fallback(ctx, data, error)
+                except Exception as fallback_error:
+                    await self._record(ctx, stage.name, "error", started, error)
+                    if fallback_error is error:  # default fallback re-raised the original
+                        raise
+                    raise error from fallback_error
+                ctx.degraded.add(stage.name)
+                await self._record(ctx, stage.name, "fallback", started, error)
+                return recovered
+            await self._record(ctx, stage.name, "ok", started, None)
+            return result
 
     async def _record(
         self,

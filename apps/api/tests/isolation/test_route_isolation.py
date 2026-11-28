@@ -26,6 +26,7 @@ from provenance.workspaces.models import Workspace
 
 PUBLIC_OPERATIONS = {
     ("GET", "/healthz"),
+    ("GET", "/metrics"),
     ("POST", "/v1/auth/register"),
     ("POST", "/v1/auth/login"),
     ("POST", "/v1/auth/logout"),

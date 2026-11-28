@@ -42,6 +42,7 @@ from provenance.guardrails.guards import (
     check_input,
     check_output,
 )
+from provenance.observability.tracing import stage_span
 from provenance.retrieval.rerank import Reranker
 from provenance.retrieval.router import Route, route_query
 from provenance.retrieval.search import Searcher, SearchRequest
@@ -115,7 +116,8 @@ class Answerer:
         outcome: StageOutcome = "ok"
         error_class = None
         try:
-            yield
+            with stage_span(stage, ctx):
+                yield
         except Exception as error:
             outcome, error_class = "error", type(error).__name__
             raise

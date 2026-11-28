@@ -72,6 +72,8 @@ class Settings(BaseSettings):
     # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
     trusted_proxies: list[str] = []
     profiles_dir: Path = REPO_ROOT / "profiles"
+    # Send OpenTelemetry spans to this OTLP/HTTP collector (e.g. http://collector:4318).
+    otel_exporter_otlp_endpoint: str | None = None
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:

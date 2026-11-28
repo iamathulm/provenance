@@ -7,6 +7,7 @@ database session because the response outlives the request's dependency-scoped s
 
 import asyncio
 import json
+import time
 import uuid
 from collections.abc import AsyncIterator, Callable
 from datetime import datetime
@@ -194,6 +195,7 @@ async def ask(
     telemetry = request.app.state.telemetry
 
     async def events() -> AsyncIterator[str]:
+        started = time.perf_counter()
         async with session_factory() as session:
             chat = await session.get_one(Conversation, conversation.id)
             history = await recent_exchanges(session, chat)
@@ -213,6 +215,8 @@ async def ask(
                         session.add(message)
                         await session.commit()
                         await telemetry.record_guardrails(ctx, event.answer.guardrails)
+                        elapsed_ms = (time.perf_counter() - started) * 1000
+                        telemetry.record_answer(event.answer.status, elapsed_ms)
                         yield _sse("final", _message_out(message).model_dump(mode="json"))
             except asyncio.CancelledError:
                 # The client went away mid-answer: leave a record so the question is not orphaned.
