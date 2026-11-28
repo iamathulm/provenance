@@ -28,6 +28,7 @@ from provenance.answers.pipeline import (
 )
 from provenance.api.dependencies import AppSettings
 from provenance.auth.dependencies import CurrentUser
+from provenance.conversations.feedback import Rating, ratings_by_message, set_feedback
 from provenance.conversations.models import Conversation, Message
 from provenance.conversations.service import (
     answer_message,
@@ -78,7 +79,21 @@ class MessageOut(BaseModel):
     sql: str | None
     model: str | None
     prompt_version: str | None
+    latency_ms: float | None
+    ttft_ms: float | None
+    feedback: Rating | None  # the current user's rating
     created_at: datetime
+
+
+class FeedbackIn(BaseModel):
+    rating: Rating
+    comment: str | None = Field(default=None, max_length=500)
+
+
+class FeedbackOut(BaseModel):
+    message_id: uuid.UUID
+    rating: Rating
+    comment: str | None
 
 
 class SourceOut(BaseModel):
@@ -97,7 +112,7 @@ def _conversation_out(conversation: Conversation) -> ConversationOut:
     )
 
 
-def _message_out(message: Message) -> MessageOut:
+def _message_out(message: Message, feedback: str | None = None) -> MessageOut:
     return MessageOut(
         id=message.id,
         role=message.role,
@@ -110,6 +125,9 @@ def _message_out(message: Message) -> MessageOut:
         sql=message.sql,
         model=message.model,
         prompt_version=message.prompt_version,
+        latency_ms=message.latency_ms,
+        ttft_ms=message.ttft_ms,
+        feedback=feedback,
         created_at=message.created_at,
     )
 
@@ -170,7 +188,22 @@ async def messages(
     conversation_id: uuid.UUID, workspace: OwnedWorkspace, user: CurrentUser, db: DbSession
 ) -> list[MessageOut]:
     conversation = await get_conversation(db, workspace, user, conversation_id)
-    return [_message_out(m) for m in await list_messages(db, conversation)]
+    ratings = await ratings_by_message(db, conversation, user)
+    return [_message_out(m, ratings.get(m.id)) for m in await list_messages(db, conversation)]
+
+
+@router.put("/conversations/{conversation_id}/messages/{message_id}/feedback")
+async def feedback(
+    conversation_id: uuid.UUID,
+    message_id: uuid.UUID,
+    body: FeedbackIn,
+    workspace: OwnedWorkspace,
+    user: CurrentUser,
+    db: DbSession,
+) -> FeedbackOut:
+    conversation = await get_conversation(db, workspace, user, conversation_id)
+    saved = await set_feedback(db, conversation, user, message_id, body.rating, body.comment)
+    return FeedbackOut(message_id=saved.message_id, rating=body.rating, comment=saved.comment)
 
 
 @router.post(
@@ -205,18 +238,22 @@ async def ask(
                 chat.title = question[:120]
             await session.commit()
             try:
+                ttft_ms: float | None = None
                 async for event in answerer.run(session, ctx, workspace.id, body.question, history):
                     if isinstance(event, StageEvent):
                         yield _sse("stage", {"stage": event.stage})
                     elif isinstance(event, TokenEvent):
+                        if ttft_ms is None:
+                            ttft_ms = (time.perf_counter() - started) * 1000
                         yield _sse("token", {"text": event.text})
                     elif isinstance(event, FinalEvent):
                         message = answer_message(chat, event.answer, ctx.correlation_id)
+                        message.latency_ms = (time.perf_counter() - started) * 1000
+                        message.ttft_ms = ttft_ms
                         session.add(message)
                         await session.commit()
                         await telemetry.record_guardrails(ctx, event.answer.guardrails)
-                        elapsed_ms = (time.perf_counter() - started) * 1000
-                        telemetry.record_answer(event.answer.status, elapsed_ms)
+                        telemetry.record_answer(event.answer.status, message.latency_ms)
                         yield _sse("final", _message_out(message).model_dump(mode="json"))
             except asyncio.CancelledError:
                 # The client went away mid-answer: leave a record so the question is not orphaned.

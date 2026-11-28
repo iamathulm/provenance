@@ -7,7 +7,8 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
 
 from provenance.observability import tracing
-from tests.conversations.test_conversations_api import RUNBOOK, ask, use_llm
+from tests.conversations.conftest import RUNBOOK
+from tests.conversations.test_conversations_api import ask, use_llm
 from tests.ingest.harness import Harness
 
 QUESTION = "battery fault: when to land and swap the pack? I'm jane.doe@example.com"

@@ -15,7 +15,6 @@ from provenance.observability.models import GuardrailEvent, ProviderCallLog
 from tests.generation.fakes import Reply, ScriptedProvider
 from tests.ingest.harness import Harness
 
-RUNBOOK = b"# Battery fault\n\nLand within 90 seconds and swap the pack.\n"
 QUESTION = "battery fault: when to land and swap the pack?"
 
 
@@ -33,16 +32,6 @@ def parse_sse(body: str) -> list[tuple[str, dict[str, Any]]]:
         lines = dict(line.split(": ", 1) for line in block.splitlines())
         events.append((lines["event"], json.loads(lines["data"])))
     return events
-
-
-@pytest.fixture
-async def conversation(client: AsyncClient, harness: Harness) -> str:
-    await client.post("/v1/auth/demo-login", json={"account": "primary"})
-    await harness.upload("runbook.txt", RUNBOOK)
-    await harness.worker.run_until_idle()
-    created = await client.post(f"/v1/workspaces/{harness.workspace_id}/conversations", json={})
-    assert created.status_code == 201
-    return f"/v1/workspaces/{harness.workspace_id}/conversations/{created.json()['id']}"
 
 
 async def ask(client: AsyncClient, conversation: str, question: str) -> list[tuple[str, Any]]:

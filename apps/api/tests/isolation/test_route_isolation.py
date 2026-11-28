@@ -17,6 +17,7 @@ from httpx import AsyncClient, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.api.app import create_app
+from provenance.conversations.models import Message
 from provenance.core.config import Settings
 from provenance.documents.models import Chunk
 from provenance.documents.service import upload_document
@@ -38,6 +39,7 @@ KNOWN_PARAMETERS = {
     "document_id",
     "conversation_id",
     "chunk_id",
+    "message_id",
     "expires",
     "signature",
 }
@@ -91,6 +93,7 @@ class TenantA:
     document_id: uuid.UUID
     conversation_id: uuid.UUID
     chunk_id: uuid.UUID
+    message_id: uuid.UUID
 
 
 @pytest.fixture
@@ -129,6 +132,14 @@ async def tenant_a(client: AsyncClient, db: AsyncSession, settings: Settings) ->
     conversation = (
         await client.post(f"/v1/workspaces/{workspace['id']}/conversations", json={})
     ).json()
+    message = Message(
+        conversation_id=uuid.UUID(conversation["id"]),
+        role="assistant",
+        content="Tenant A acquisition plan.",
+        status="answered",
+    )
+    db.add(message)
+    await db.commit()
     return TenantA(
         uuid.UUID(user["id"]),
         uuid.UUID(workspace["id"]),
@@ -137,6 +148,7 @@ async def tenant_a(client: AsyncClient, db: AsyncSession, settings: Settings) ->
         document.document.id,
         uuid.UUID(conversation["id"]),
         chunk.id,
+        message.id,
     )
 
 
@@ -153,6 +165,7 @@ def _values(tenant: TenantA, settings: Settings) -> dict[str, Any]:
         "document_id": tenant.document_id,
         "conversation_id": tenant.conversation_id,
         "chunk_id": tenant.chunk_id,
+        "message_id": tenant.message_id,
         "expires": link.expires,
         "signature": link.signature,
     }

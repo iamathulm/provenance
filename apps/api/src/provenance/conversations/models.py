@@ -4,7 +4,7 @@ citations, guardrail decisions, route, SQL and the model and prompt version that
 import uuid
 from typing import Any
 
-from sqlalchemy import ForeignKey, Integer, String, Text
+from sqlalchemy import Float, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -43,3 +43,20 @@ class Message(TimestampMixin, Base):
     prompt_tokens: Mapped[int | None] = mapped_column(Integer)
     completion_tokens: Mapped[int | None] = mapped_column(Integer)
     correlation_id: Mapped[str | None] = mapped_column(String(64))
+    latency_ms: Mapped[float | None] = mapped_column(Float)  # question to final answer
+    ttft_ms: Mapped[float | None] = mapped_column(Float)  # question to first visible text
+
+
+class Feedback(TimestampMixin, Base):
+    """One rating per user per answer; a later rating replaces the earlier one."""
+
+    __tablename__ = "feedback"
+    __table_args__ = (UniqueConstraint("message_id", "user_id"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    message_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("messages.id", ondelete="CASCADE"), index=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    rating: Mapped[str] = mapped_column(String(4))  # up | down
+    comment: Mapped[str | None] = mapped_column(Text)  # PII-redacted
