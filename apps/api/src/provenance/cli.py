@@ -8,7 +8,7 @@ import time
 from collections.abc import Coroutine, Sequence
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, get_args
+from typing import Any, TextIO, get_args
 
 import httpx
 from alembic import command
@@ -67,6 +67,13 @@ PROMPT_GUARD_CASSETTES = REPO_ROOT / "eval" / "cassettes" / "prompt_guard"
 def _run[T](coroutine: Coroutine[Any, Any, T]) -> T:
     # psycopg's async driver needs a selector event loop (Windows defaults to Proactor).
     return asyncio.run(coroutine, loop_factory=asyncio.SelectorEventLoop)
+
+
+def _print_report(text: str, stream: TextIO | None = None) -> None:
+    """Print a report; characters a legacy console cannot encode (e.g. cp1252) become '?'."""
+    out = stream or sys.stdout
+    encoding = out.encoding or "utf-8"
+    out.write(text.encode(encoding, errors="replace").decode(encoding) + "\n")
 
 
 def _say(message: str) -> None:
@@ -151,7 +158,7 @@ async def _eval(
         await engine.dispose()
     metadata = run_metadata(golden_sets, settings)
     markdown = to_markdown(reports, metadata)
-    print(markdown)
+    _print_report(markdown)
     if out is not None:
         out.mkdir(parents=True, exist_ok=True)
         write_report(out, f"retrieval-{split}", to_json(reports, metadata), markdown)
@@ -185,7 +192,7 @@ async def _eval_answers(
         "limit": limit,
     }
     markdown = answers_markdown(reports, metadata)
-    print(markdown)
+    _print_report(markdown)
     if out is not None:
         write_report(out, f"answers-{split}", answers_json(reports, metadata), markdown)
     return 0
@@ -203,7 +210,7 @@ async def _eval_guardrails(out: Path | None) -> int:
         report = await evaluate_guardrails(labeled_questions(), classifiers)
     metadata = {"created_at": _now(), "git_sha": run_metadata([], settings)["git_sha"]}
     markdown = guardrails_markdown(report, metadata)
-    print(markdown)
+    _print_report(markdown)
     if out is not None:
         write_report(out, "guardrails", guardrails_json(report, metadata), markdown)
     return 0
@@ -239,7 +246,7 @@ async def _optimize(
         "test_limit": test_limit,
     }
     markdown = optimization_markdown(result, metadata)
-    print(markdown)
+    _print_report(markdown)
     write_report(out, "prompt-optimization", optimization_json(result, metadata), markdown)
     (REPO_ROOT / "docs" / "prompt-optimization.md").write_text(
         markdown, encoding="utf-8", newline="\n"

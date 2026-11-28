@@ -71,3 +71,16 @@ def test_worker_until_idle_exits_on_empty_queue(monkeypatch: pytest.MonkeyPatch)
     finally:
         get_settings.cache_clear()
         QdrantClient(url=TEST_QDRANT_URL).delete_collection("test_cli_worker")
+
+
+def test_reports_print_on_a_legacy_windows_console() -> None:
+    import io
+
+    from provenance.cli import _print_report
+
+    console = io.TextIOWrapper(io.BytesIO(), encoding="cp1252")
+
+    _print_report("Winner leads by ≥ 0.02 – kept", console)
+    console.flush()
+
+    assert console.buffer.getvalue().decode("cp1252").startswith("Winner leads by ? 0.02")
