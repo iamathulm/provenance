@@ -1,19 +1,47 @@
 # Evaluation report
 
 This is the current state of Provenance's measured quality. All numbers come from committed reports in `eval/reports/` and can be reproduced from the committed cassettes (answers, Prompt Guard). Judge scores are cached in the gitignored `.cache/ragas`, so reproducing faithfulness and relevancy needs a judge key:
-- `provenance eval --suite retrieval|answers|guardrails`
+- `provenance eval --suite retrieval|answers|sql|guardrails`
 - `provenance optimize`
 
-Means carry 95% bootstrap confidence intervals. The samples are small (10 items per domain and split for answers), so the intervals are wide, and they are shown here rather than hidden. Design and trade-offs: ADR-0004, ADR-0005, ADR-0008, ADR-0009.
+Means carry 95% bootstrap confidence intervals. The samples are small (10 items per domain and split for answers), so the intervals are wide, and they are shown here rather than hidden. Design and trade-offs: ADR-0004, ADR-0005, ADR-0006, ADR-0008, ADR-0009.
 
 ## Retrieval (held-out test split, `hybrid_rerank`)
 
 | Domain | Recall@5 | MRR@10 | nDCG@10 |
 |---|---|---|---|
-| Company | 0.96 (0.88–1.00) | 0.85 (0.73–0.95) | 0.88 (0.79–0.96) |
-| Research | 0.75 (0.56–0.92) | 0.57 (0.39–0.73) | 0.63 (0.48–0.78) |
+| Company | 0.92 (0.80–1.00) | 0.85 (0.72–0.95) | 0.88 (0.79–0.96) |
+| Research | 0.81 (0.61–0.94) | 0.58 (0.41–0.74) | 0.65 (0.50–0.80) |
 
-The proposed targets are recall@5 ≥ 0.80 and MRR@10 ≥ 0.65. **Company meets them; research does not.** Most research misses are multi-hop questions that need passages from two papers in the top 5. The full ablation (dense, sparse, hybrid, rerank) is in `eval/reports/retrieval-*.md`.
+The proposed targets are recall@5 ≥ 0.80 and MRR@10 ≥ 0.65. **Company meets both. Research meets recall but misses MRR.**
+
+- **Where research misses:** 2 of the 4 test misses are single-paper factual questions where the right paper is found but the evidence passage is not in the top 5. The other 2 are multi-hop questions that need two papers.
+- **Reranker passage length (P5.1):** the reranker used to truncate passages at 256 tokens while research chunks run to 320, so the end of a chunk was never scored. A dev-only grid picked 384 tokens and 20 candidates:
+
+  | Tokens / candidates | Research R@5 | Research MRR | Company R@5 | Company MRR | p95 ms |
+  |---|---|---|---|---|---|
+  | 256 / 20 (previous) | 0.750 | 0.579 | 0.920 | 0.864 | 1199 |
+  | 256 / 30 | 0.750 | 0.569 | 0.960 | 0.865 | 1681 |
+  | **384 / 20 (chosen)** | 0.806 | 0.632 | 0.920 | 0.864 | 2112 |
+  | 384 / 30 | 0.806 | 0.662 | 0.920 | 0.864 | 2977 |
+  | 512 / 20 | 0.833 | 0.634 | 0.960 | 0.842 | 3196 |
+  | 512 / 30 | 0.833 | 0.591 | 0.960 | 0.842 | 3206 |
+
+  512 tokens breaks the 3 s p95 search budget, and 384 / 30 sits right at it. On held-out test, research recall@5 went from 0.75 to 0.81 and MRR@10 from 0.57 to 0.58. Company recall@5 went from 0.96 to 0.92 (one item). Search p95 on the laptop CPU rose from about 1.3 s to about 2.1 s.
+- **Ablation:** the full comparison (dense, sparse, hybrid, rerank) is in `eval/reports/retrieval-*.md`. On company, plain hybrid without reranking scores higher on test (0.96 / 0.90) at a fraction of the latency. That is a candidate per-profile setting.
+
+**Query routing** (company only; research has no tables): the rule-based router sends a question to documents, to tables, or to both. Superlatives such as "maximum" or "most" now count only together with a table chunk in the top 3. Route accuracy went from 0.76 to 0.91 on dev and from 0.67 to 0.79 on test. Every table question still reaches the SQL path. The remaining test misses route unanswerable or prose questions to both, because a table chunk ranks near the top. That costs one extra SQL call but doesn't change the answer.
+
+## SQL (company table questions, `openai/gpt-oss-20b`)
+
+| Split | Items | Execution accuracy |
+|---|---|---|
+| Dev | 4 | 1.00 |
+| Test | 5 | 1.00 |
+
+- **Execution accuracy:** the generated query, run through the guarded engine, returns the rows of a hand-written gold query. Row order, column names and extra columns are ignored.
+- **Target:** ≥ 0.80. It is met, but 9 items is a small sample.
+- **CI:** gates it on test from committed cassettes (floor 0.80).
 
 ## Answers (held-out test split, pinned prompt `answer.strict_citation`, judge `gemini-3.5-flash-lite`)
 
@@ -25,12 +53,13 @@ The proposed targets are recall@5 ≥ 0.80 and MRR@10 ≥ 0.65. **Company meets 
 | Domain | Faithfulness | Answer relevancy | Citation precision | Sentence coverage | Abstention recall | False abstentions | Injections blocked |
 |---|---|---|---|---|---|---|---|
 | Company | 0.82 (0.60–1.00) | 0.95 (0.91–0.99) | 1.00 | 1.00 | 1.00 | 0.00 | 1.00 |
-| Research | 1.00 (1.00–1.00) | 0.69 (0.33–0.95) | 1.00 | 0.90 (0.70–1.00) | 1.00 | 0.00 | 1.00 |
+| Research | 1.00 (1.00–1.00) | 0.64 (0.28–0.95) | 1.00 | 0.73 (0.53–0.93) | 1.00 | 0.00 | 1.00 |
 
 - **Faithfulness** (RAGAS) is the share of answer statements the cited sources support. The proposed target is ≥ 0.85: research meets it, and company's 0.82 has an interval that spans it.
+- **Research sentence coverage fell from 0.90 to 0.73 after the reranker change (P5.1):** the citation verifier scores support with the same cross-encoder, and on 3 multi-hop and factual answers it now drops one sentence that the judge still rates fully faithful. The verifier errs toward removing text, not keeping unsupported text. With 10 items this is within noise, but it is the next thing to watch together with research answer relevancy.
 - **Citation precision** is the share of cited documents that hold the gold evidence.
 - **Abstention recall** counts unanswerable questions correctly declined. **False abstentions** count answerable questions wrongly declined.
-- **Latency:** p50 is about 1.4–2.0 s. p95 is about 55 s, and that is free-tier queueing: evaluation waits out Groq's 8K tokens-per-minute limit instead of failing over, so the scores never depend on timing.
+- **Latency:** p50 is about 2.2–4.5 s. p95 is about 55 s, and that is free-tier queueing: evaluation waits out Groq's 8K tokens-per-minute limit instead of failing over, so the scores never depend on timing.
 
 ## Guardrails (all golden questions plus 22 known attacks)
 

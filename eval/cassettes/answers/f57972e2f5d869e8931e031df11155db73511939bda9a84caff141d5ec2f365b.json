@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "ARES requires a human preference validation set of approximately 150 annotated datapoints or more [S5][S6]. In contrast, the sampled annotation method used for comparison gathers 150 annotated datapoints from each mock RAG system [S3][S4]. ARES is significantly more data-efficient, requiring 78% less annotations than the baseline sampled annotation approach [S4][S6].",
+  "usage": {
+    "prompt_tokens": 2142,
+    "completion_tokens": 85
+  }
+}

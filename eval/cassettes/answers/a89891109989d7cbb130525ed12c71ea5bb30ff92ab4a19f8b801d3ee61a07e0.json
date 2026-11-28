@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The paper states that extensive evaluations were conducted on 56 datasets from the BEIR and MTEB benchmarks [S5]. The MTEB benchmark specifically includes 56 datasets in its English subset [S1][S3]. The BEIR benchmark evaluation covers 15 datasets that provide public downloads [S1].",
+  "usage": {
+    "prompt_tokens": 1857,
+    "completion_tokens": 67
+  }
+}

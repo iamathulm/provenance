@@ -183,3 +183,30 @@ instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev
   - The cache notice is `conversations.cache.CACHE_NOTICE`.
   - Analytics and operator payloads are plain dicts, so type them in the client from OpenAPI.
 - **P8 `/metrics`:** it's public; decide in P8 whether the cloud deploy exposes it.
+
+## P5.1: Quality gaps
+
+**Done:**
+- **SQL evaluation:** `provenance eval --suite sql` scores text-to-SQL execution accuracy against hand-written gold queries (`sql:` on company table items). CI gates it from committed cassettes.
+- **Router:** superlatives route to tables only with a table chunk in the top 3. The retrieval report lists each misrouted item with the reasons behind it.
+- **Reranker:** passages are scored up to 384 tokens instead of 256, so research chunks (up to 320 tokens) are no longer cut off. Chosen on a dev-only grid.
+- **Fixes:** operator emails match case-insensitively, and feedback is saved with one atomic upsert, so two ratings at once no longer fail.
+
+**Measured (held-out test):**
+
+| Metric | Before | After |
+|---|---|---|
+| SQL execution accuracy | not measured | 1.00 (5 items; dev 4/4) |
+| Company route accuracy | 0.67 | 0.79 (dev 0.76 → 0.91) |
+| Research recall@5 | 0.75 | 0.81 (meets 0.80) |
+| Research MRR@10 | 0.57 | 0.58 (misses 0.65) |
+| Company recall@5 | 0.96 | 0.92 |
+| Search p95 (laptop) | ~1.3 s | ~2.1 s |
+| Research sentence coverage | 0.90 | 0.73 (the verifier drops more sentences; faithfulness stays 1.00) |
+
+**Gotchas for later phases:**
+- **Gold SQL:** it selects only the columns the question asks for ("which team" → `team`). The comparison checks that each gold row is contained in its own predicted row, so a gold query with extra columns would fail correct answers.
+- **What invalidates answer cassettes:** a router change (adding or dropping the SQL rows in the prompt) and a reranker change (different sources). Re-record with a key, then replay without one.
+- **CI timing:** the reranker now takes about 1.5 s per query on the laptop. If GitHub runners push it past `rerank_timeout_s` (3 s), the retrieval gate degrades to RRF fallback; the report's fallback column shows it.
+- **P7 load test:** search p95 is now about 2.1 s single-user, against the 3 s target with 5 concurrent users. Measure before tuning anything else.
+- **Per-profile candidate:** plain hybrid search without reranking beats hybrid plus rerank on company test (0.96 / 0.90). It may be worth making reranking a profile setting.

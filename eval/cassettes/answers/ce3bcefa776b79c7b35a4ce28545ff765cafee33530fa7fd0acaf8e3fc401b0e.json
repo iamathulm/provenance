@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "E5 is contrastively trained on CCPairs, a curated web-scale text pair dataset [S1]. This dataset is constructed by combining various semi-structured data sources such as CommunityQA, Common Crawl, and Scientific papers [S4].",
+  "usage": {
+    "prompt_tokens": 2042,
+    "completion_tokens": 50
+  }
+}

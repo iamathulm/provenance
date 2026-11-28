@@ -9,12 +9,13 @@ Automated evaluation is non-negotiable. Retrieval, answers, guardrails and promp
 
 ## Decision
 
-**Four evaluation suites:**
+**Five evaluation suites:**
 
 | Suite | What it measures | Model calls |
 |---|---|---|
-| `retrieval` (P3) | recall, MRR and nDCG | none (deterministic) |
+| `retrieval` (P3) | recall, MRR, nDCG and route accuracy | none (deterministic) |
 | `answers` | the real answer pipeline on a category-stratified sample (`--limit`) | Groq answers |
+| `sql` (P5.1) | execution accuracy: the generated query returns the hand-written gold query's rows | Groq SQL, one per table item |
 | `guardrails` | local injection rules against Groq-hosted Prompt Guard | Prompt Guard |
 | `optimize` | prompt variants scored on dev and decided on test | Groq answers, judge |
 
@@ -37,7 +38,7 @@ All of them report per domain with seeded bootstrap 95% CIs and record reproduci
 - RAGAS analytics are switched off before RAGAS is imported, and RAGAS lives in a separate `eval` dependency group that is never in the runtime image.
 
 **CI:**
-- Per pull request, only the deterministic retrieval gate runs.
+- Per pull request, the deterministic retrieval gate runs, plus the SQL gate replayed from committed cassettes (no key needed).
 - `eval.yml` runs answers and guardrails manually or weekly, using repository secrets.
 
 ## Alternatives considered
