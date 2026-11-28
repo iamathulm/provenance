@@ -27,6 +27,9 @@ dev = [
   "types-openpyxl>=3.1.5.20261122",
   "pyarrow-stubs>=20.0.0.20260819",
 ]
+eval = [
+    "ragas>=0.4.4",
+]
 
 [tool.ruff]
 line-length = 100
