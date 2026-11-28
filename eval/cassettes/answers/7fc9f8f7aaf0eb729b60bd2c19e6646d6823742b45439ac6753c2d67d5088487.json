@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The Talon X2 must begin returning home when its battery charge reaches 25 percent [S2]. The aircraft carries two smart batteries [S1].",
+  "usage": {
+    "prompt_tokens": 1033,
+    "completion_tokens": 33
+  }
+}

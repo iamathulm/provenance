@@ -143,3 +143,43 @@ instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev
   - Never put the key in `.env.example`; gitleaks blocks the commit.
 - **Free tier:** about 2 answers per minute per model, about 4 with the fallback. P7 load tests must report Groq throttling separately.
 - **gpt-oss quirks:** it emits ` ` spaces and drops final periods (the verifier NFKC-normalizes). Its reasoning needs 512 tokens of completion headroom.
+
+## P5: Observability, evaluation and prompt optimization
+
+**Done:**
+- **Observability:**
+  - `GET /metrics` (Prometheus, content-free labels) and OpenTelemetry spans for every stage, exported only when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
+  - Answer timings (time to first visible text, total latency) and per-user feedback.
+  - A response cache keyed by question, history, prompt, models and corpus version.
+  - Workspace analytics, plus the operator overview for `OPERATOR_EMAILS`.
+- **Evaluation:**
+  - `provenance eval --suite answers` (our metrics plus RAGAS faithfulness and answer relevancy, with a Gemini judge) and `--suite guardrails` (local rules against Prompt Guard).
+  - `provenance optimize` (3 prompt variants, scored on dev, decided on test).
+  - `eval.yml` runs manually or weekly; ADR-0009 records the design.
+
+**Measured (10 items per domain and split, Gemini judge, `eval/reports/answers-*.md`):**
+
+| Metric | Result |
+|---|---|
+| Faithfulness | 0.70–1.00 |
+| Answer relevancy | 0.80–0.97 |
+| Citation precision | 1.00 |
+| Abstention recall | 1.00 |
+| Injection block rate | 1.00 |
+| False abstentions | 0–0.2 |
+
+- **Guardrails:** the local rules score 27/27 with 0 false positives, but that is in-sample. Prompt Guard scores 18/27 with 0 false positives.
+
+**Gotchas for later phases:**
+- **One answer model in evaluation:** `evaluation.runner.eval_settings` pins evaluation to the first answer model. Failover made scores depend on quota timing, and so did the cassette keys, since they include the model.
+- **Cassettes:**
+  - `eval/cassettes/answers` and `eval/cassettes/prompt_guard` are committed, so reruns are free.
+  - Changing a prompt, the model options or the retrieval output re-records.
+  - The judge cache in `.cache/ragas` is not committed; `eval.yml` caches it between runs.
+- **RAGAS:** lives in the `eval` dependency group (`uv sync --group eval`). CI's default sync and the runtime image don't install it, and mypy ignores its imports when it is absent.
+- **Gemini:** evaluation-only (free-tier data terms). Never wire it into the request path.
+- **P6 UI wiring:**
+  - Show `ttft_ms` and `latency_ms` from messages.
+  - The cache notice is `conversations.cache.CACHE_NOTICE`.
+  - Analytics and operator payloads are plain dicts, so type them in the client from OpenAPI.
+- **P8 `/metrics`:** it's public; decide in P8 whether the cloud deploy exposes it.

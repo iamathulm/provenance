@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "Harrier Mini units shipped in Q3 were 1,130 [S1]. The list price for the Harrier Mini aircraft is 6400 US dollars [S2][S3].",
+  "usage": {
+    "prompt_tokens": 3809,
+    "completion_tokens": 44
+  }
+}

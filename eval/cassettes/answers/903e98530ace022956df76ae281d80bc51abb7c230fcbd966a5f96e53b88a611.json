@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "ARES evaluates RAG systems along the dimensions of context relevance, answer faithfulness, and answer relevance [S1]. These dimensions assess whether retrieved information is pertinent to the test question, if the response is grounded in the retrieved context, and if the response is relevant to the question [S5].",
+  "usage": {
+    "prompt_tokens": 2062,
+    "completion_tokens": 60
+  }
+}

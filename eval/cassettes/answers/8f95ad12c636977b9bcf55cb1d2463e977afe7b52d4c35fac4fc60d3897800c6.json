@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "ARES requires a human preference validation set of approximately 150 to 300 annotated datapoints to compute confidence intervals using prediction-powered inference [S4][S5][S6]. In contrast, RAGAS uses GPT-3.5 as its judge with few-shot prompts that are not targeted for each evaluation domain [S1][S3]. The sources do not specify the exact number of human annotations required for RAGAS, only noting that ARES is more data-efficient than standard sampled annotation methods [S2].",
+  "usage": {
+    "prompt_tokens": 2111,
+    "completion_tokens": 110
+  }
+}

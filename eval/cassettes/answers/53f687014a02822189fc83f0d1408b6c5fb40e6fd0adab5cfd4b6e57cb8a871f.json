@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "When fine-tuned, E5 obtains the best results on the MTEB benchmark [S6]. This performance beats existing embedding models with 40\u00d7 more parameters [S6].",
+  "usage": {
+    "prompt_tokens": 2094,
+    "completion_tokens": 39
+  }
+}

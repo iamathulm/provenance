@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "Suspected security incidents must be reported in the sec-incidents Slack channel or to security@kestrelridge.example [S3]. New employees must join the announcements, it-help, and sec-incidents channels on day one [S1].",
+  "usage": {
+    "prompt_tokens": 1059,
+    "completion_tokens": 49
+  }
+}
