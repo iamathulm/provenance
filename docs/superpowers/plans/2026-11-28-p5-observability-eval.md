@@ -26,8 +26,9 @@
 - **Cache key:** the response cache keys on SHA-256 of (normalized question, history digest, answer prompt version, answer model list, corpus version). The corpus version is the SHA-256 of the workspace's sorted `(document_id, active_version_id)` pairs. TTL is `ANSWER_CACHE_TTL_S = 86400`. Only `answered` and `abstained` answers are cached, and only when nothing was degraded. A hit adds the notice `Served from cache (same question and documents).`
 - **Feedback:** `rating ∈ {up, down}` with an optional comment of ≤ 500 characters, PII-redacted. There is one feedback per (message, user), and it upserts. Only assistant messages accept feedback.
 - **Groq free-tier budget (ADR-0007):** at most about 200K tokens per day per model.
-  - Answers run on `qwen/qwen3.8-27b` and fall back to `openai/gpt-oss-120b`.
-  - The RAGAS judge is `openai/gpt-oss-20b` with JSON mode, which keeps it out of the answer models' pools.
+  - Answers in evaluation always run on the production models: `qwen/qwen3.8-27b`, falling back to `openai/gpt-oss-120b`. Evaluating or optimizing against any other model would measure the wrong system.
+  - **RAGAS judge:** when `GEMINI_API_KEY` is set, the judge is `gemini-3.5-flash-lite` on the Gemini free tier, called through its OpenAI-compatible endpoint `https://generativelanguage.googleapis.com/v1beta/openai/`. That keeps judging outside the Groq budget and uses a different model family from the answers, which avoids self-preference. Without a Gemini key the judge is `openai/gpt-oss-20b` on Groq.
+  - **Gemini is evaluation-only.** Only the evaluation CLI calls it, never the runtime. The free tier lists inputs as "Used to improve our products: Yes" (verified 2026-11-28 on the ai.google.dev pricing page), so the judge only ever sees the synthetic company corpus, the CC-BY papers and the golden questions.
   - Answer relevancy uses `strictness=1`.
   - Context precision and recall are not run with RAGAS. Our deterministic retrieval metrics (P3) measure context quality; ADR-0009 records this deviation.
   - Evaluation commands take `--limit` (items per domain and split, stratified by category) and are resumable through cassettes and the judge cache.
@@ -164,20 +165,22 @@ Tracing in `tracing.py`:
 ### Task 5: Answer evaluation with own metrics and RAGAS
 
 **Files:**
-- Create: `evaluation/answers.py` (runs and scores), `evaluation/ragas_judge.py` (the RAGAS adapter: env guard, `AsyncOpenAI` to Groq, `llm_factory(settings.judge_model, client=…, cache=DiskCacheBackend(".cache/ragas"))`, a `FastEmbedRagasEmbedding(BaseRagasEmbedding)` wrapping `FastEmbedder.embed_query_dense`, and `Faithfulness` plus `AnswerRelevancy(strictness=1)`).
-- Modify: `answers/pipeline.py` (`Answer.sentences_removed: int`); `core/config.py` (`judge_model: str = "openai/gpt-oss-20b"`); `cli.py` (`eval --suite {retrieval,answers}`, `--limit`, `--judge/--no-judge`).
+- Create: `evaluation/answers.py` (runs and scores), `evaluation/ragas_judge.py` (the RAGAS adapter: env guard, `llm_factory(judge.model, client=AsyncOpenAI(base_url=judge.base_url, api_key=judge.api_key), cache=DiskCacheBackend(".cache/ragas"))`, a `FastEmbedRagasEmbedding(BaseRagasEmbedding)` wrapping `FastEmbedder.embed_query_dense`, and `Faithfulness` plus `AnswerRelevancy(strictness=1)`).
+- Modify: `answers/pipeline.py` (`Answer.sentences_removed: int`); `core/config.py` (`gemini_api_key: SecretStr | None = None`, `gemini_base_url`, `gemini_judge_model: str = "gemini-3.5-flash-lite"`, `groq_judge_model: str = "openai/gpt-oss-20b"`); `.env.example` (`GEMINI_API_KEY=`, commented as evaluation-only); `cli.py` (`eval --suite {retrieval,answers}`, `--limit`, `--judge/--no-judge`).
 - Modify: `evaluation/report.py` (answer report JSON/MD); `docs/budget.md`.
 - Tests: `tests/evaluation/test_answers_eval.py` (scripted provider and a fake judge, no RAGAS import).
 
 **Interfaces — Produces:**
 - `select_items(golden, limit) -> list[GoldenItem]`: stratified round-robin over categories in id order; deterministic.
 - `AnswerJudge` protocol: `async score(question, answer, contexts) -> JudgeScores(faithfulness: float | None, answer_relevancy: float | None)`.
+- `JudgeConfig(provider: Literal["gemini","groq"], model, base_url, api_key)`; `judge_settings(settings) -> JudgeConfig | None` returns Gemini if keyed, else Groq if keyed, else None (behaves like `--no-judge`).
 - `evaluate_answers(session_factory, answerer, golden, limit, judge: AnswerJudge | None) -> AnswerReport`, holding per-item records `{id, category, status, error_code, citations_gold: [bool], sentences_kept, sentences_removed, latency_ms, tokens, faithfulness, answer_relevancy}` and per-metric `Estimate`s.
 - CLI: `provenance eval --suite answers --domain all --split dev --limit 10 [--no-judge] --out eval/reports`. It uses `CassetteProvider(eval/cassettes/answers, "record", groq)` when a key is set, and `"replay"` otherwise.
 
 - [ ] Test `test_answer_metrics_on_scripted_answers`: four items (answered with a gold citation; answered with a non-gold citation; unanswerable that abstained; answerable that abstained). Expect `citation_precision == 0.5`, `abstention_recall == 1.0`, `false_abstention_rate == 0.5`, and judge scores averaged over answered items only.
 - [ ] Test `test_evaluation_survives_provider_errors`: the second item raises `LLMRateLimitedError`. It records `status="error"` and `error_code="llm_rate_limited"`, the third item still runs, and the report shows `errors == 1`.
 - [ ] Test `test_select_items_is_stratified_and_stable`: limit 5 over the company dev set includes every category present, and two calls return the same order.
+- [ ] Test `test_judge_prefers_gemini_then_groq`: with both keys set, the judge uses the Gemini model and base URL; with only the Groq key, it uses `openai/gpt-oss-20b` on the Groq URL; with neither, `judge_settings` returns None.
 - [ ] Test `test_ragas_judge_disables_tracking` (marked `slow`): importing `provenance.evaluation.ragas_judge` sets `os.environ["RAGAS_DO_NOT_TRACK"] == "true"` before `ragas` is in `sys.modules`.
 - [ ] Implement, test, then commit `feat(eval): answer evaluation with grounding metrics and a RAGAS judge`.
 
@@ -215,11 +218,11 @@ Tracing in `tracing.py`:
 
 ### Task 8: Live runs, eval workflow, reports, docs
 
-- [ ] **Answer eval:** with the key, run `provenance eval --suite answers --split dev --limit 10 --out eval/reports` and `--split test --limit 10`, for both domains. Expect about 40 answers (~130K tokens) and about 80 judge calls (~120K tokens on `gpt-oss-20b`), which may span two days of quota; the cassettes and the judge cache resume the run. Commit the cassettes and the reports.
+- [ ] **Answer eval:** with the key, run `provenance eval --suite answers --split dev --limit 10 --out eval/reports` and `--split test --limit 10`, for both domains. Expect about 40 answers (~130K Groq tokens) and about 80 judge calls on Gemini, which are outside the Groq budget. The cassettes and the judge cache resume an interrupted run. Commit the cassettes and the reports.
 - [ ] **Guardrail eval and optimizer:** run `provenance eval --suite guardrails`, and run `provenance optimize --dev-limit 8 --test-limit 8` (about 100 answers). Pin only if the margin rule says so (re-record the P4 e2e cassettes if pinned). Commit the reports and `docs/prompt-optimization.md`.
 - [ ] **Workflow:** `.github/workflows/eval.yml` runs on `workflow_dispatch` and a weekly cron. It uses `secrets.GROQ_API_KEY`, indexes the corpora, runs the answers and guardrails suites with record cassettes, and uploads `eval-report/` as an artifact. The user adds the secret.
 - [ ] **Docs:**
   - `docs/eval-report.md`: retrieval, answers and guardrails tables with CIs and the optimizer result, with misses stated.
-  - ADR-0009: evaluation design and the RAGAS budget deviation.
+  - ADR-0009: evaluation design, the RAGAS budget deviation, and the evaluation-only Gemini judge with its data terms.
   - Update `docs/budget.md` and `docs/progress.md`.
 - [ ] Full suite plus ruff, mypy and vulture; code review; PR. After the merge the user tags `v0.5.0`.
