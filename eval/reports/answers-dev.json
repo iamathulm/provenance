@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "created_at": "2026-11-28T14:06:05+00:00",
-    "git_sha": "875ff1524cbb8a83cc458d7deaea9e6bf1e05554",
+    "created_at": "2026-11-28T14:51:44+00:00",
+    "git_sha": "8efaa9e6d15a898d723e3ab01f29357e0b05336c",
     "golden_sha256": {
       "company/dev": "81a215ce3203eaeaf4613be6f1ce9558b8c3eb9dd5c71e81b674ae52d48f3308",
       "research/dev": "7088449db12957b8a069ca63308becba8ac3f9097e2a088d2c641e37192dd936"
@@ -44,7 +44,7 @@
           ],
           "sentences_kept": 1,
           "sentences_removed": 0,
-          "latency_ms": 2338.355000014417,
+          "latency_ms": 2998.600799939595,
           "tokens": 1082,
           "faithfulness": 0.0,
           "answer_relevancy": 0.750650260611203
@@ -59,10 +59,10 @@
           ],
           "sentences_kept": 1,
           "sentences_removed": 0,
-          "latency_ms": 2480.547499959357,
-          "tokens": 1795,
+          "latency_ms": 3322.8900000685826,
+          "tokens": 1800,
           "faithfulness": 1.0,
-          "answer_relevancy": 0.9946382035671578
+          "answer_relevancy": 0.9955521595865061
         },
         {
           "id": "company-dev-23",
@@ -75,7 +75,7 @@
           ],
           "sentences_kept": 2,
           "sentences_removed": 0,
-          "latency_ms": 1755.4119999986142,
+          "latency_ms": 2427.364500006661,
           "tokens": 1084,
           "faithfulness": 1.0,
           "answer_relevancy": 0.9416044317425925
@@ -88,7 +88,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 1720.4660999123007,
+          "latency_ms": 1809.8887000232935,
           "tokens": 0,
           "faithfulness": null,
           "answer_relevancy": null
@@ -101,7 +101,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 0.30750001315027475,
+          "latency_ms": 0.43270003516227007,
           "tokens": 0,
           "faithfulness": null,
           "answer_relevancy": null
@@ -116,7 +116,7 @@
           ],
           "sentences_kept": 1,
           "sentences_removed": 0,
-          "latency_ms": 2182.657800032757,
+          "latency_ms": 1973.1821999885142,
           "tokens": 1140,
           "faithfulness": 1.0,
           "answer_relevancy": 1.0
@@ -132,7 +132,7 @@
           ],
           "sentences_kept": 1,
           "sentences_removed": 0,
-          "latency_ms": 1670.731300022453,
+          "latency_ms": 1868.5448999749497,
           "tokens": 659,
           "faithfulness": 1.0,
           "answer_relevancy": 1.0000000000000004
@@ -147,7 +147,7 @@
           ],
           "sentences_kept": 1,
           "sentences_removed": 1,
-          "latency_ms": 50099.91370001808,
+          "latency_ms": 45481.67549993377,
           "tokens": 825,
           "faithfulness": 1.0,
           "answer_relevancy": 0.9231463612831233
@@ -160,7 +160,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 2467.6525000249967,
+          "latency_ms": 2200.070000020787,
           "tokens": 1589,
           "faithfulness": null,
           "answer_relevancy": null
@@ -173,7 +173,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 1869.8449999792501,
+          "latency_ms": 6511.96319994051,
           "tokens": 611,
           "faithfulness": null,
           "answer_relevancy": null
@@ -206,9 +206,9 @@
           "ci_high": 1.0
         },
         "tokens_mean": {
-          "mean": 878.5,
+          "mean": 879.0,
           "ci_low": 535.1,
-          "ci_high": 1213.1
+          "ci_high": 1214.6
         },
         "faithfulness": {
           "mean": 0.8333333333333334,
@@ -216,15 +216,15 @@
           "ci_high": 1.0
         },
         "answer_relevancy": {
-          "mean": 0.9350065428673462,
-          "ci_low": 0.8549663081476586,
-          "ci_high": 0.9884801398128182
+          "mean": 0.9351588688705709,
+          "ci_low": 0.8551186341508833,
+          "ci_high": 0.9887847918192675
         }
       },
       "errors": 0,
       "latency_ms": {
-        "p50": 2182.657800032757,
-        "p95": 50099.91370001808
+        "p50": 2427.364500006661,
+        "p95": 45481.67549993377
       },
       "judge_missing": 0
     },
@@ -244,7 +244,7 @@
           ],
           "sentences_kept": 2,
           "sentences_removed": 0,
-          "latency_ms": 3681.5812999848276,
+          "latency_ms": 3892.5538000185043,
           "tokens": 2092,
           "faithfulness": 1.0,
           "answer_relevancy": 0.9696245838891081
@@ -262,7 +262,7 @@
           ],
           "sentences_kept": 3,
           "sentences_removed": 0,
-          "latency_ms": 55034.08830007538,
+          "latency_ms": 50024.02670006268,
           "tokens": 2227,
           "faithfulness": 1.0,
           "answer_relevancy": 0.693526549841123
@@ -275,7 +275,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 2321.678999927826,
+          "latency_ms": 6014.477499993518,
           "tokens": 2409,
           "faithfulness": null,
           "answer_relevancy": null
@@ -288,7 +288,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 0.2516999375075102,
+          "latency_ms": 0.32400002237409353,
           "tokens": 0,
           "faithfulness": null,
           "answer_relevancy": null
@@ -303,7 +303,7 @@
           ],
           "sentences_kept": 2,
           "sentences_removed": 0,
-          "latency_ms": 2102.813299978152,
+          "latency_ms": 3965.01529996749,
           "tokens": 2313,
           "faithfulness": 1.0,
           "answer_relevancy": 0.8618614779906167
@@ -320,7 +320,7 @@
           ],
           "sentences_kept": 4,
           "sentences_removed": 0,
-          "latency_ms": 51131.08750001993,
+          "latency_ms": 49688.70329996571,
           "tokens": 1925,
           "faithfulness": 1.0,
           "answer_relevancy": 0.7755528882420374
@@ -333,7 +333,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 1618.2248999830335,
+          "latency_ms": 1973.6605000216514,
           "tokens": 0,
           "faithfulness": null,
           "answer_relevancy": null
@@ -346,7 +346,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 2509.4600999727845,
+          "latency_ms": 4317.256500013173,
           "tokens": 1988,
           "faithfulness": null,
           "answer_relevancy": null
@@ -363,7 +363,7 @@
           ],
           "sentences_kept": 3,
           "sentences_removed": 0,
-          "latency_ms": 2296.178799937479,
+          "latency_ms": 4144.724000012502,
           "tokens": 1924,
           "faithfulness": 1.0,
           "answer_relevancy": 0.7839890111328295
@@ -376,7 +376,7 @@
           "citations_gold": [],
           "sentences_kept": 0,
           "sentences_removed": 0,
-          "latency_ms": 1656.0184999834746,
+          "latency_ms": 1812.904000049457,
           "tokens": 0,
           "faithfulness": null,
           "answer_relevancy": null
@@ -426,8 +426,8 @@
       },
       "errors": 0,
       "latency_ms": {
-        "p50": 2321.678999927826,
-        "p95": 55034.08830007538
+        "p50": 4144.724000012502,
+        "p95": 50024.02670006268
       },
       "judge_missing": 0
     }

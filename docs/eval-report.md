@@ -37,10 +37,10 @@ The proposed targets are recall@5 ≥ 0.80 and MRR@10 ≥ 0.65. **Company meets 
 | Split | Items | Execution accuracy |
 |---|---|---|
 | Dev | 4 | 1.00 |
-| Test | 5 | 1.00 |
+| Test | 5 | 0.80 |
 
 - **Execution accuracy:** the generated query, run through the guarded engine, returns the rows of a hand-written gold query. Row order, column names and extra columns are ignored.
-- **Target:** ≥ 0.80. It is met, but 9 items is a small sample.
+- **Target:** ≥ 0.80. It is met exactly. The one test miss filters `product = 'battery'` where the column is `category`. Reordering the table list in the prompt (P5.1 CI fix) changed which query the model wrote, so with 9 items any single answer moves the score by 0.2.
 - **CI:** gates it on test from committed cassettes (floor 0.80).
 
 ## Answers (held-out test split, pinned prompt `answer.strict_citation`, judge `gemini-3.5-flash-lite`)

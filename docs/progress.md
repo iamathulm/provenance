@@ -196,7 +196,7 @@ instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev
 
 | Metric | Before | After |
 |---|---|---|
-| SQL execution accuracy | not measured | 1.00 (5 items; dev 4/4) |
+| SQL execution accuracy | not measured | 0.80 (4 of 5; dev 4/4) |
 | Company route accuracy | 0.67 | 0.79 (dev 0.76 → 0.91) |
 | Research recall@5 | 0.75 | 0.81 (meets 0.80) |
 | Research MRR@10 | 0.57 | 0.58 (misses 0.65) |
@@ -210,3 +210,4 @@ instruction, research chunks 450 → 220 words, NFKC text cleaning; done on `dev
 - **CI timing:** the reranker now takes about 1.5 s per query on the laptop. If GitHub runners push it past `rerank_timeout_s` (3 s), the retrieval gate degrades to RRF fallback; the report's fallback column shows it.
 - **P7 load test:** search p95 is now about 2.1 s single-user, against the 3 s target with 5 concurrent users. Measure before tuning anything else.
 - **Per-profile candidate:** plain hybrid search without reranking beats hybrid plus rerank on company test (0.96 / 0.90). It may be worth making reranking a profile setting.
+- **Catalog order is part of the prompt:** `load_catalog` orders by `created_at`, then filename. A seeding transaction gives every document the same timestamp, and the old tie-break on random ids made the SQL prompt, and so its cassette key, differ per database. Only the order changed, yet test SQL accuracy moved from 5/5 to 4/5: the score is sensitive to prompt wording.

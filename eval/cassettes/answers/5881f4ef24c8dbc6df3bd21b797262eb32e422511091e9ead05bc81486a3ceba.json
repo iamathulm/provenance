@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT SUM(\\\"revenue_usd\\\") AS total_revenue_north_america FROM t_sales_q3_2026_by_region WHERE region = 'North America';\"}",
+  "usage": {
+    "prompt_tokens": 546,
+    "completion_tokens": 76
+  }
+}
