@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     # Per user, so one person cannot spend the shared free quota for everyone.
     questions_per_minute: int = 5
     questions_per_hour: int = 60
+    answer_cache_ttl_s: int = 86_400  # identical question over unchanged documents
     context_max_sources: int = 6
     context_max_words: int = 1_800  # ~2.4K tokens: one answer must fit the free 8K tokens/minute
     citation_support_min: float = 0.5  # FlashRank score a cited sentence needs

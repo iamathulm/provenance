@@ -121,6 +121,22 @@ def answer_message(conversation: Conversation, answer: Answer, correlation_id: s
     )
 
 
+def cache_payload(message: Message) -> dict[str, Any]:
+    """The parts of an answer a later identical question can reuse (no ids, times or usage)."""
+    return {
+        "role": message.role,
+        "content": message.content,
+        "status": message.status,
+        "citations": message.citations,
+        "guardrails": message.guardrails,
+        "notices": message.notices,
+        "route": message.route,
+        "sql": message.sql,
+        "model": message.model,
+        "prompt_version": message.prompt_version,
+    }
+
+
 async def resolve_source(
     db: AsyncSession, workspace: Workspace, chunk_id: uuid.UUID
 ) -> tuple[Chunk, Document]:

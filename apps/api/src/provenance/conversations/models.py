@@ -60,3 +60,16 @@ class Feedback(TimestampMixin, Base):
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     rating: Mapped[str] = mapped_column(String(4))  # up | down
     comment: Mapped[str | None] = mapped_column(Text)  # PII-redacted
+
+
+class AnswerCache(TimestampMixin, Base):
+    """A reusable answer, keyed by question, history, prompt, models and corpus version."""
+
+    __tablename__ = "answer_cache"
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("workspaces.id", ondelete="CASCADE"), index=True
+    )
+    key: Mapped[str] = mapped_column(String(64), unique=True)
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONB)
