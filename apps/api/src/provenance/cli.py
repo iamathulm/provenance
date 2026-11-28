@@ -2,7 +2,6 @@
 
 import argparse
 import asyncio
-import json
 import signal
 import sys
 import time
@@ -17,8 +16,11 @@ from qdrant_client import AsyncQdrantClient
 from provenance.core.config import REPO_ROOT, get_settings
 from provenance.db.engine import create_engine_from_settings, session_factory
 from provenance.demo import company_corpus, research_corpus
+from provenance.evaluation.answers import evaluate_answers
 from provenance.evaluation.golden import Domain, Split, load_golden
 from provenance.evaluation.report import (
+    answers_json,
+    answers_markdown,
     check_thresholds,
     load_thresholds,
     run_metadata,
@@ -26,6 +28,7 @@ from provenance.evaluation.report import (
     to_markdown,
 )
 from provenance.evaluation.retrieval import NullRecorder, RetrievalReport, evaluate
+from provenance.evaluation.runner import eval_runtime, write_report
 from provenance.ingest.runtime import build_worker
 from provenance.observability.logging import configure_logging
 from provenance.retrieval.embeddings import FastEmbedder
@@ -131,16 +134,41 @@ async def _eval(
     print(markdown)
     if out is not None:
         out.mkdir(parents=True, exist_ok=True)
-        report_json = json.dumps(to_json(reports, metadata), indent=2) + "\n"
-        for name, content in (("json", report_json), ("md", markdown)):
-            path = out / f"retrieval-{split}.{name}"
-            path.write_text(content, encoding="utf-8", newline="\n")  # same bytes on every OS
+        write_report(out, f"retrieval-{split}", to_json(reports, metadata), markdown)
     if check is None:
         return 0
     failures = check_thresholds(reports, load_thresholds(check))
     for failure in failures:
         _say(f"gate failed: {failure}")
     return 1 if failures else 0
+
+
+async def _eval_answers(
+    domains: list[Domain], split: Split, limit: int | None, use_judge: bool, out: Path | None
+) -> int:
+    settings = get_settings()
+    async with eval_runtime(settings, use_judge=use_judge) as runtime:
+        if not runtime.recording:
+            _say("no GROQ_API_KEY: answering only from recorded cassettes")
+        answerer = runtime.answerer()
+        reports = []
+        golden_sets = [load_golden(domain, split) for domain in domains]
+        for golden in golden_sets:
+            report = await evaluate_answers(
+                runtime.sessions, answerer, golden, limit, runtime.judge
+            )
+            _say(f"{golden.domain}/{split}: {len(report.items)} items, {report.errors} errors")
+            reports.append(report)
+    metadata = run_metadata(golden_sets, settings) | {
+        "answer_models": settings.answer_models,
+        "judge": runtime.judge.model if runtime.judge is not None else None,
+        "limit": limit,
+    }
+    markdown = answers_markdown(reports, metadata)
+    print(markdown)
+    if out is not None:
+        write_report(out, f"answers-{split}", answers_json(reports, metadata), markdown)
+    return 0
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -166,7 +194,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     research.add_argument(
         "--refresh", action="store_true", help="re-resolve versions and licenses from arXiv"
     )
-    evaluation = commands.add_parser("eval", help="score retrieval against the golden sets")
+    evaluation = commands.add_parser("eval", help="score the system against the golden sets")
+    evaluation.add_argument(
+        "--suite",
+        choices=["retrieval", "answers"],
+        default="retrieval",
+        help="retrieval (no model calls) or answers (Groq answers, optional RAGAS judge)",
+    )
+    evaluation.add_argument(
+        "--limit", type=int, help="answers: items per domain, stratified by category"
+    )
+    evaluation.add_argument(
+        "--no-judge", action="store_true", help="answers: skip RAGAS, own metrics only"
+    )
     evaluation.add_argument(
         "--domain", choices=[*get_args(Domain), "all"], default="all", help="golden set domain"
     )
@@ -174,7 +214,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     evaluation.add_argument(
         "--ablation", action="store_true", help="score every search mode, not only the default"
     )
-    evaluation.add_argument("--out", type=Path, help="write retrieval-<split>.json/.md here")
+    evaluation.add_argument("--out", type=Path, help="write <suite>-<split>.json/.md here")
     evaluation.add_argument(
         "--check", type=Path, help="thresholds YAML; exit 1 if the default mode misses one"
     )
@@ -197,6 +237,11 @@ def main(argv: Sequence[str] | None = None) -> int:
                 research_corpus.fetch(RESEARCH_MANIFEST, RESEARCH_FILES)
         case "eval":
             domains = list(get_args(Domain)) if args.domain == "all" else [args.domain]
+            if args.suite == "answers":
+                use_judge = not args.no_judge
+                status = _run(_eval_answers(domains, args.split, args.limit, use_judge, args.out))
+                _say("eval: done")
+                return status
             modes: list[SearchMode] = list(SEARCH_MODES) if args.ablation else ["hybrid_rerank"]
             status = _run(_eval(domains, args.split, modes, args.out, args.check))
             _say(f"eval: {'gate failed' if status else 'done'}")

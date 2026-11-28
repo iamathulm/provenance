@@ -75,6 +75,7 @@ class Answer:
     model: str | None = None
     prompt_version: str = ""
     usage: Usage = field(default_factory=Usage)
+    sentences_removed: int = 0  # drafted sentences the citation verifier dropped
 
 
 @dataclass(frozen=True)
@@ -320,6 +321,7 @@ class Answerer:
                 model=end.model or None,
                 prompt_version=version,
                 usage=end.usage or Usage(),
+                sentences_removed=verified.removed_sentences,
             )
         )
 

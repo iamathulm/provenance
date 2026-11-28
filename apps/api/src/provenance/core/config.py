@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     qdrant_url: str = "http://127.0.0.1:6333"
     groq_api_key: SecretStr | None = None
     groq_base_url: str = "https://api.groq.com/openai/v1"
+    # Evaluation only (never used at runtime): judge model for RAGAS, see evaluation/judging.py.
+    gemini_api_key: SecretStr | None = None
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    gemini_judge_model: str = "gemini-3.5-flash-lite"
+    groq_judge_model: str = "openai/gpt-oss-20b"
     # Answer models in preference order; the next one is used when the first has no quota left.
     answer_models: list[str] = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b"]
     sql_model: str = "openai/gpt-oss-20b"
