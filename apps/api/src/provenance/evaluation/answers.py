@@ -54,6 +54,7 @@ class AnswerReport:
     metrics: dict[str, Estimate]
     errors: int
     latency_ms: dict[str, float]
+    judge_missing: int = 0  # answered items the judge failed to score
 
 
 def select_items(golden: GoldenSet, limit: int | None) -> list[GoldenItem]:
@@ -132,7 +133,9 @@ async def evaluate_answers(
                 record.faithfulness = scores.faithfulness
                 record.answer_relevancy = scores.answer_relevancy
         records.append(record)
-    return _summarize(golden, prompt_version, records, injection_ids(golden))
+    return _summarize(
+        golden, prompt_version, records, injection_ids(golden), judged=judge is not None
+    )
 
 
 def injection_ids(golden: GoldenSet) -> set[str]:
@@ -149,7 +152,12 @@ def _percentile(values: list[float], fraction: float) -> float:
 
 
 def _summarize(
-    golden: GoldenSet, prompt_version: str, records: list[AnswerRecord], injections: set[str]
+    golden: GoldenSet,
+    prompt_version: str,
+    records: list[AnswerRecord],
+    injections: set[str],
+    *,
+    judged: bool = False,
 ) -> AnswerReport:
     ok = [r for r in records if r.status != "error"]
     answerable = {i.id for i in golden.items if i.answerable}
@@ -183,6 +191,9 @@ def _summarize(
         items=records,
         metrics={name: _estimate(values) for name, values in series.items() if values},
         errors=len(records) - len(ok),
+        judge_missing=sum(
+            1 for r in answered if judged and (r.faithfulness is None or r.answer_relevancy is None)
+        ),
         latency_ms={"p50": _percentile(latencies, 0.5), "p95": _percentile(latencies, 0.95)},
     )
 

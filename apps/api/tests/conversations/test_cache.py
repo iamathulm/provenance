@@ -76,3 +76,35 @@ async def test_uncacheable_results(
 
     assert errors_and_blocks == 0
     assert len(provider.requests) == 2  # a zero TTL never serves a cached answer
+
+
+def test_cache_keys_are_scoped_to_the_workspace() -> None:
+    import uuid
+
+    from provenance.conversations.cache import cache_key
+
+    a, b = uuid.uuid4(), uuid.uuid4()
+
+    assert cache_key(a, "q", [], "v1", ["m"], "c") != cache_key(b, "q", [], "v1", ["m"], "c")
+
+
+async def test_concurrent_identical_answers_do_not_collide(
+    app: FastAPI, harness: Harness, db: AsyncSession
+) -> None:
+    import asyncio
+
+    from provenance.conversations.cache import put_cached
+
+    factory = app.state.session_factory
+
+    async def store(delay_before: float, hold: float, content: str) -> None:
+        await asyncio.sleep(delay_before)
+        async with factory() as session:
+            await put_cached(session, harness.workspace_id, "k" * 64, {"content": content})
+            await asyncio.sleep(hold)
+            await session.commit()
+
+    await asyncio.gather(store(0, 0.3, "first"), store(0.1, 0, "second"))
+
+    rows = (await db.scalars(select(AnswerCache))).all()
+    assert [r.payload["content"] for r in rows] == ["second"]

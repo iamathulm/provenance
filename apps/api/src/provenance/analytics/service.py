@@ -169,7 +169,7 @@ async def operator_overview(
         "queue": {"queued": 0, "running": 0, "failed": 0} | {s: n for s, n in queue_rows},
         "models": await _model_usage(db, day_ago),
         "answers_24h": dict.fromkeys(STATUSES, 0) | {s: n for s, n in answers if s},
-        "latest_eval": _latest_eval(reports),
+        "latest_eval": latest_eval(reports),
     }
 
 
@@ -213,16 +213,27 @@ async def _model_usage(db: AsyncSession, day_ago: datetime) -> list[dict[str, An
     ]
 
 
-def _latest_eval(reports: Path) -> dict[str, Any] | None:
-    path = reports / "retrieval-test.json"
-    if not path.exists():
-        return None
-    data = json.loads(path.read_text(encoding="utf-8"))
+def latest_eval(reports: Path) -> dict[str, Any] | None:
+    """Default-mode retrieval and answer metric means per domain from the committed test reports.
+    A missing or unreadable report hides the section instead of failing the overview."""
     domains: dict[str, dict[str, float]] = {}
-    for report in data["reports"]:
-        if report["mode"] == "hybrid_rerank":
-            domains[report["domain"]] = {
-                name: value["mean"] for name, value in report["metrics"].items()
-            }
-    meta = data["metadata"]
-    return {"created_at": meta["created_at"], "git_sha": meta["git_sha"], "domains": domains}
+    newest: dict[str, Any] | None = None
+    for name in ("retrieval-test.json", "answers-test.json"):
+        path = reports / name
+        if not path.exists():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            for report in data["reports"]:
+                if report.get("mode", "hybrid_rerank") != "hybrid_rerank":
+                    continue
+                means = {metric: value["mean"] for metric, value in report["metrics"].items()}
+                domains.setdefault(report["domain"], {}).update(means)
+            meta = data["metadata"]
+        except (ValueError, KeyError, TypeError):
+            return None
+        if newest is None or meta["created_at"] > newest["created_at"]:
+            newest = meta
+    if newest is None:
+        return None
+    return {"created_at": newest["created_at"], "git_sha": newest["git_sha"], "domains": domains}

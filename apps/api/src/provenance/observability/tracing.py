@@ -49,10 +49,14 @@ def stage_span(name: str, ctx: RequestContext) -> Iterator[None]:
     attributes = {"provenance.stage": name, "provenance.correlation_id": ctx.correlation_id}
     if ctx.workspace_id is not None:
         attributes["provenance.workspace_id"] = str(ctx.workspace_id)
-    with _TRACER.start_as_current_span(name, attributes=attributes) as span:
+    # Exception messages can quote user text (e.g. a SQL error echoing a literal), so spans keep
+    # only the error class: no exception events, no message in the status.
+    with _TRACER.start_as_current_span(
+        name, attributes=attributes, record_exception=False, set_status_on_exception=False
+    ) as span:
         try:
             yield
         except Exception as error:
-            span.record_exception(error)
-            span.set_status(Status(StatusCode.ERROR, type(error).__name__))
+            span.set_attribute("error.type", type(error).__name__)
+            span.set_status(Status(StatusCode.ERROR))
             raise

@@ -107,3 +107,26 @@ async def test_report_shows_both_splits_and_decision() -> None:
     assert "| answer.concise |" in markdown
     assert "Winner on test: `answer.concise`" in markdown
     assert "pinned" in markdown
+
+
+async def test_optimizer_never_pins_on_incomplete_reports() -> None:
+    table = {
+        ("answer.concise", "dev"): 0.95,
+        ("answer.concise", "test"): 0.95,
+        ("answer", "test"): 0.5,
+    }
+
+    async def score(prompt: Prompt, split: Split) -> list[AnswerReport]:
+        result = report(table.get((prompt.id, split), 0.5))
+        if prompt.id == "answer.concise" and split == "test":
+            result.errors = 1  # e.g. the quota ran out mid-run
+        if prompt.id == "answer" and split == "test":
+            result.judge_missing = 2
+        return [result]
+
+    result = await optimize(score)
+
+    assert result.comparable is False
+    assert result.pin is False
+    assert "answer.concise" in result.incomplete
+    assert "answer" in result.incomplete

@@ -72,3 +72,23 @@ async def test_spans_per_stage_without_exporter(spans: InMemorySpanExporter) -> 
         "answer_verify",
     } <= names
     assert tracing.exporting() is False
+
+
+async def test_exported_span_events_never_carry_error_text(spans: InMemorySpanExporter) -> None:
+    from provenance.core.context import RequestContext
+
+    secret = "Could not convert string 'jane.doe@example.com'"
+    with (
+        pytest.raises(ValueError, match="jane"),
+        tracing.stage_span("answer_sql", RequestContext("c1")),
+    ):
+        raise ValueError(secret)
+
+    (span,) = [s for s in spans.get_finished_spans() if s.name == "answer_sql"]
+    exported = " ".join(
+        [str(v) for v in span.attributes.values()]
+        + [str(v) for event in span.events for v in event.attributes.values()]
+        + [span.status.description or ""]
+    )
+    assert "jane.doe" not in exported
+    assert span.attributes["error.type"] == "ValueError"

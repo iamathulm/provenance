@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from pathlib import Path
 
 import pytest
 from fastapi import FastAPI
@@ -71,3 +72,32 @@ async def test_operator_requires_operator_email(
     answer_model = next(m for m in overview["models"] if m["model"] == "m-1")
     assert (answer_model["purpose"], answer_model["calls_24h"]) == ("answer", 1)
     assert answer_model["tokens_per_day_limit"] == 200_000
+
+
+def test_latest_eval_merges_answer_and_retrieval_reports(tmp_path: Path) -> None:
+    import json
+
+    from provenance.analytics.service import latest_eval
+
+    def write(name: str, reports: list[dict[str, object]]) -> None:
+        meta = {"created_at": "2026-11-28T00:00:00+00:00", "git_sha": "abc"}
+        (tmp_path / name).write_text(json.dumps({"metadata": meta, "reports": reports}))
+
+    write(
+        "retrieval-test.json",
+        [
+            {
+                "domain": "company",
+                "mode": "hybrid_rerank",
+                "metrics": {"recall_at_5": {"mean": 0.96}},
+            }
+        ],
+    )
+    write("answers-test.json", [{"domain": "company", "metrics": {"faithfulness": {"mean": 0.82}}}])
+
+    merged = latest_eval(tmp_path)
+    (tmp_path / "answers-test.json").write_text("{not json")
+
+    assert merged is not None
+    assert merged["domains"]["company"] == {"recall_at_5": 0.96, "faithfulness": 0.82}
+    assert latest_eval(tmp_path) is None  # a broken report never breaks the overview

@@ -248,7 +248,9 @@ async def ask(
                 chat.title = question[:120]
             await session.commit()
             corpus = await corpus_version(session, workspace.id)
-            key = cache_key(body.question, history, prompt_version, settings.answer_models, corpus)
+            key = cache_key(
+                workspace.id, body.question, history, prompt_version, settings.answer_models, corpus
+            )
             cached = await get_cached(session, workspace.id, key, settings.answer_cache_ttl_s)
             if cached is not None:
                 message = Message(conversation_id=chat.id, **cached)

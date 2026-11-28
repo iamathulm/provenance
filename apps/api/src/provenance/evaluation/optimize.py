@@ -66,6 +66,8 @@ class OptimizationResult:
     test_scores: dict[str, float] = field(default_factory=dict)
     winner: str = ""
     pin: bool = False
+    comparable: bool = True  # False when any finalist report has errors or unjudged items
+    incomplete: list[str] = field(default_factory=list)
     reports: dict[str, dict[str, list[AnswerReport]]] = field(default_factory=dict)
 
 
@@ -87,8 +89,16 @@ async def optimize(score: Scorer) -> OptimizationResult:
         result.reports[name]["test"] = reports
         result.test_scores[name] = objective(reports)
     result.winner = max(finalists, key=lambda name: (result.test_scores[name], -dev_tokens[name]))
+    # Scores are only comparable when every finalist was measured on the same items with the
+    # same metrics; a quota failure mid-run silently shrinks the sample or drops faithfulness.
+    result.incomplete = [
+        name
+        for name in finalists
+        if any(r.errors or r.judge_missing for r in result.reports[name]["test"])
+    ]
+    result.comparable = not result.incomplete
     margin = result.test_scores[result.winner] - result.test_scores[baseline.id]
-    result.pin = result.winner != baseline.id and margin >= PIN_MARGIN
+    result.pin = result.comparable and result.winner != baseline.id and margin >= PIN_MARGIN
     return result
 
 
@@ -131,7 +141,9 @@ def optimization_markdown(result: OptimizationResult, metadata: dict[str, Any]) 
         )
     margin = result.test_scores[result.winner] - result.test_scores[result.baseline]
     decision = (
-        "pinned as the new baseline"
+        f"not decided: incomplete reports for {', '.join(result.incomplete)} (rerun to resume)"
+        if not result.comparable
+        else "pinned as the new baseline"
         if result.pin
         else "baseline kept (no variant cleared the margin)"
         if result.winner != result.baseline

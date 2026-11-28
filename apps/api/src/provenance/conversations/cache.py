@@ -14,7 +14,8 @@ from collections.abc import Sequence
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from sqlalchemy import delete, select
+from sqlalchemy import func, select
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.answers.pipeline import Exchange
@@ -42,6 +43,7 @@ def _normalize(question: str) -> str:
 
 
 def cache_key(
+    workspace_id: uuid.UUID,
     question: str,
     history: Sequence[Exchange],
     prompt_version: str,
@@ -49,6 +51,7 @@ def cache_key(
     corpus: str,
 ) -> str:
     parts = [
+        str(workspace_id),  # empty workspaces share a corpus hash; keys must never be shared
         _normalize(question),
         *(f"{e.question}\x1f{e.answer}" for e in history),
         prompt_version,
@@ -75,6 +78,14 @@ async def get_cached(
 async def put_cached(
     db: AsyncSession, workspace_id: uuid.UUID, key: str, payload: dict[str, Any]
 ) -> None:
-    await db.execute(delete(AnswerCache).where(AnswerCache.key == key))  # replaces expired entry
-    db.add(AnswerCache(workspace_id=workspace_id, key=key, payload=payload))
-    await db.flush()
+    # One atomic upsert: concurrent identical questions (double submit, two tabs) must not fail
+    # the second answer on the unique key, and an expired entry is simply refreshed.
+    statement = insert(AnswerCache).values(
+        id=uuid.uuid4(), workspace_id=workspace_id, key=key, payload=payload
+    )
+    await db.execute(
+        statement.on_conflict_do_update(
+            index_elements=[AnswerCache.key],
+            set_={"payload": statement.excluded.payload, "created_at": func.now()},
+        )
+    )
