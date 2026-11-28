@@ -10,8 +10,9 @@ from typing import Any
 import yaml
 
 from provenance.core.config import REPO_ROOT, Settings
+from provenance.evaluation.answers import AnswerReport
 from provenance.evaluation.golden import GoldenSet
-from provenance.evaluation.retrieval import RetrievalReport
+from provenance.evaluation.retrieval import Estimate, RetrievalReport
 
 GATED_MODE = "hybrid_rerank"
 
@@ -136,3 +137,52 @@ def check_thresholds(
                     f"{report.domain}/{report.split} {metric} {value:.3f} < {minimum:.2f}"
                 )
     return failures
+
+
+ANSWER_COLUMNS = (
+    ("faithfulness", "Faithfulness"),
+    ("answer_relevancy", "Answer relevancy"),
+    ("citation_precision", "Citation precision"),
+    ("sentence_coverage", "Sentence coverage"),
+    ("abstention_recall", "Abstention recall"),
+    ("false_abstention_rate", "False abstention"),
+    ("injection_block_rate", "Injection blocked"),
+)
+
+
+def _cell(estimates: dict[str, Estimate], name: str) -> str:
+    value = estimates.get(name)
+    if value is None:
+        return "–"
+    return f"{value.mean:.3f} ({value.ci_low:.2f}–{value.ci_high:.2f})"
+
+
+def answers_json(reports: list[AnswerReport], metadata: dict[str, Any]) -> dict[str, Any]:
+    return {"metadata": metadata, "reports": [dataclasses.asdict(r) for r in reports]}
+
+
+def answers_markdown(reports: list[AnswerReport], metadata: dict[str, Any]) -> str:
+    lines = [
+        "# Answer evaluation",
+        "",
+        f"Run {metadata['created_at']} at `{metadata['git_sha'][:12]}`; judge "
+        f"`{metadata.get('judge') or 'none'}`. Means with 95% bootstrap CIs; judge and grounding "
+        "metrics over answered items, abstention metrics over the matching categories.",
+        "",
+        "| Domain | Split | Items | Errors | "
+        + " | ".join(title for _, title in ANSWER_COLUMNS)
+        + " | Tokens | p50 / p95 ms |",
+        "|" + "---|" * (len(ANSWER_COLUMNS) + 6),
+    ]
+    for r in reports:
+        cells = [str(len(r.items)), str(r.errors)]
+        cells += [_cell(r.metrics, name) for name, _ in ANSWER_COLUMNS]
+        tokens = r.metrics.get("tokens_mean")
+        cells.append(f"{tokens.mean:.0f}" if tokens else "–")
+        cells.append(f"{r.latency_ms['p50']:.0f} / {r.latency_ms['p95']:.0f}")
+        lines.append(f"| {r.domain} | {r.split} | " + " | ".join(cells) + " |")
+    failed = [(r.domain, i) for r in reports for i in r.items if i.status == "error"]
+    if failed:
+        lines += ["", "Errors (rerun to resume from cassettes):"]
+        lines += [f"- `{i.id}`: {i.error_code}" for _, i in failed]
+    return "\n".join(lines) + "\n"

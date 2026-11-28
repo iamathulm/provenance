@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from provenance.analytics.router import router as analytics_router
 from provenance.auth.router import router as auth_router
 from provenance.conversations.router import router as conversations_router
 from provenance.documents.router import router as documents_router
@@ -20,3 +21,4 @@ router.include_router(documents_router)
 router.include_router(tables_router)
 router.include_router(search_router)
 router.include_router(conversations_router)
+router.include_router(analytics_router)

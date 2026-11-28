@@ -42,6 +42,7 @@ from provenance.guardrails.guards import (
     check_input,
     check_output,
 )
+from provenance.observability.tracing import stage_span
 from provenance.retrieval.rerank import Reranker
 from provenance.retrieval.router import Route, route_query
 from provenance.retrieval.search import Searcher, SearchRequest
@@ -74,6 +75,7 @@ class Answer:
     model: str | None = None
     prompt_version: str = ""
     usage: Usage = field(default_factory=Usage)
+    sentences_removed: int = 0  # drafted sentences the citation verifier dropped
 
 
 @dataclass(frozen=True)
@@ -115,7 +117,8 @@ class Answerer:
         outcome: StageOutcome = "ok"
         error_class = None
         try:
-            yield
+            with stage_span(stage, ctx):
+                yield
         except Exception as error:
             outcome, error_class = "error", type(error).__name__
             raise
@@ -318,6 +321,7 @@ class Answerer:
                 model=end.model or None,
                 prompt_version=version,
                 usage=end.usage or Usage(),
+                sentences_removed=verified.removed_sentences,
             )
         )
 

@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The total headcount in the table is 173 [S1].",
+  "usage": {
+    "prompt_tokens": 783,
+    "completion_tokens": 17
+  }
+}

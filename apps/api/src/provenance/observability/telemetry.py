@@ -11,6 +11,7 @@ from provenance.core.pipeline import SpanRecorder, StageOutcome
 from provenance.db.base import Base
 from provenance.generation.client import ProviderCall
 from provenance.guardrails.guards import GuardrailDecision
+from provenance.observability import metrics
 from provenance.observability.models import (
     GuardrailEvent,
     ProviderCallLog,
@@ -33,6 +34,7 @@ class TelemetryRecorder(SpanRecorder):
         duration_ms: float,
         error_class: str | None,
     ) -> None:
+        metrics.STAGE_DURATION.labels(stage, outcome).observe(duration_ms / 1000)
         await self._write(
             StageSpan(
                 correlation_id=ctx.correlation_id,
@@ -65,6 +67,9 @@ class TelemetryRecorder(SpanRecorder):
         )
 
     async def record_provider_call(self, ctx: RequestContext, call: ProviderCall) -> None:
+        metrics.LLM_CALLS.labels(call.model, call.purpose, call.status).inc()
+        metrics.LLM_TOKENS.labels(call.model, "prompt").inc(call.prompt_tokens)
+        metrics.LLM_TOKENS.labels(call.model, "completion").inc(call.completion_tokens)
         await self._write(
             ProviderCallLog(
                 correlation_id=ctx.correlation_id,
@@ -83,6 +88,7 @@ class TelemetryRecorder(SpanRecorder):
         self, ctx: RequestContext, decisions: list[GuardrailDecision]
     ) -> None:
         for decision in decisions:
+            metrics.GUARDRAIL_ACTIONS.labels(decision.name, decision.action).inc()
             await self._write(
                 GuardrailEvent(
                     correlation_id=ctx.correlation_id,
@@ -93,6 +99,10 @@ class TelemetryRecorder(SpanRecorder):
                     rule=decision.rule,
                 )
             )
+
+    def record_answer(self, status: str, latency_ms: float) -> None:
+        metrics.ANSWERS.labels(status).inc()
+        metrics.ANSWER_LATENCY.observe(latency_ms / 1000)
 
     async def _write(self, row: Base) -> None:
         try:

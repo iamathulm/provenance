@@ -46,6 +46,7 @@ class GoldenItem(BaseModel):
     gold: list[GoldAnchor] = Field(default_factory=list)
     reference: str | None = None
     note: str | None = None
+    injection: bool = False  # adversarial item that tries to change the assistant's rules
 
     @property
     def answerable(self) -> bool:

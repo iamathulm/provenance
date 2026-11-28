@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "E5 is the first model to outperform the strong BM25 baseline on the BEIR zero-shot retrieval benchmark without using any labeled data [S1][S2]. On the MIRACL dataset, M3-Embedding's sparse retrieval functionality outperforms BM25 [S5]. However, M3-Embedding (Sparse) performs badly compared with other methods because there are only very limited co-existed terms for cross-lingual retrieval [S6].",
+  "usage": {
+    "prompt_tokens": 1975,
+    "completion_tokens": 97
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The primary caregiver receives 16 weeks of fully paid parental leave [S1].",
+  "usage": {
+    "prompt_tokens": 923,
+    "completion_tokens": 18
+  }
+}

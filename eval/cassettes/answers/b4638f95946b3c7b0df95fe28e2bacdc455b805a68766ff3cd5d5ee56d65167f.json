@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "Standard payment terms are net 45 days from the receipt of a valid invoice [S1]. Invoices must reference a purchase order number [S1][S2].",
+  "usage": {
+    "prompt_tokens": 595,
+    "completion_tokens": 36
+  }
+}

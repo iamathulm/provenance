@@ -36,6 +36,9 @@ class NullRecorder:
     async def record(self, *_: object) -> None:
         return None
 
+    async def record_provider_call(self, *_: object) -> None:
+        return None
+
 
 class GoldMissingError(Exception):
     """Gold anchors that no indexed chunk satisfies."""

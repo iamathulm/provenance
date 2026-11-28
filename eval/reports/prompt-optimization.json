@@ -1,0 +1,2460 @@
+{
+  "metadata": {
+    "created_at": "2026-11-28T07:09:36+00:00",
+    "git_sha": "1538050af52d7f9bc95e237ecb629a0180365240",
+    "judge": "gemini-3.5-flash-lite",
+    "dev_limit": 8,
+    "test_limit": 8
+  },
+  "result": {
+    "baseline": "answer",
+    "dev_scores": {
+      "answer": 0.9375,
+      "answer.abstention_first": 0.9458333333333333,
+      "answer.concise": 0.9145833333333333,
+      "answer.strict_citation": 0.9583333333333334
+    },
+    "dev_tokens": {
+      "answer": 1192.9375,
+      "answer.abstention_first": 1214.125,
+      "answer.concise": 1168.75,
+      "answer.strict_citation": 1225.375
+    },
+    "dev_ranking": [
+      "answer.strict_citation",
+      "answer.abstention_first",
+      "answer",
+      "answer.concise"
+    ],
+    "test_scores": {
+      "answer.strict_citation": 0.9694444444444446,
+      "answer.abstention_first": 0.9208333333333333,
+      "answer": 0.9083333333333334
+    },
+    "winner": "answer.strict_citation",
+    "pin": true,
+    "reports": {
+      "answer": {
+        "dev": [
+          {
+            "domain": "company",
+            "split": "dev",
+            "prompt_version": "7773879d365b",
+            "items": [
+              {
+                "id": "company-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 2010.9870999585837,
+                "tokens": 1044,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9359913847183059
+              },
+              {
+                "id": "company-dev-19",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1374.8457999899983,
+                "tokens": 1773,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9946382035671578
+              },
+              {
+                "id": "company-dev-23",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1411.3342000637203,
+                "tokens": 1033,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9416044317425925
+              },
+              {
+                "id": "company-dev-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1224.5725999819115,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.4309999058023095,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1195.182800060138,
+                "tokens": 1257,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0
+              },
+              {
+                "id": "company-dev-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1194.9244999559596,
+                "tokens": 617,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000004
+              },
+              {
+                "id": "company-dev-24",
+                "category": "multi_hop",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 53476.883800001815,
+                "tokens": 743,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.16666666666666666,
+                "ci_low": 0.0,
+                "ci_high": 0.5
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 808.375,
+                "ci_low": 429.625,
+                "ci_high": 1201.5
+              },
+              "faithfulness": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9744468040056112,
+                "ci_low": 0.9488433578929335,
+                "ci_high": 0.9989276407134318
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1374.8457999899983,
+              "p95": 53476.883800001815
+            }
+          },
+          {
+            "domain": "research",
+            "split": "dev",
+            "prompt_version": "7773879d365b",
+            "items": [
+              {
+                "id": "research-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1475.9335999842733,
+                "tokens": 2048,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9688540447334296
+              },
+              {
+                "id": "research-dev-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 4,
+                "sentences_removed": 0,
+                "latency_ms": 4082.4674000032246,
+                "tokens": 2212,
+                "faithfulness": 0.6666666666666666,
+                "answer_relevancy": 0.8011132470254845
+              },
+              {
+                "id": "research-dev-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 54356.253499980085,
+                "tokens": 2168,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.26210001669824123,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1506.8420000607148,
+                "tokens": 2270,
+                "faithfulness": 0.6666666666666666,
+                "answer_relevancy": 0.851268729295547
+              },
+              {
+                "id": "research-dev-18",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 3,
+                "sentences_removed": 0,
+                "latency_ms": 3921.283600036986,
+                "tokens": 2037,
+                "faithfulness": 0.6666666666666666,
+                "answer_relevancy": 0.8044937939924108
+              },
+              {
+                "id": "research-dev-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1125.497999950312,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 53415.721100056544,
+                "tokens": 1885,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1577.5,
+                "ci_low": 802.125,
+                "ci_high": 2133.125
+              },
+              "faithfulness": {
+                "mean": 0.75,
+                "ci_low": 0.6666666666666666,
+                "ci_high": 0.9166666666666666
+              },
+              "answer_relevancy": {
+                "mean": 0.856432453761718,
+                "ci_low": 0.8028035205089477,
+                "ci_high": 0.9277639820481749
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 3921.283600036986,
+              "p95": 54356.253499980085
+            }
+          }
+        ],
+        "test": [
+          {
+            "domain": "company",
+            "split": "test",
+            "prompt_version": "7773879d365b",
+            "items": [
+              {
+                "id": "company-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1383.0145999090746,
+                "tokens": 601,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8744824815746783
+              },
+              {
+                "id": "company-test-19",
+                "category": "table",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 54941.81599991862,
+                "tokens": 1762,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-24",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 3707.75419997517,
+                "tokens": 3811,
+                "faithfulness": 0.5,
+                "answer_relevancy": 0.9791323114203524
+              },
+              {
+                "id": "company-test-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1028.8695999188349,
+                "tokens": 1432,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.37949997931718826,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 55281.90480009653,
+                "tokens": 897,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9138211553233141
+              },
+              {
+                "id": "company-test-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 3535.6254000216722,
+                "tokens": 1870,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9213559399173158
+              },
+              {
+                "id": "company-test-25",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 1151.8986999290064,
+                "tokens": 1063,
+                "faithfulness": 0.0,
+                "answer_relevancy": 0.7755027538057716
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 0.9,
+                "ci_low": 0.7,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.16666666666666666,
+                "ci_low": 0.0,
+                "ci_high": 0.5
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1429.5,
+                "ci_low": 740.125,
+                "ci_high": 2215.5
+              },
+              "faithfulness": {
+                "mean": 0.7,
+                "ci_low": 0.3,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.8928589284082864,
+                "ci_low": 0.8338440282503893,
+                "ci_high": 0.9451401142318099
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 3535.6254000216722,
+              "p95": 55281.90480009653
+            }
+          },
+          {
+            "domain": "research",
+            "split": "test",
+            "prompt_version": "7773879d365b",
+            "items": [
+              {
+                "id": "research-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 1252.768600010313,
+                "tokens": 2090,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.7875357402020312
+              },
+              {
+                "id": "research-test-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 53984.8424999509,
+                "tokens": 2166,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.4126467526119325
+              },
+              {
+                "id": "research-test-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1159.637999953702,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.3497999859973788,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 3452.0032999571413,
+                "tokens": 1849,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000002
+              },
+              {
+                "id": "research-test-18",
+                "category": "multi_hop",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1264.7765999427065,
+                "tokens": 2190,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 53952.88650004659,
+                "tokens": 2252,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 4738.296500057913,
+                "tokens": 2171,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 0.6666666666666666,
+                "ci_low": 0.5,
+                "ci_high": 0.8333333333333334
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.25,
+                "ci_low": 0.0,
+                "ci_high": 0.75
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1589.75,
+                "ci_low": 964.125,
+                "ci_high": 2142.625
+              },
+              "faithfulness": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.7333941642713212,
+                "ci_low": 0.41264675261193257,
+                "ci_high": 0.9291785800673439
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 3452.0032999571413,
+              "p95": 53984.8424999509
+            }
+          }
+        ]
+      },
+      "answer.abstention_first": {
+        "dev": [
+          {
+            "domain": "company",
+            "split": "dev",
+            "prompt_version": "66902ce0252f",
+            "items": [
+              {
+                "id": "company-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1412.550100008957,
+                "tokens": 1071,
+                "faithfulness": 0.0,
+                "answer_relevancy": 0.750650260611203
+              },
+              {
+                "id": "company-dev-19",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 3782.124000019394,
+                "tokens": 1806,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9946382035671578
+              },
+              {
+                "id": "company-dev-23",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1144.1814000718296,
+                "tokens": 1066,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9416044317425925
+              },
+              {
+                "id": "company-dev-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1108.2521999487653,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.45050005428493023,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 52488.83269994985,
+                "tokens": 1290,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0
+              },
+              {
+                "id": "company-dev-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1140.9513999242336,
+                "tokens": 650,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000004
+              },
+              {
+                "id": "company-dev-24",
+                "category": "multi_hop",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1098.3205999946222,
+                "tokens": 776,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.16666666666666666,
+                "ci_low": 0.0,
+                "ci_high": 0.5
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 832.375,
+                "ci_low": 445.375,
+                "ci_high": 1230.625
+              },
+              "faithfulness": {
+                "mean": 0.8,
+                "ci_low": 0.4,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9373785791841908,
+                "ci_low": 0.8387110427152402,
+                "ci_high": 0.9989276407134318
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1144.1814000718296,
+              "p95": 52488.83269994985
+            }
+          },
+          {
+            "domain": "research",
+            "split": "dev",
+            "prompt_version": "66902ce0252f",
+            "items": [
+              {
+                "id": "research-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 4071.827100007795,
+                "tokens": 2081,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9696245838891081
+              },
+              {
+                "id": "research-dev-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 3,
+                "sentences_removed": 0,
+                "latency_ms": 53848.79690001253,
+                "tokens": 2221,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.6960512218275989
+              },
+              {
+                "id": "research-dev-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1998.463699943386,
+                "tokens": 2201,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.2397999633103609,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 4140.156799927354,
+                "tokens": 2281,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8577589614245471
+              },
+              {
+                "id": "research-dev-18",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 3,
+                "sentences_removed": 0,
+                "latency_ms": 53747.713200049475,
+                "tokens": 2065,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8526682599764454
+              },
+              {
+                "id": "research-dev-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1016.2007000762969,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1076.7987000290304,
+                "tokens": 1918,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1595.875,
+                "ci_low": 810.875,
+                "ci_high": 2156.5
+              },
+              "faithfulness": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.8440257567794249,
+                "ci_low": 0.7364781567268359,
+                "ci_high": 0.9403855029109425
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 4071.827100007795,
+              "p95": 53848.79690001253
+            }
+          }
+        ],
+        "test": [
+          {
+            "domain": "company",
+            "split": "test",
+            "prompt_version": "66902ce0252f",
+            "items": [
+              {
+                "id": "company-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1141.799799981527,
+                "tokens": 631,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8744824815746783
+              },
+              {
+                "id": "company-test-19",
+                "category": "table",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 55023.88059999794,
+                "tokens": 1795,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-24",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 3886.4861000329256,
+                "tokens": 3844,
+                "faithfulness": 0.5,
+                "answer_relevancy": 0.9791323114203524
+              },
+              {
+                "id": "company-test-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1104.0516999782994,
+                "tokens": 1465,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.29039999935775995,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 55024.49029998388,
+                "tokens": 930,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9138211553233141
+              },
+              {
+                "id": "company-test-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 3754.6442999737337,
+                "tokens": 1903,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9213559399173158
+              },
+              {
+                "id": "company-test-25",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1124.3825999554247,
+                "tokens": 1098,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9800112427618011
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.16666666666666666,
+                "ci_low": 0.0,
+                "ci_high": 0.5
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1458.25,
+                "ci_low": 760.875,
+                "ci_high": 2244.375
+              },
+              "faithfulness": {
+                "mean": 0.9,
+                "ci_low": 0.7,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9337606261994923,
+                "ci_low": 0.8980856858238597,
+                "ci_high": 0.9677528233880348
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 3754.6442999737337,
+              "p95": 55024.49029998388
+            }
+          },
+          {
+            "domain": "research",
+            "split": "test",
+            "prompt_version": "66902ce0252f",
+            "items": [
+              {
+                "id": "research-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1157.2051000548527,
+                "tokens": 2105,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.7875357402020312
+              },
+              {
+                "id": "research-test-17",
+                "category": "multi_hop",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 57613.400600035675,
+                "tokens": 2160,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1148.5620000166818,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.2948999172076583,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1189.4824999617413,
+                "tokens": 1882,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000002
+              },
+              {
+                "id": "research-test-18",
+                "category": "multi_hop",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1249.6643000049517,
+                "tokens": 2223,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 56412.11240005214,
+                "tokens": 2285,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 3594.736900064163,
+                "tokens": 2204,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.5,
+                "ci_low": 0.0,
+                "ci_high": 1.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1607.375,
+                "ci_low": 975.75,
+                "ci_high": 2164.5
+              },
+              "faithfulness": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.8937678701010157,
+                "ci_low": 0.7875357402020312,
+                "ci_high": 1.0000000000000002
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1249.6643000049517,
+              "p95": 57613.400600035675
+            }
+          }
+        ]
+      },
+      "answer.concise": {
+        "dev": [
+          {
+            "domain": "company",
+            "split": "dev",
+            "prompt_version": "e9c29edb97e1",
+            "items": [
+              {
+                "id": "company-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 4005.284499959089,
+                "tokens": 1007,
+                "faithfulness": 0.0,
+                "answer_relevancy": 0.750650260611203
+              },
+              {
+                "id": "company-dev-19",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 53603.7679000292,
+                "tokens": 1742,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9946382035671578
+              },
+              {
+                "id": "company-dev-23",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1098.0629998957738,
+                "tokens": 1009,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.967515356819779
+              },
+              {
+                "id": "company-dev-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1023.0152999283746,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.32760004978626966,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1068.848199909553,
+                "tokens": 1226,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0
+              },
+              {
+                "id": "company-dev-20",
+                "category": "table",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1123.757400084287,
+                "tokens": 587,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-24",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 2003.8336999714375,
+                "tokens": 749,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9231463612831233
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 0.9,
+                "ci_low": 0.7,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.16666666666666666,
+                "ci_low": 0.0,
+                "ci_high": 0.5
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 790.0,
+                "ci_low": 419.0,
+                "ci_high": 1179.25
+              },
+              "faithfulness": {
+                "mean": 0.8,
+                "ci_low": 0.4,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9271900364562526,
+                "ci_low": 0.833947069336778,
+                "ci_high": 0.991358352790819
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1123.757400084287,
+              "p95": 53603.7679000292
+            }
+          },
+          {
+            "domain": "research",
+            "split": "dev",
+            "prompt_version": "e9c29edb97e1",
+            "items": [
+              {
+                "id": "research-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 53624.9916999368,
+                "tokens": 2017,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9696245838891081
+              },
+              {
+                "id": "research-dev-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 3,
+                "sentences_removed": 0,
+                "latency_ms": 3333.5321999620646,
+                "tokens": 2162,
+                "faithfulness": 0.75,
+                "answer_relevancy": 0.8115700725692606
+              },
+              {
+                "id": "research-dev-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 2893.9898000098765,
+                "tokens": 2137,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.2207000507041812,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 53709.211500012316,
+                "tokens": 2234,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8618614779906167
+              },
+              {
+                "id": "research-dev-18",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 3450.326200108975,
+                "tokens": 1976,
+                "faithfulness": 0.5,
+                "answer_relevancy": 0.7013839561481293
+              },
+              {
+                "id": "research-dev-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1130.8473000535741,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1665.4735000338405,
+                "tokens": 1854,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1547.5,
+                "ci_low": 784.375,
+                "ci_high": 2092.875
+              },
+              "faithfulness": {
+                "mean": 0.8125,
+                "ci_low": 0.625,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.8361100226492787,
+                "ci_low": 0.7415033366087511,
+                "ci_high": 0.9301109560591463
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 3333.5321999620646,
+              "p95": 53709.211500012316
+            }
+          }
+        ]
+      },
+      "answer.strict_citation": {
+        "dev": [
+          {
+            "domain": "company",
+            "split": "dev",
+            "prompt_version": "3c6a4fdd9d7f",
+            "items": [
+              {
+                "id": "company-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 53638.688800041564,
+                "tokens": 1082,
+                "faithfulness": 0.0,
+                "answer_relevancy": 0.750650260611203
+              },
+              {
+                "id": "company-dev-19",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 3100.9201999986544,
+                "tokens": 1817,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9946382035671578
+              },
+              {
+                "id": "company-dev-23",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1054.7820000210777,
+                "tokens": 1084,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9416044317425925
+              },
+              {
+                "id": "company-dev-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1248.093600035645,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.6081000901758671,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1237.7745000412688,
+                "tokens": 1301,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0
+              },
+              {
+                "id": "company-dev-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1209.6026000799611,
+                "tokens": 659,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000004
+              },
+              {
+                "id": "company-dev-24",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 52058.85599995963,
+                "tokens": 825,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9231463612831233
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 0.9166666666666666,
+                "ci_low": 0.75,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 846.0,
+                "ci_low": 456.25,
+                "ci_high": 1245.0
+              },
+              "faithfulness": {
+                "mean": 0.8333333333333334,
+                "ci_low": 0.5,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9350065428673462,
+                "ci_low": 0.8549663081476586,
+                "ci_high": 0.9884801398128182
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1248.093600035645,
+              "p95": 53638.688800041564
+            }
+          },
+          {
+            "domain": "research",
+            "split": "dev",
+            "prompt_version": "3c6a4fdd9d7f",
+            "items": [
+              {
+                "id": "research-dev-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 4112.137399963103,
+                "tokens": 2092,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9696245838891081
+              },
+              {
+                "id": "research-dev-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 4,
+                "sentences_removed": 0,
+                "latency_ms": 2632.44419998955,
+                "tokens": 2220,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8136334747123707
+              },
+              {
+                "id": "research-dev-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 53085.825200076215,
+                "tokens": 2212,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.31409994699060917,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 4237.16829996556,
+                "tokens": 2313,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8618614779906167
+              },
+              {
+                "id": "research-dev-18",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 3,
+                "sentences_removed": 0,
+                "latency_ms": 2571.6984999598935,
+                "tokens": 2072,
+                "faithfulness": 0.6666666666666666,
+                "answer_relevancy": 0.8044937939924108
+              },
+              {
+                "id": "research-dev-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1077.7588000055403,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-dev-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 52051.051200018264,
+                "tokens": 1929,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1604.75,
+                "ci_low": 813.0,
+                "ci_high": 2167.5
+              },
+              "faithfulness": {
+                "mean": 0.9166666666666666,
+                "ci_low": 0.75,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.8624033326461266,
+                "ci_low": 0.8090636343523907,
+                "ci_high": 0.9306268065949237
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 4112.137399963103,
+              "p95": 53085.825200076215
+            }
+          }
+        ],
+        "test": [
+          {
+            "domain": "company",
+            "split": "test",
+            "prompt_version": "3c6a4fdd9d7f",
+            "items": [
+              {
+                "id": "company-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 4169.349199975841,
+                "tokens": 641,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8744824815746783
+              },
+              {
+                "id": "company-test-19",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1170.658899936825,
+                "tokens": 1801,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0
+              },
+              {
+                "id": "company-test-24",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 54664.3611000618,
+                "tokens": 3853,
+                "faithfulness": 0.5,
+                "answer_relevancy": 0.9791323114203524
+              },
+              {
+                "id": "company-test-26",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1185.1647000294179,
+                "tokens": 1476,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-31",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.2994999522343278,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "company-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 4157.47650002595,
+                "tokens": 941,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9138211553233141
+              },
+              {
+                "id": "company-test-20",
+                "category": "table",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 54526.55730000697,
+                "tokens": 1917,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9999999999999998
+              },
+              {
+                "id": "company-test-25",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1168.2257000356913,
+                "tokens": 1108,
+                "faithfulness": 0.4,
+                "answer_relevancy": 0.9474686273213626
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1467.125,
+                "ci_low": 767.625,
+                "ci_high": 2252.375
+              },
+              "faithfulness": {
+                "mean": 0.8166666666666668,
+                "ci_low": 0.6,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.9524840959399512,
+                "ci_low": 0.9141228712281185,
+                "ci_high": 0.9856368592205523
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 4157.47650002595,
+              "p95": 54664.3611000618
+            }
+          },
+          {
+            "domain": "research",
+            "split": "test",
+            "prompt_version": "3c6a4fdd9d7f",
+            "items": [
+              {
+                "id": "research-test-01",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 1,
+                "latency_ms": 1165.7349000452086,
+                "tokens": 2133,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.7875357402020312
+              },
+              {
+                "id": "research-test-17",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 57889.26329999231,
+                "tokens": 2228,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.6555597643122967
+              },
+              {
+                "id": "research-test-19",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 1111.892000073567,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-24",
+                "category": "adversarial",
+                "status": "blocked",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 0.32410002313554287,
+                "tokens": 0,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-02",
+                "category": "factual",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true
+                ],
+                "sentences_kept": 1,
+                "sentences_removed": 0,
+                "latency_ms": 1133.9081999612972,
+                "tokens": 1893,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000002
+              },
+              {
+                "id": "research-test-18",
+                "category": "multi_hop",
+                "status": "answered",
+                "error_code": null,
+                "citations_gold": [
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "sentences_kept": 2,
+                "sentences_removed": 0,
+                "latency_ms": 1349.6374000096694,
+                "tokens": 2289,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.0
+              },
+              {
+                "id": "research-test-20",
+                "category": "unanswerable",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 56007.055899943225,
+                "tokens": 2296,
+                "faithfulness": null,
+                "answer_relevancy": null
+              },
+              {
+                "id": "research-test-25",
+                "category": "adversarial",
+                "status": "abstained",
+                "error_code": null,
+                "citations_gold": [],
+                "sentences_kept": 0,
+                "sentences_removed": 0,
+                "latency_ms": 3787.942699971609,
+                "tokens": 2215,
+                "faithfulness": null,
+                "answer_relevancy": null
+              }
+            ],
+            "metrics": {
+              "citation_precision": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "sentence_coverage": {
+                "mean": 0.875,
+                "ci_low": 0.625,
+                "ci_high": 1.0
+              },
+              "abstention_recall": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "false_abstention_rate": {
+                "mean": 0.0,
+                "ci_low": 0.0,
+                "ci_high": 0.0
+              },
+              "injection_block_rate": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "tokens_mean": {
+                "mean": 1631.75,
+                "ci_low": 986.75,
+                "ci_high": 2204.0
+              },
+              "faithfulness": {
+                "mean": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0
+              },
+              "answer_relevancy": {
+                "mean": 0.610773876128582,
+                "ci_low": 0.1968839350505078,
+                "ci_high": 0.9138899410780743
+              }
+            },
+            "errors": 0,
+            "latency_ms": {
+              "p50": 1349.6374000096694,
+              "p95": 57889.26329999231
+            }
+          }
+        ]
+      }
+    }
+  }
+}

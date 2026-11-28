@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "ARES requires a human preference validation set of approximately 150 annotated datapoints or more [S4]. In contrast, RAGAS uses GPT-3.5 as its judge with few-shot prompts that are not targeted for each evaluation domain [S1]. ARES is significantly more data-efficient, requiring 78% less annotations than the baseline approach [S5]. The human annotations for ARES are used to compute confidence intervals for prediction-powered inference [S5].",
+  "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 98
+  }
+}

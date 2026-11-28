@@ -45,3 +45,13 @@ These run on the CPU and are cached in `.cache/`. P7 bakes them into the Docker 
 | FastEmbed `BAAI/bge-small-en-v1.5` | ~65 MB | dense embeddings |
 | FastEmbed `Qdrant/bm25` | small | sparse BM25 |
 | FlashRank `ms-marco-MiniLM-L-12-v2` | ~33 MB | reranking, citation support |
+
+## Gemini (evaluation judge only)
+
+- **Verified:** 2026-11-28 (ai.google.dev pricing and rate-limit pages).
+- **Plan:** free tier, no card. The key comes from aistudio.google.com/apikey and goes in `.env` as `GEMINI_API_KEY`.
+- **Model:** `gemini-3.5-flash-lite`, called through the OpenAI-compatible endpoint `https://generativelanguage.googleapis.com/v1beta/openai/`.
+- **Use:** RAGAS faithfulness and answer relevancy in `provenance eval --suite answers`. **The app never calls Gemini.**
+- **Limits:** per project, shown in AI Studio. Judge calls are cached in `.cache/ragas`, so reruns cost nothing.
+- **Data:** the free tier lists inputs as *used to improve Google's products*. The judge only sees the synthetic Kestrel Ridge corpus, the CC-BY/CC0 papers and the golden questions, never user data.
+- **Without a key:** the judge falls back to `openai/gpt-oss-20b` on Groq (its own 8K TPM / 200K TPD pool). `--no-judge` skips judging entirely.

@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"WITH price AS (\\n  SELECT list_price_usd\\n  FROM t_price_list_2026\\n  WHERE product = 'Harrier Mini'\\n), shipped AS (\\n  SELECT SUM(harrier_mini_units) AS units_shipped\\n  FROM t_sales_q3_2026_by_region\\n)\\nSELECT s.units_shipped, p.list_price_usd\\nFROM shipped s\\nCROSS JOIN price p;\"}",
+  "usage": {
+    "prompt_tokens": 550,
+    "completion_tokens": 150
+  }
+}

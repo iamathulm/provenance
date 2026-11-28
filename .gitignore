@@ -38,3 +38,6 @@ references/
 
 # Downloaded research PDFs (fetched by scripts/fetch_research_corpus.py)
 data/research/files/
+
+# Plan execution scratch (superpowers ledgers, briefs, review packages)
+.superpowers/

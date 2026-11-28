@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The pilot must land within 90 seconds at the nearest safe location [S1].",
+  "usage": {
+    "prompt_tokens": 1052,
+    "completion_tokens": 19
+  }
+}

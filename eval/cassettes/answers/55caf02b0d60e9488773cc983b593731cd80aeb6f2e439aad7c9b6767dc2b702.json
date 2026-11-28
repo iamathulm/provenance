@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "After applying the consistency-based filter, approximately 270 million text pairs remain for contrastive pre-training [S1][S2].",
+  "usage": {
+    "prompt_tokens": 2252,
+    "completion_tokens": 29
+  }
+}

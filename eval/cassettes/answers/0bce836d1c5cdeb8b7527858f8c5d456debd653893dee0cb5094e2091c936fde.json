@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The nightly hotel cap in London is 260 US dollars [S1].",
+  "usage": {
+    "prompt_tokens": 1272,
+    "completion_tokens": 18
+  }
+}

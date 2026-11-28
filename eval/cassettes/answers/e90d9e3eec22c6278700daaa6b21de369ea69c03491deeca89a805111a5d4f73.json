@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "There were 47 support tickets opened for the Harrier Mini in Q3 [S1].",
+  "usage": {
+    "prompt_tokens": 1780,
+    "completion_tokens": 21
+  }
+}

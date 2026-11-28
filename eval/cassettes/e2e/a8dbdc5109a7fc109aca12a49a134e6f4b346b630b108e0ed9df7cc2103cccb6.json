@@ -1,8 +1,0 @@
-{
-  "model": "qwen/qwen3.8-27b",
-  "text": "NO_ANSWER",
-  "usage": {
-    "prompt_tokens": 594,
-    "completion_tokens": 4
-  }
-}

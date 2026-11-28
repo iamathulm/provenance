@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     qdrant_url: str = "http://127.0.0.1:6333"
     groq_api_key: SecretStr | None = None
     groq_base_url: str = "https://api.groq.com/openai/v1"
+    # Evaluation only (never used at runtime): judge model for RAGAS, see evaluation/judging.py.
+    gemini_api_key: SecretStr | None = None
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
+    gemini_judge_model: str = "gemini-3.5-flash-lite"
+    groq_judge_model: str = "openai/gpt-oss-20b"
     # Answer models in preference order; the next one is used when the first has no quota left.
     answer_models: list[str] = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b"]
     sql_model: str = "openai/gpt-oss-20b"
@@ -37,6 +42,9 @@ class Settings(BaseSettings):
     # Per user, so one person cannot spend the shared free quota for everyone.
     questions_per_minute: int = 5
     questions_per_hour: int = 60
+    # Accounts allowed to see the service-wide operator overview.
+    operator_emails: list[str] = ["demo@provenance.local"]
+    answer_cache_ttl_s: int = 86_400  # identical question over unchanged documents
     context_max_sources: int = 6
     context_max_words: int = 1_800  # ~2.4K tokens: one answer must fit the free 8K tokens/minute
     citation_support_min: float = 0.5  # FlashRank score a cited sentence needs
@@ -72,6 +80,8 @@ class Settings(BaseSettings):
     # Peers whose X-Forwarded-For is trusted for client IPs (e.g. the web app proxy).
     trusted_proxies: list[str] = []
     profiles_dir: Path = REPO_ROOT / "profiles"
+    # Send OpenTelemetry spans to this OTLP/HTTP collector (e.g. http://collector:4318).
+    otel_exporter_otlp_endpoint: str | None = None
 
     @model_validator(mode="after")
     def _require_real_secret_in_production(self) -> Self:
