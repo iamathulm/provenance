@@ -32,6 +32,7 @@ class Prompt:
     version: str  # first 12 hex chars of the file's SHA-256
     system: str
     template: Template
+    directory: Path
 
     def render(self, **values: str) -> str:
         return self.template.substitute(values)
@@ -44,4 +45,9 @@ def load_prompt(prompt_id: str, directory: Path = PROMPTS_DIR) -> Prompt:
         msg = f"{prompt_id}.yaml declares id '{parsed.id}'"
         raise ValueError(msg)
     version = hashlib.sha256(raw).hexdigest()[:12]
-    return Prompt(parsed.id, version, parsed.system.strip(), Template(parsed.template))
+    return Prompt(parsed.id, version, parsed.system.strip(), Template(parsed.template), directory)
+
+
+def variant_ids(directory: Path = PROMPTS_DIR / "variants") -> list[str]:
+    """Answer-prompt variants the optimizer scores (`prompts/variants/answer.<name>.yaml`)."""
+    return sorted(path.stem for path in directory.glob("answer.*.yaml"))

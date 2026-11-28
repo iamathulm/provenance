@@ -18,7 +18,7 @@ from qdrant_client import AsyncQdrantClient
 from provenance.core.config import REPO_ROOT, get_settings
 from provenance.db.engine import create_engine_from_settings, session_factory
 from provenance.demo import company_corpus, research_corpus
-from provenance.evaluation.answers import evaluate_answers
+from provenance.evaluation.answers import AnswerReport, evaluate_answers
 from provenance.evaluation.golden import Domain, Split, load_golden
 from provenance.evaluation.guardrail_eval import (
     Classifier,
@@ -28,6 +28,13 @@ from provenance.evaluation.guardrail_eval import (
     guardrails_markdown,
     labeled_questions,
     local_classifier,
+)
+from provenance.evaluation.optimize import (
+    objective,
+    optimization_json,
+    optimization_markdown,
+    optimize,
+    pin_winner,
 )
 from provenance.evaluation.report import (
     answers_json,
@@ -40,6 +47,7 @@ from provenance.evaluation.report import (
 )
 from provenance.evaluation.retrieval import NullRecorder, RetrievalReport, evaluate
 from provenance.evaluation.runner import eval_runtime, write_report
+from provenance.generation.prompts import Prompt
 from provenance.ingest.runtime import build_worker
 from provenance.observability.logging import configure_logging
 from provenance.retrieval.embeddings import FastEmbedder
@@ -201,6 +209,45 @@ async def _eval_guardrails(out: Path | None) -> int:
     return 0
 
 
+async def _optimize(dev_limit: int, test_limit: int, pin: bool, out: Path) -> int:
+    settings = get_settings()
+    async with eval_runtime(settings, use_judge=True) as runtime:
+        if runtime.judge is None:
+            _say("no judge key: the objective uses citation precision and abstention only")
+
+        async def score(prompt: Prompt, split: Split) -> list[AnswerReport]:
+            limit = dev_limit if split == "dev" else test_limit
+            reports = []
+            for domain in get_args(Domain):
+                golden = load_golden(domain, split)
+                answerer = runtime.answerer(prompt)
+                reports.append(
+                    await evaluate_answers(runtime.sessions, answerer, golden, limit, runtime.judge)
+                )
+            _say(f"{prompt.id} on {split}: {objective(reports):.3f}")
+            return reports
+
+        result = await optimize(score)
+        judge = runtime.judge.model if runtime.judge is not None else None
+    metadata = {
+        "created_at": _now(),
+        "git_sha": run_metadata([], settings)["git_sha"],
+        "judge": judge,
+        "dev_limit": dev_limit,
+        "test_limit": test_limit,
+    }
+    markdown = optimization_markdown(result, metadata)
+    print(markdown)
+    write_report(out, "prompt-optimization", optimization_json(result, metadata), markdown)
+    (REPO_ROOT / "docs" / "prompt-optimization.md").write_text(
+        markdown, encoding="utf-8", newline="\n"
+    )
+    if pin and result.pin:
+        pin_winner(result.winner)
+        _say(f"pinned {result.winner} as prompts/answer.yaml")
+    return 0
+
+
 def _now() -> str:
     return datetime.now(UTC).isoformat(timespec="seconds")
 
@@ -253,6 +300,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     evaluation.add_argument(
         "--check", type=Path, help="thresholds YAML; exit 1 if the default mode misses one"
     )
+    optimizer = commands.add_parser(
+        "optimize", help="score answer-prompt variants on dev, pick the winner on test"
+    )
+    optimizer.add_argument("--dev-limit", type=int, default=8, help="dev items per domain")
+    optimizer.add_argument("--test-limit", type=int, default=8, help="test items per domain")
+    optimizer.add_argument(
+        "--pin",
+        action="store_true",
+        help="write the winner to prompts/answer.yaml if it clears the margin",
+    )
+    optimizer.add_argument("--out", type=Path, default=REPO_ROOT / "eval" / "reports")
     args = parser.parse_args(argv)
     configure_logging(get_settings())
 
@@ -270,6 +328,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                     _say(line)
             else:
                 research_corpus.fetch(RESEARCH_MANIFEST, RESEARCH_FILES)
+        case "optimize":
+            return _run(_optimize(args.dev_limit, args.test_limit, args.pin, args.out))
         case "eval":
             domains = list(get_args(Domain)) if args.domain == "all" else [args.domain]
             if args.suite == "guardrails":
