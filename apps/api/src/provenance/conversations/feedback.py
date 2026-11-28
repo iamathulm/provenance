@@ -4,6 +4,7 @@ import uuid
 from typing import Literal
 
 from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from provenance.auth.models import User
@@ -36,16 +37,24 @@ async def set_feedback(
     if message.role != "assistant":
         msg = "Feedback can only be given on answers."
         raise FeedbackNotAllowedError(msg)
-    feedback = await db.scalar(
-        select(Feedback).where(Feedback.message_id == message.id, Feedback.user_id == user.id)
+    note = redact(comment.strip()) if comment and comment.strip() else None
+    # One atomic upsert: a double click or two tabs must not fail the second rating on the
+    # unique (message, user) key.
+    statement = insert(Feedback).values(
+        id=uuid.uuid4(), message_id=message.id, user_id=user.id, rating=rating, comment=note
     )
-    if feedback is None:
-        feedback = Feedback(message_id=message.id, user_id=user.id)
-        db.add(feedback)
-    feedback.rating = rating
-    feedback.comment = redact(comment.strip()) if comment and comment.strip() else None
-    await db.flush()
-    return feedback
+    await db.execute(
+        statement.on_conflict_do_update(
+            index_elements=[Feedback.message_id, Feedback.user_id],
+            set_={"rating": statement.excluded.rating, "comment": statement.excluded.comment},
+        )
+    )
+    written = await db.scalars(
+        select(Feedback)
+        .where(Feedback.message_id == message.id, Feedback.user_id == user.id)
+        .execution_options(populate_existing=True)
+    )
+    return written.one()
 
 
 async def ratings_by_message(

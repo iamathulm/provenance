@@ -101,3 +101,13 @@ def test_latest_eval_merges_answer_and_retrieval_reports(tmp_path: Path) -> None
     assert merged is not None
     assert merged["domains"]["company"] == {"recall_at_5": 0.96, "faithfulness": 0.82}
     assert latest_eval(tmp_path) is None  # a broken report never breaks the overview
+
+
+@pytest.mark.usefixtures("conversation")
+async def test_operator_email_match_ignores_case(app: FastAPI, client: AsyncClient) -> None:
+    settings = app.state.settings
+    app.state.settings = settings.model_copy(update={"operator_emails": ["Demo@Provenance.Local"]})
+
+    response = await client.get("/v1/operator/overview")
+
+    assert response.status_code == 200
