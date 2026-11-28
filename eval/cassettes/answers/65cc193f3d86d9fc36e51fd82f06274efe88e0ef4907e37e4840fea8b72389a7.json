@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT COUNT(*) AS support_ticket_count FROM t_support_tickets_q3_2026 WHERE product = 'Harrier Mini';\"}",
+  "usage": {
+    "prompt_tokens": 545,
+    "completion_tokens": 68
+  }
+}

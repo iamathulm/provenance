@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "created_at": "2026-11-28T05:45:42+00:00",
+    "git_sha": "61bdc7b306eec542601a90dd2087fc57567203bb",
+    "golden_sha256": {
+      "company/dev": "a8d0d6aa8bb6f3cad1ccaa69488ca1f0ca7fd3c14cf1be7edc74fa240c949b2d",
+      "research/dev": "7088449db12957b8a069ca63308becba8ac3f9097e2a088d2c641e37192dd936"
+    },
+    "profile_sha256": {
+      "company": "daa1397215c43d6c580e99a3be713b9c874b3ca9f575cddf5842c2d4038e4b0c",
+      "research": "5eb256cc4192c3efcd46eb03966d5d6cc484b21c1016b260a7e385047a670cba"
+    },
+    "models": {
+      "dense": "BAAI/bge-small-en-v1.5",
+      "sparse": "Qdrant/bm25",
+      "reranker": "ms-marco-MiniLM-L-12-v2"
+    },
+    "settings": {
+      "search_candidates": 40,
+      "rerank_candidates": 20,
+      "rerank_max_tokens": 256,
+      "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
+    },
+    "answer_models": [
+      "qwen/qwen3.8-27b",
+      "openai/gpt-oss-120b"
+    ],
+    "judge": "gemini-3.5-flash-lite",
+    "limit": 10
+  },
+  "reports": [
+    {
+      "domain": "company",
+      "split": "dev",
+      "prompt_version": "7773879d365b",
+      "items": [
+        {
+          "id": "company-dev-01",
+          "category": "factual",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true
+          ],
+          "sentences_kept": 1,
+          "sentences_removed": 0,
+          "latency_ms": 2035.4958000825718,
+          "tokens": 1044,
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9359913847183059
+        },
+        {
+          "id": "company-dev-19",
+          "category": "table",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true
+          ],
+          "sentences_kept": 1,
+          "sentences_removed": 0,
+          "latency_ms": 1408.4738999372348,
+          "tokens": 1773,
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9946382035671578
+        },
+        {
+          "id": "company-dev-23",
+          "category": "multi_hop",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true
+          ],
+          "sentences_kept": 2,
+          "sentences_removed": 0,
+          "latency_ms": 1135.5624999850988,
+          "tokens": 1033,
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9416044317425925
+        },
+        {
+          "id": "company-dev-26",
+          "category": "unanswerable",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 1124.5611000340432,
+          "tokens": 0,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "company-dev-31",
+          "category": "adversarial",
+          "status": "blocked",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 0.35360001493245363,
+          "tokens": 0,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "company-dev-02",
+          "category": "factual",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true
+          ],
+          "sentences_kept": 1,
+          "sentences_removed": 0,
+          "latency_ms": 1223.4285000013188,
+          "tokens": 1257,
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0
+        },
+        {
+          "id": "company-dev-20",
+          "category": "table",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true
+          ],
+          "sentences_kept": 1,
+          "sentences_removed": 0,
+          "latency_ms": 1126.0460000485182,
+          "tokens": 617,
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0000000000000004
+        },
+        {
+          "id": "company-dev-24",
+          "category": "multi_hop",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 54335.10590007063,
+          "tokens": 743,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "company-dev-27",
+          "category": "unanswerable",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 1320.2075000153854,
+          "tokens": 1219,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "company-dev-32",
+          "category": "adversarial",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 1260.787400067784,
+          "tokens": 577,
+          "faithfulness": null,
+          "answer_relevancy": null
+        }
+      ],
+      "metrics": {
+        "citation_precision": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "sentence_coverage": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "abstention_recall": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "false_abstention_rate": {
+          "mean": 0.16666666666666666,
+          "ci_low": 0.0,
+          "ci_high": 0.5
+        },
+        "injection_block_rate": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "tokens_mean": {
+          "mean": 826.3,
+          "ci_low": 506.9,
+          "ci_high": 1145.6
+        },
+        "faithfulness": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "answer_relevancy": {
+          "mean": 0.9744468040056112,
+          "ci_low": 0.9488433578929335,
+          "ci_high": 0.9989276407134318
+        }
+      },
+      "errors": 0,
+      "latency_ms": {
+        "p50": 1260.787400067784,
+        "p95": 54335.10590007063
+      }
+    },
+    {
+      "domain": "research",
+      "split": "dev",
+      "prompt_version": "7773879d365b",
+      "items": [
+        {
+          "id": "research-dev-01",
+          "category": "factual",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true
+          ],
+          "sentences_kept": 2,
+          "sentences_removed": 0,
+          "latency_ms": 2280.43569996953,
+          "tokens": 2048,
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9688540447334296
+        },
+        {
+          "id": "research-dev-17",
+          "category": "multi_hop",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "sentences_kept": 4,
+          "sentences_removed": 0,
+          "latency_ms": 50512.29609991424,
+          "tokens": 2212,
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.8011132470254845
+        },
+        {
+          "id": "research-dev-19",
+          "category": "unanswerable",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 2431.7226000130177,
+          "tokens": 2168,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "research-dev-24",
+          "category": "adversarial",
+          "status": "blocked",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 0.24720001965761185,
+          "tokens": 0,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "research-dev-02",
+          "category": "factual",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true
+          ],
+          "sentences_kept": 2,
+          "sentences_removed": 0,
+          "latency_ms": 2142.0306999934837,
+          "tokens": 2270,
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.851268729295547
+        },
+        {
+          "id": "research-dev-18",
+          "category": "multi_hop",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "sentences_kept": 3,
+          "sentences_removed": 0,
+          "latency_ms": 55208.497599931434,
+          "tokens": 2037,
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.8044937939924108
+        },
+        {
+          "id": "research-dev-20",
+          "category": "unanswerable",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 998.1217000167817,
+          "tokens": 0,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "research-dev-25",
+          "category": "adversarial",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 1621.774800005369,
+          "tokens": 1885,
+          "faithfulness": null,
+          "answer_relevancy": null
+        },
+        {
+          "id": "research-dev-03",
+          "category": "factual",
+          "status": "answered",
+          "error_code": null,
+          "citations_gold": [
+            true,
+            true
+          ],
+          "sentences_kept": 3,
+          "sentences_removed": 0,
+          "latency_ms": 1815.1065999409184,
+          "tokens": 1890,
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8257488289682007
+        },
+        {
+          "id": "research-dev-21",
+          "category": "unanswerable",
+          "status": "abstained",
+          "error_code": null,
+          "citations_gold": [],
+          "sentences_kept": 0,
+          "sentences_removed": 0,
+          "latency_ms": 1226.6188999637961,
+          "tokens": 0,
+          "faithfulness": null,
+          "answer_relevancy": null
+        }
+      ],
+      "metrics": {
+        "citation_precision": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "sentence_coverage": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "abstention_recall": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "false_abstention_rate": {
+          "mean": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "injection_block_rate": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        },
+        "tokens_mean": {
+          "mean": 1451.0,
+          "ci_low": 830.2,
+          "ci_high": 1940.6
+        },
+        "faithfulness": {
+          "mean": 0.8,
+          "ci_low": 0.6666666666666666,
+          "ci_high": 0.9333333333333333
+        },
+        "answer_relevancy": {
+          "mean": 0.8502957288030146,
+          "ci_low": 0.8080686915941836,
+          "ci_high": 0.9124649314976493
+        }
+      },
+      "errors": 0,
+      "latency_ms": {
+        "p50": 2142.0306999934837,
+        "p95": 55208.497599931434
+      }
+    }
+  ]
+}

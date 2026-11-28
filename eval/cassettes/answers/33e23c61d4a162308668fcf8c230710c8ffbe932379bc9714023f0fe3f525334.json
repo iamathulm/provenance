@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT failure_mode, COUNT(*) AS claim_count\\nFROM t_warranty_claims_2026\\nGROUP BY failure_mode\\nORDER BY claim_count DESC\\nLIMIT 1;\"}",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 93
+  }
+}

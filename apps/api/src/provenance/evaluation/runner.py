@@ -59,8 +59,16 @@ class EvalRuntime:
         )
 
 
+def eval_settings(settings: Settings) -> Settings:
+    """Evaluate exactly one answer model: production fails over to a second model when the
+    first is out of quota, but an evaluation whose model depends on quota timing would score the
+    same questions differently from run to run."""
+    return settings.model_copy(update={"answer_models": settings.answer_models[:1]})
+
+
 @asynccontextmanager
 async def eval_runtime(settings: Settings, *, use_judge: bool) -> AsyncIterator[EvalRuntime]:
+    settings = eval_settings(settings)
     engine = create_engine_from_settings(settings)
     qdrant = AsyncQdrantClient(url=settings.qdrant_url)
     http = httpx.AsyncClient(base_url=settings.groq_base_url)

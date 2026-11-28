@@ -209,9 +209,11 @@ async def _eval_guardrails(out: Path | None) -> int:
     return 0
 
 
-async def _optimize(dev_limit: int, test_limit: int, pin: bool, out: Path) -> int:
+async def _optimize(
+    dev_limit: int, test_limit: int, pin: bool, out: Path, *, use_judge: bool
+) -> int:
     settings = get_settings()
-    async with eval_runtime(settings, use_judge=True) as runtime:
+    async with eval_runtime(settings, use_judge=use_judge) as runtime:
         if runtime.judge is None:
             _say("no judge key: the objective uses citation precision and abstention only")
 
@@ -310,6 +312,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         action="store_true",
         help="write the winner to prompts/answer.yaml if it clears the margin",
     )
+    optimizer.add_argument(
+        "--no-judge", action="store_true", help="skip RAGAS (record answers now, judge later)"
+    )
     optimizer.add_argument("--out", type=Path, default=REPO_ROOT / "eval" / "reports")
     args = parser.parse_args(argv)
     configure_logging(get_settings())
@@ -329,7 +334,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             else:
                 research_corpus.fetch(RESEARCH_MANIFEST, RESEARCH_FILES)
         case "optimize":
-            return _run(_optimize(args.dev_limit, args.test_limit, args.pin, args.out))
+            judged = not args.no_judge
+            return _run(
+                _optimize(args.dev_limit, args.test_limit, args.pin, args.out, use_judge=judged)
+            )
         case "eval":
             domains = list(get_args(Domain)) if args.domain == "all" else [args.domain]
             if args.suite == "guardrails":

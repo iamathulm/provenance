@@ -219,3 +219,14 @@ async def test_judge_sees_the_sql_behind_row_sources(harness: Harness) -> None:
 
     assert RecordingJudge.contexts[0].startswith("SQL: SELECT SUM(headcount)")
     assert "162" in RecordingJudge.contexts[0]
+
+
+def test_evaluation_pins_the_primary_answer_model() -> None:
+    from provenance.evaluation.runner import eval_settings
+
+    settings = Settings(_env_file=None, answer_models=["qwen/qwen3.8-27b", "openai/gpt-oss-120b"])
+
+    pinned = eval_settings(settings)
+
+    assert pinned.answer_models == ["qwen/qwen3.8-27b"]  # results never depend on quota timing
+    assert settings.answer_models == ["qwen/qwen3.8-27b", "openai/gpt-oss-120b"]

@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "E5 was evaluated on 56 datasets from the MTEB benchmark and 15 datasets from the BEIR benchmark [S1][S3]. The MTEB evaluation specifically covers the English subsets of the benchmark [S1]. The paper states that extensive evaluations were conducted on these 56 datasets from the BEIR and MTEB benchmarks [S3].",
+  "usage": {
+    "prompt_tokens": 1813,
+    "completion_tokens": 77
+  }
+}

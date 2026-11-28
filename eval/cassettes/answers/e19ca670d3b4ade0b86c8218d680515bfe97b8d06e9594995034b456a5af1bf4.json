@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "There were 3 support tickets in Q3 2026 with severity S1 [S1].",
+  "usage": {
+    "prompt_tokens": 1794,
+    "completion_tokens": 23
+  }
+}
