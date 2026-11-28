@@ -4,9 +4,14 @@ import duckdb
 import pyarrow as pa
 import pyarrow.parquet as pq
 import pytest
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from provenance.structured.catalog import sql_name
+from provenance.documents.models import Document
+from provenance.structured.catalog import load_catalog, sql_name
 from provenance.structured.engine import _execute
+from tests.ingest.harness import Harness
+from tests.ingest.samples import xlsx_bytes
 
 
 def parquet(rows: int) -> bytes:
@@ -52,3 +57,28 @@ def test_registered_tables_are_queryable() -> None:
 
     assert len(columns) == 2
     assert rows == [(11, 45)]
+
+
+async def test_catalog_order_is_stable_when_uploads_share_a_timestamp(
+    harness: Harness, db: AsyncSession
+) -> None:
+    # One seeding transaction gives every document the same created_at. The order must then come
+    # from the file names, not from random ids, or prompts (and cassette keys) differ per database.
+    for name in ("one.xlsx", "two.xlsx"):
+        await harness.upload(name, xlsx_bytes({"Sheet": [["n"], [1]]}))
+    await harness.worker.run_until_idle()
+    documents = sorted(
+        (
+            await db.scalars(select(Document).where(Document.workspace_id == harness.workspace_id))
+        ).all(),
+        key=lambda d: d.id,
+    )
+    stamp = documents[0].created_at
+    for document, filename in zip(documents, ("b_second.xlsx", "a_first.xlsx"), strict=True):
+        document.filename = filename
+        document.created_at = stamp
+    await db.commit()
+
+    entries = await load_catalog(db, harness.workspace_id)
+
+    assert [e.filename for e in entries] == ["a_first.xlsx", "b_second.xlsx"]

@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "ARES is the evaluation framework that fine-tunes lightweight LM judges to assess the quality of individual RAG components [S3]. The sources do not state that ARES offers reference-free evaluation, so the second part of the question cannot be answered. NO_ANSWER",
+  "usage": {
+    "prompt_tokens": 2126,
+    "completion_tokens": 53
+  }
+}

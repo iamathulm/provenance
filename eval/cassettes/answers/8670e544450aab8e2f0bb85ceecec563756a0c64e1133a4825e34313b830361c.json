@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT AVG(hours_to_resolve) AS avg_resolution_time_hours\\nFROM t_support_tickets_q3_2026\\nWHERE \\\"category\\\" = 'battery';\"}",
+  "usage": {
+    "prompt_tokens": 543,
+    "completion_tokens": 87
+  }
+}

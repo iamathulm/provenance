@@ -3,12 +3,18 @@
 #
 # Floors sit ~0.05 under the committed baseline (eval/reports/retrieval-test.md), so a real
 # regression trips the gate while CPU-level score ties do not. They are not the quality targets:
-# NFR-01 targets are recall@5 >= 0.80 and MRR@10 >= 0.65 per domain. Company meets them; research
-# currently does not (0.75 / 0.57), which is reported, not hidden. Raise a floor whenever the
-# baseline improves.
+# NFR-01 targets are recall@5 >= 0.80 and MRR@10 >= 0.65 per domain. Company meets both (0.92 /
+# 0.85); research meets recall but not MRR (0.81 / 0.58), which is reported, not hidden. Raise a
+# floor whenever the baseline improves.
 company:
-  recall_at_5: 0.90
-  mrr_at_10: 0.80
+  recall_at_5: 0.87
+  mrr_at_10: 0.79
 research:
-  recall_at_5: 0.70
-  mrr_at_10: 0.50
+  recall_at_5: 0.75
+  mrr_at_10: 0.53
+
+# SQL gate: `provenance eval --suite sql --split test --check eval/thresholds.yaml` exits 1 when
+# execution accuracy on the company table items drops below the floor (research has no tables).
+# Target (design spec): >= 0.80.
+sql:
+  company: 0.80

@@ -21,6 +21,22 @@ DOCS_ONLY = [chunk("page"), chunk("section")]
         ("What is the average warranty claim cost?", DOCS_ONLY, True, "both"),
         ("What is the battery fault procedure?", DOCS_ONLY, True, "docs"),
         ("How many seconds before landing after a battery fault?", DOCS_ONLY, False, "docs"),
+        # A superlative alone describes a spec value, not a computation over rows.
+        ("What is the maximum payload of the Talon X2?", DOCS_ONLY, True, "docs"),
+        ("Which failure mode has the most warranty claims?", TABLE_TOP, True, "table"),
+        ("Which month of Q3 had the highest revenue?", TABLE_TOP, True, "table"),
+        (
+            "How many support tickets were opened for the Harrier Mini in Q3?",
+            TABLE_TOP,
+            True,
+            "table",
+        ),
+        (
+            "What ingress protection rating does the Sentinel Dock have?",
+            [chunk("page"), chunk("page"), chunk("page"), chunk("rows")],
+            True,
+            "docs",
+        ),
     ],
 )
 def test_routes(question: str, chunks: list[Chunk], has_tables: bool, expected: str) -> None:

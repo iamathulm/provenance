@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "E5 was the first model to outperform the BM25 baseline on the BEIR retrieval benchmark without using any labeled data [S1]. Specifically, E5-PTbase outperformed the classic BM25 algorithm by 1.2 points when averaged over all 15 datasets [S4]. Regarding M3-Embedding, its sparse retrieval functionality outperforms BM25 on the MIRACL dataset [S6]. This indicates that the learned weights in M3 are significantly better than those calculated by BM25 [S6].",
+  "usage": {
+    "prompt_tokens": 1812,
+    "completion_tokens": 113
+  }
+}

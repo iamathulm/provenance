@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT SUM(cost_usd) AS total_approved_warranty_cost FROM t_warranty_claims_2026 WHERE approved = true\"}",
+  "usage": {
+    "prompt_tokens": 544,
+    "completion_tokens": 67
+  }
+}

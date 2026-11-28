@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The name E5 stands for EmbEddings from bidirEctional Encoder rEpresentations [S1].",
+  "usage": {
+    "prompt_tokens": 1965,
+    "completion_tokens": 26
+  }
+}

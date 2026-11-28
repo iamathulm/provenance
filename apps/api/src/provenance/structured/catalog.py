@@ -50,7 +50,9 @@ async def load_catalog(db: AsyncSession, workspace_id: uuid.UUID) -> list[TableE
             Document.workspace_id == workspace_id,
             Document.deleted_at.is_(None),
         )
-        .order_by(Document.created_at, Document.id, VersionTable.name)
+        # Filename before id: a seeding transaction gives every document the same created_at, and
+        # random ids would make the table list (and so every SQL prompt) differ per database.
+        .order_by(Document.created_at, Document.filename, VersionTable.name, Document.id)
     )
     entries: list[TableEntry] = []
     taken: set[str] = set()

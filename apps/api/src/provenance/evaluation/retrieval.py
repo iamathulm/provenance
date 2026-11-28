@@ -59,6 +59,7 @@ class ItemResult:
     route_predicted: str
     latency_ms: float
     top_files: list[str]
+    route_reasons: list[str]
     scores: dict[str, float] = field(default_factory=dict)
 
 
@@ -148,7 +149,13 @@ async def evaluate(
         hits = [(hit.document.filename, hit.chunk.text) for hit in result.hits]
         route = route_query(item.question, result.ranked_chunks, has_tables)
         scored = ItemResult(
-            item.id, item.category, item.route, route.kind, latency, [f for f, _ in hits[:3]]
+            item.id,
+            item.category,
+            item.route,
+            route.kind,
+            latency,
+            [f for f, _ in hits[:3]],
+            route.reasons,
         )
         if item.answerable:
             matched = _matches(item, hits)

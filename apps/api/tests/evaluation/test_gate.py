@@ -10,7 +10,7 @@ THRESHOLDS = Path(__file__).resolve().parents[4] / "eval" / "thresholds.yaml"
 
 
 def report(mode: SearchMode, recall: float) -> RetrievalReport:
-    item = ItemResult("company-test-01", "factual", "docs", "docs", 12.0, ["a.pdf"])
+    item = ItemResult("company-test-01", "factual", "docs", "docs", 12.0, ["a.pdf"], [])
     item.scores = {"recall_at_5": recall, "mrr_at_10": recall}
     return RetrievalReport(
         domain="company",
@@ -42,8 +42,8 @@ def test_gate_trips_on_regression() -> None:
 
     assert passing == []
     assert failing == [
-        "company/test recall_at_5 0.400 < 0.90",
-        "company/test mrr_at_10 0.400 < 0.80",
+        "company/test recall_at_5 0.400 < 0.87",
+        "company/test mrr_at_10 0.400 < 0.79",
     ]
     assert raised == ["company/test recall_at_5 0.950 < 0.99"]
 
@@ -64,3 +64,19 @@ def test_markdown_lists_misses(recall: float) -> None:
 
     assert "| company | test | hybrid_rerank |" in markdown
     assert ("company-test-01" in markdown) is (recall < 1.0)
+
+
+def test_markdown_explains_route_misses() -> None:
+    metadata = {
+        "created_at": "2026-11-27T00:00:00+00:00",
+        "git_sha": "abc123",
+        "models": {"dense": "d"},
+    }
+    misrouted = report("hybrid_rerank", 1.0)
+    misrouted.items[0] = ItemResult(
+        "company-test-05", "factual", "docs", "both", 12.0, ["a.pdf"], ["table chunk at rank 2"]
+    )
+
+    markdown = to_markdown([misrouted], metadata)
+
+    assert "| `company-test-05` | docs | both | table chunk at rank 2 |" in markdown

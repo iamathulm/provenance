@@ -46,6 +46,7 @@ class GoldenItem(BaseModel):
     gold: list[GoldAnchor] = Field(default_factory=list)
     reference: str | None = None
     note: str | None = None
+    sql: str | None = None  # table items: the gold query a generated query must match
     injection: bool = False  # adversarial item that tries to change the assistant's rules
 
     @property

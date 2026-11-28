@@ -13,6 +13,7 @@ from provenance.core.config import REPO_ROOT, Settings
 from provenance.evaluation.answers import AnswerReport
 from provenance.evaluation.golden import GoldenSet
 from provenance.evaluation.retrieval import Estimate, RetrievalReport
+from provenance.evaluation.sql_eval import SqlReport
 
 GATED_MODE = "hybrid_rerank"
 
@@ -114,6 +115,20 @@ def to_markdown(reports: list[RetrievalReport], metadata: dict[str, Any]) -> str
         misses = [i for i in r.items if i.scores and i.scores["recall_at_5"] < 1.0]
         lines += ["", f"Missed at 5 ({len(misses)}):" if misses else "No misses at 5."]
         lines += [f"- `{i.id}` top files: {', '.join(i.top_files) or 'none'}" for i in misses]
+        misrouted = [i for i in r.items if i.route_predicted != i.route_expected]
+        if misrouted:
+            lines += [
+                "",
+                f"Route misses ({len(misrouted)}):",
+                "",
+                "| Item | Expected | Predicted | Reasons |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| `{i.id}` | {i.route_expected} | {i.route_predicted} | "
+                f"{'; '.join(i.route_reasons)} |"
+                for i in misrouted
+            ]
     return "\n".join(lines) + "\n"
 
 
@@ -185,4 +200,52 @@ def answers_markdown(reports: list[AnswerReport], metadata: dict[str, Any]) -> s
     if failed:
         lines += ["", "Errors (rerun to resume from cassettes):"]
         lines += [f"- `{i.id}`: {i.error_code}" for _, i in failed]
+    return "\n".join(lines) + "\n"
+
+
+def check_sql_threshold(
+    reports: list[SqlReport], thresholds: dict[str, dict[str, float]]
+) -> list[str]:
+    """Failures against the `sql:` floors; domains without a floor are not gated. Items the run
+    could not score (no cassette, quota) fail the gate instead of passing as a smaller sample."""
+    floors = thresholds.get("sql", {})
+    failures: list[str] = []
+    for report in reports:
+        if report.errors:
+            failures.append(
+                f"{report.domain}/{report.split}: {report.errors} item(s) not scored "
+                "(model unavailable or rate limited; rerun to resume)"
+            )
+            continue
+        minimum = floors.get(report.domain)
+        value = report.metrics["execution_accuracy"].mean
+        if minimum is not None and value < minimum:
+            failures.append(
+                f"{report.domain}/{report.split} execution_accuracy {value:.3f} < {minimum:.2f}"
+            )
+    return failures
+
+
+def sql_json(reports: list[SqlReport], metadata: dict[str, Any]) -> dict[str, Any]:
+    return {"metadata": metadata, "reports": [dataclasses.asdict(r) for r in reports]}
+
+
+def sql_markdown(reports: list[SqlReport], metadata: dict[str, Any]) -> str:
+    lines = [
+        "# SQL evaluation",
+        "",
+        f"Run {metadata['created_at']} at `{metadata['git_sha'][:12]}`; SQL model "
+        f"`{metadata['sql_model']}`. Execution accuracy: the generated query returns the gold "
+        "query's rows (row order, column names and extra columns ignored). 95% bootstrap CIs.",
+        "",
+        "| Domain | Split | Items | Not scored | Execution accuracy |",
+        "|---|---|---|---|---|",
+    ]
+    for r in reports:
+        accuracy = _cell(r.metrics, "execution_accuracy")
+        lines.append(f"| {r.domain} | {r.split} | {len(r.items)} | {r.errors} | {accuracy} |")
+    misses = [i for r in reports for i in r.items if not i.match]
+    if misses:
+        lines += ["", "Misses:"]
+        lines += [f"- `{i.id}`: {i.reason}" for i in misses]
     return "\n".join(lines) + "\n"

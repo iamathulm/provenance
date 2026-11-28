@@ -158,6 +158,7 @@ items:
     question: How many support tickets were opened for the Harrier Mini in Q3?
     category: table
     route: table
+    sql: "SELECT COUNT(*) FROM t_support_tickets_q3_2026 WHERE product = 'Harrier Mini'"
     gold:
       - {file: support-tickets-q3-2026.csv}
     reference: "47"
@@ -166,6 +167,7 @@ items:
     question: Which failure mode has the most warranty claims?
     category: table
     route: table
+    sql: "SELECT failure_mode FROM t_warranty_claims_2026 GROUP BY failure_mode ORDER BY COUNT(*) DESC LIMIT 1"
     gold:
       - {file: warranty-claims-2026.csv}
     reference: Battery swelling, with 21 claims.
@@ -174,6 +176,7 @@ items:
     question: What is the total headcount across all teams?
     category: table
     route: table
+    sql: "SELECT SUM(headcount) FROM t_headcount_by_team_2026_q3_headcount"
     gold:
       - {file: headcount-by-team-2026-q3.xlsx}
     reference: "342"
@@ -182,6 +185,7 @@ items:
     question: Which month of Q3 had the highest revenue?
     category: table
     route: table
+    sql: "SELECT month FROM t_sales_q3_2026_by_month ORDER BY revenue_usd DESC LIMIT 1"
     gold:
       - {file: sales-q3-2026.xlsx, evidence: "month: 2026-09"}
     reference: September 2026, with 6.7 million US dollars.
@@ -190,6 +194,7 @@ items:
     question: What is the average resolution time in hours for battery support tickets?
     category: table
     route: table
+    sql: "SELECT AVG(hours_to_resolve) FROM t_support_tickets_q3_2026 WHERE category = 'battery'"
     gold:
       - {file: support-tickets-q3-2026.csv}
     reference: 31.4 hours.

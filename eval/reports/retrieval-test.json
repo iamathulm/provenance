@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "created_at": "2026-11-27T05:28:55+00:00",
-    "git_sha": "d704cce52bb7bcad172680aa8cabe1ac55942973",
+    "created_at": "2026-11-28T13:48:58+00:00",
+    "git_sha": "1eb85f63725e5aab5316cfc78c6e71758196f3ac",
     "golden_sha256": {
-      "company/test": "27bdd78c6819a9b82e9be57018e042b5b640cfe74ceda3ee076e0b125df121fe",
-      "research/test": "9a5c03ed9bbced75170284afc3fc57fb82ae3dd2a3afe3fa2c7eb4aaef2da23a"
+      "company/test": "77b9ba26fa9be0c36f30abfb38ef7335895076de1cfd8abaa8d1b200b57ca63f",
+      "research/test": "df2586dd77762f6bd445b0983baae56c0c58716ba8d15e8e4c5d991f1ef1e84e"
     },
     "profile_sha256": {
       "company": "daa1397215c43d6c580e99a3be713b9c874b3ca9f575cddf5842c2d4038e4b0c",
-      "research": "5eb256cc4192c3efcd46eb03966d5d6cc484b21c1016b260a7e385047a670cba"
+      "research": "08b10b746c005097530e9ae1e8d8b3d078d3439476628aff1e1406bcab562d0f"
     },
     "models": {
       "dense": "BAAI/bge-small-en-v1.5",
@@ -18,7 +18,7 @@
     "settings": {
       "search_candidates": 40,
       "rerank_candidates": 20,
-      "rerank_max_tokens": 256,
+      "rerank_max_tokens": 384,
       "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
     }
   },
@@ -33,11 +33,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 330.21639997605234,
+          "latency_ms": 432.6819999841973,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -51,11 +54,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 31.128200003877282,
+          "latency_ms": 24.664800032041967,
           "top_files": [
             "employee-handbook.pdf",
             "employee-handbook.pdf",
             "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -69,11 +75,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.23499991185963,
+          "latency_ms": 28.250599978491664,
           "top_files": [
             "groundlink-4-2-release-notes.docx",
             "flight-operations-safety-manual.pdf",
             "runbook-battery-fault.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -87,11 +96,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.34519993606955,
+          "latency_ms": 27.952500036917627,
           "top_files": [
             "postmortem-2026-08-14-telemetry-outage.txt",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -104,12 +116,16 @@
           "id": "company-test-05",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 34.26670003682375,
+          "route_predicted": "docs",
+          "latency_ms": 27.86460006609559,
           "top_files": [
             "talon-x2-product-specification.docx",
             "talon-x2-product-specification.docx",
             "flight-operations-safety-manual.pdf"
+          ],
+          "route_reasons": [
+            "weak aggregate 'maximum'",
+            "weak wording without a table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -122,12 +138,15 @@
           "id": "company-test-06",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 32.8148000407964,
+          "route_predicted": "docs",
+          "latency_ms": 25.64959996379912,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -141,11 +160,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.98819996416569,
+          "latency_ms": 27.942500077188015,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "talon-x2-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -159,11 +181,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 33.224200014956295,
+          "latency_ms": 27.43220003321767,
           "top_files": [
             "q3-2026-business-review.pptx",
             "q3-2026-business-review.pptx",
             "sales-q3-2026.xlsx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -177,11 +202,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 34.23730004578829,
+          "latency_ms": 28.023899998515844,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -195,11 +223,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 34.08160002436489,
+          "latency_ms": 24.98430002015084,
           "top_files": [
             "employee-handbook.pdf",
             "sales-q3-2026.xlsx",
             "sales-q3-2026.xlsx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -213,11 +244,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.329300069250166,
+          "latency_ms": 27.047700015828013,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "information-security-policy.pdf",
             "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -231,11 +265,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.15799990762025,
+          "latency_ms": 26.00069995969534,
           "top_files": [
             "runbook-battery-fault.txt",
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -249,11 +286,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.25720003340393,
+          "latency_ms": 24.380399961955845,
           "top_files": [
             "runbook-lost-link.txt",
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -267,11 +307,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.73019997868687,
+          "latency_ms": 24.74160003475845,
           "top_files": [
             "harrier-mini-product-specification.docx",
             "talon-x2-product-specification.docx",
             "harrier-mini-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -285,11 +328,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.45479997713119,
+          "latency_ms": 23.88350002001971,
           "top_files": [
             "information-security-policy.pdf",
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -303,11 +349,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.7569999974221,
+          "latency_ms": 23.916500038467348,
           "top_files": [
             "groundlink-4-2-release-notes.docx",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -321,11 +370,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.21880002133548,
+          "latency_ms": 23.48800003528595,
           "top_files": [
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -339,11 +391,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 36.965199979022145,
+          "latency_ms": 25.209199986420572,
           "top_files": [
             "postmortem-2026-06-firmware-rollback.txt",
             "postmortem-2026-06-firmware-rollback.txt",
             "harrier-mini-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -357,11 +412,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 36.55149997211993,
+          "latency_ms": 26.140999980270863,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -375,11 +434,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 33.449299982748926,
+          "latency_ms": 24.691700004041195,
           "top_files": [
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "weak aggregate 'most'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -393,11 +456,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 34.11220002453774,
+          "latency_ms": 25.107600027695298,
           "top_files": [
             "headcount-by-team-2026-q3.xlsx",
             "headcount-by-team-2026-q3.xlsx",
             "sales-q3-2026.xlsx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'total'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -411,11 +478,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 33.17629999946803,
+          "latency_ms": 26.30279993172735,
           "top_files": [
             "sales-q3-2026.xlsx",
             "sales-q3-2026.xlsx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "weak aggregate 'highest'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -429,11 +500,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 34.10069993697107,
+          "latency_ms": 25.283500086516142,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'average'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -446,12 +521,15 @@
           "id": "company-test-24",
           "category": "multi_hop",
           "route_expected": "both",
-          "route_predicted": "table",
-          "latency_ms": 36.20730002876371,
+          "route_predicted": "both",
+          "latency_ms": 26.74160001333803,
           "top_files": [
             "harrier-mini-product-specification.docx",
             "q3-2026-business-review.pptx",
             "harrier-mini-product-specification.docx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -465,11 +543,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.77640000730753,
+          "latency_ms": 27.74279995355755,
           "top_files": [
             "it-onboarding-checklist.txt",
             "information-security-policy.pdf",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -483,11 +564,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.16989999823272,
+          "latency_ms": 24.467799928970635,
           "top_files": [
             "q3-2026-business-review.pptx",
             "vendor-faq.txt",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -495,12 +579,15 @@
           "id": "company-test-27",
           "category": "unanswerable",
           "route_expected": "docs",
-          "route_predicted": "table",
-          "latency_ms": 33.531200024299324,
+          "route_predicted": "both",
+          "latency_ms": 23.543299990706146,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how much'"
           ],
           "scores": {}
         },
@@ -509,11 +596,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.358999993652105,
+          "latency_ms": 22.778799990192056,
           "top_files": [
             "q3-2026-business-review.pptx",
             "sentinel-dock-launch-plan.pptx",
             "postmortem-2026-06-firmware-rollback.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -522,11 +612,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 38.41959999408573,
+          "latency_ms": 24.056299938820302,
           "top_files": [
             "information-security-policy.pdf",
             "support-tickets-q3-2026.csv",
             "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {}
         },
@@ -535,11 +628,15 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "table",
-          "latency_ms": 40.78409995418042,
+          "latency_ms": 27.793899993412197,
           "top_files": [
             "q3-2026-business-review.pptx",
             "employee-handbook.pdf",
             "headcount-by-team-2026-q3.xlsx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 3"
           ],
           "scores": {}
         },
@@ -548,11 +645,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.200300113298,
+          "latency_ms": 28.538100072182715,
           "top_files": [
             "it-onboarding-checklist.txt",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -560,12 +660,15 @@
           "id": "company-test-32",
           "category": "adversarial",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 33.03389996290207,
+          "route_predicted": "docs",
+          "latency_ms": 25.15190001577139,
           "top_files": [
             "vendor-faq.txt",
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -574,11 +677,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 36.821499932557344,
+          "latency_ms": 27.057699975557625,
           "top_files": [
             "information-security-policy.pdf",
             "it-onboarding-checklist.txt",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         }
@@ -605,9 +711,9 @@
           "ci_high": 1.0
         },
         "route_accuracy": {
-          "mean": 0.696969696969697,
-          "ci_low": 0.5454545454545454,
-          "ci_high": 0.8484848484848485
+          "mean": 0.8181818181818182,
+          "ci_low": 0.6666666666666666,
+          "ci_high": 0.9393939393939394
         }
       },
       "by_category": {
@@ -637,8 +743,8 @@
         "off": 33
       },
       "latency_ms": {
-        "p50": 34.11220002453774,
-        "p95": 40.78409995418042
+        "p50": 25.64959996379912,
+        "p95": 28.538100072182715
       }
     },
     {
@@ -651,11 +757,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 257.21110007725656,
+          "latency_ms": 236.28850001841784,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt",
             "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -669,11 +778,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 18.554799957200885,
+          "latency_ms": 12.572300038300455,
           "top_files": [
             "employee-handbook.pdf",
             "employee-handbook.pdf",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -687,11 +799,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.668999942950904,
+          "latency_ms": 14.017899986356497,
           "top_files": [
             "flight-operations-safety-manual.pdf",
             "sentinel-dock-launch-plan.pptx",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -705,11 +820,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.683900056406856,
+          "latency_ms": 13.768000062555075,
           "top_files": [
             "information-security-policy.pdf",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -723,11 +841,15 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "table",
-          "latency_ms": 19.661500002257526,
+          "latency_ms": 12.902099988423288,
           "top_files": [
             "talon-x2-product-specification.docx",
             "harrier-mini-product-specification.docx",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "weak aggregate 'maximum'",
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -740,12 +862,15 @@
           "id": "company-test-06",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 18.784899963065982,
+          "route_predicted": "docs",
+          "latency_ms": 13.40860000345856,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -759,11 +884,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 19.42839997354895,
+          "latency_ms": 13.138000038452446,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -777,11 +905,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 19.743199925869703,
+          "latency_ms": 13.433500076644123,
           "top_files": [
             "q3-2026-business-review.pptx",
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -795,11 +926,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.129699910990894,
+          "latency_ms": 12.491900008171797,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "flight-operations-safety-manual.pdf",
             "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -813,11 +947,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 18.712999997660518,
+          "latency_ms": 12.585500022396445,
           "top_files": [
             "employee-handbook.pdf",
             "employee-handbook.pdf",
             "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -831,11 +968,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.774700049310923,
+          "latency_ms": 13.018399942666292,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "information-security-policy.pdf",
             "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -849,11 +989,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.222100032493472,
+          "latency_ms": 13.354799943044782,
           "top_files": [
             "runbook-battery-fault.txt",
             "information-security-policy.pdf",
             "talon-x2-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -867,11 +1010,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.048700109124184,
+          "latency_ms": 13.924599974416196,
           "top_files": [
             "runbook-lost-link.txt",
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -885,11 +1031,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 19.451200030744076,
+          "latency_ms": 14.135700068436563,
           "top_files": [
             "harrier-mini-product-specification.docx",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -903,11 +1052,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.340300001204014,
+          "latency_ms": 12.888700002804399,
           "top_files": [
             "information-security-policy.pdf",
             "employee-handbook.pdf",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -921,11 +1073,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.499099977314472,
+          "latency_ms": 14.123299974016845,
           "top_files": [
             "groundlink-4-2-release-notes.docx",
             "groundlink-4-2-release-notes.docx",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -939,11 +1094,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.22389992978424,
+          "latency_ms": 13.108699931763113,
           "top_files": [
             "employee-handbook.pdf",
             "information-security-policy.pdf",
             "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -957,11 +1115,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 20.2686000848189,
+          "latency_ms": 14.068100019358099,
           "top_files": [
             "postmortem-2026-06-firmware-rollback.txt",
             "warranty-claims-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -975,11 +1136,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 20.168200018815696,
+          "latency_ms": 13.684300007298589,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -993,11 +1158,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 19.359800033271313,
+          "latency_ms": 12.537600006908178,
           "top_files": [
             "warranty-claims-2026.csv",
             "q3-2026-business-review.pptx",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "weak aggregate 'most'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1011,11 +1180,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 19.26969992928207,
+          "latency_ms": 12.758499942719936,
           "top_files": [
             "headcount-by-team-2026-q3.xlsx",
             "headcount-by-team-2026-q3.xlsx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'total'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1029,11 +1202,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 19.747599959373474,
+          "latency_ms": 13.266599969938397,
           "top_files": [
             "q3-2026-business-review.pptx",
             "sales-q3-2026.xlsx",
             "sales-q3-2026.xlsx"
+          ],
+          "route_reasons": [
+            "weak aggregate 'highest'",
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1047,11 +1224,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 20.423099980689585,
+          "latency_ms": 13.730200007557869,
           "top_files": [
             "q3-2026-business-review.pptx",
             "it-onboarding-checklist.txt",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'average'",
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1065,11 +1246,15 @@
           "category": "multi_hop",
           "route_expected": "both",
           "route_predicted": "table",
-          "latency_ms": 23.870899924077094,
+          "latency_ms": 14.37729992903769,
           "top_files": [
             "price-list-2026.csv",
             "price-list-2026.csv",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1083,11 +1268,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 22.84739993046969,
+          "latency_ms": 13.376299990341067,
           "top_files": [
             "information-security-policy.pdf",
             "it-onboarding-checklist.txt",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1100,12 +1288,15 @@
           "id": "company-test-26",
           "category": "unanswerable",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 21.78549999371171,
+          "route_predicted": "docs",
+          "latency_ms": 12.406599940732121,
           "top_files": [
             "vendor-faq.txt",
             "employee-handbook.pdf",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1114,11 +1305,15 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "table",
-          "latency_ms": 22.286899969913065,
+          "latency_ms": 13.764900038950145,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "support-tickets-q3-2026.csv",
             "sentinel-dock-launch-plan.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how much'",
+            "table chunk at rank 2"
           ],
           "scores": {}
         },
@@ -1127,11 +1322,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 21.999799995683134,
+          "latency_ms": 14.505499973893166,
           "top_files": [
             "information-security-policy.pdf",
             "travel-and-expense-policy.pdf",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {}
         },
@@ -1140,11 +1338,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 20.550800021737814,
+          "latency_ms": 12.822600081562996,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "employee-handbook.pdf",
             "headcount-by-team-2026-q3.xlsx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {}
         },
@@ -1153,11 +1354,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 20.94989991746843,
+          "latency_ms": 12.325200019404292,
           "top_files": [
             "employee-handbook.pdf",
             "travel-and-expense-policy.pdf",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'"
           ],
           "scores": {}
         },
@@ -1166,11 +1370,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 21.6273000696674,
+          "latency_ms": 12.847400037571788,
           "top_files": [
             "postmortem-2026-08-14-telemetry-outage.txt",
             "it-onboarding-checklist.txt",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1179,11 +1386,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.43720008805394,
+          "latency_ms": 13.642699923366308,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1192,11 +1402,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.32429992686957,
+          "latency_ms": 13.085199985653162,
           "top_files": [
             "information-security-policy.pdf",
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         }
@@ -1223,9 +1436,9 @@
           "ci_high": 1.0
         },
         "route_accuracy": {
-          "mean": 0.6363636363636364,
-          "ci_low": 0.48484848484848486,
-          "ci_high": 0.8181818181818182
+          "mean": 0.696969696969697,
+          "ci_low": 0.5454545454545454,
+          "ci_high": 0.8484848484848485
         }
       },
       "by_category": {
@@ -1255,8 +1468,8 @@
         "off": 33
       },
       "latency_ms": {
-        "p50": 19.747599959373474,
-        "p95": 23.870899924077094
+        "p50": 13.354799943044782,
+        "p95": 14.505499973893166
       }
     },
     {
@@ -1269,11 +1482,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 40.70729995146394,
+          "latency_ms": 24.418000015430152,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt",
             "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1287,11 +1503,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.34159999154508,
+          "latency_ms": 26.534599950537086,
           "top_files": [
             "employee-handbook.pdf",
             "employee-handbook.pdf",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1305,11 +1524,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 46.8125999905169,
+          "latency_ms": 28.607300017029047,
           "top_files": [
             "flight-operations-safety-manual.pdf",
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1323,11 +1545,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.705600038170815,
+          "latency_ms": 28.97109999321401,
           "top_files": [
             "postmortem-2026-08-14-telemetry-outage.txt",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1340,12 +1565,16 @@
           "id": "company-test-05",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 48.7050999654457,
+          "route_predicted": "docs",
+          "latency_ms": 28.450199984945357,
           "top_files": [
             "harrier-mini-product-specification.docx",
             "talon-x2-product-specification.docx",
             "flight-operations-safety-manual.pdf"
+          ],
+          "route_reasons": [
+            "weak aggregate 'maximum'",
+            "weak wording without a table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1358,12 +1587,15 @@
           "id": "company-test-06",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 60.01389992889017,
+          "route_predicted": "docs",
+          "latency_ms": 28.06759998202324,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1377,11 +1609,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 46.96659999899566,
+          "latency_ms": 28.005499974824488,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1395,11 +1630,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 51.04120005853474,
+          "latency_ms": 27.832599938847125,
           "top_files": [
             "q3-2026-business-review.pptx",
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1413,11 +1651,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 52.174100070260465,
+          "latency_ms": 29.18879990465939,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "travel-and-expense-policy.pdf",
             "price-list-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1430,12 +1671,15 @@
           "id": "company-test-10",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 47.8716999059543,
+          "route_predicted": "docs",
+          "latency_ms": 29.515999951399863,
           "top_files": [
             "employee-handbook.pdf",
             "travel-and-expense-policy.pdf",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1449,11 +1693,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 50.5731999874115,
+          "latency_ms": 28.831499977968633,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "information-security-policy.pdf",
             "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1467,11 +1714,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 51.698099938221276,
+          "latency_ms": 27.78749994467944,
           "top_files": [
             "runbook-battery-fault.txt",
             "talon-x2-product-specification.docx",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1485,11 +1735,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.40980004519224,
+          "latency_ms": 27.576399967074394,
           "top_files": [
             "runbook-lost-link.txt",
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1503,11 +1756,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 48.475699964910746,
+          "latency_ms": 27.916799997910857,
           "top_files": [
             "harrier-mini-product-specification.docx",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1521,11 +1777,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.80010005924851,
+          "latency_ms": 27.19530009198934,
           "top_files": [
             "information-security-policy.pdf",
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1539,11 +1798,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 52.12689994368702,
+          "latency_ms": 28.41409994289279,
           "top_files": [
             "groundlink-4-2-release-notes.docx",
             "groundlink-4-2-release-notes.docx",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1557,11 +1819,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.39339998923242,
+          "latency_ms": 27.894299943000078,
           "top_files": [
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1575,11 +1840,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 49.505500006489456,
+          "latency_ms": 31.229900079779327,
           "top_files": [
             "postmortem-2026-06-firmware-rollback.txt",
             "flight-operations-safety-manual.pdf",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -1593,11 +1861,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 47.984000062569976,
+          "latency_ms": 30.037099961191416,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1611,11 +1883,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 48.29410009551793,
+          "latency_ms": 29.338399996049702,
           "top_files": [
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "weak aggregate 'most'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1629,11 +1905,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 48.10919996816665,
+          "latency_ms": 28.506900067441165,
           "top_files": [
             "headcount-by-team-2026-q3.xlsx",
             "headcount-by-team-2026-q3.xlsx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'total'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1647,11 +1927,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 47.1004000864923,
+          "latency_ms": 28.018000070005655,
           "top_files": [
             "sales-q3-2026.xlsx",
             "sales-q3-2026.xlsx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "weak aggregate 'highest'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1665,11 +1949,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 48.729400034062564,
+          "latency_ms": 27.751500019803643,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "strong aggregate 'average'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1683,11 +1971,15 @@
           "category": "multi_hop",
           "route_expected": "both",
           "route_predicted": "table",
-          "latency_ms": 49.56600000150502,
+          "latency_ms": 31.435600016266108,
           "top_files": [
             "q3-2026-business-review.pptx",
             "price-list-2026.csv",
             "price-list-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1701,11 +1993,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 51.54799995943904,
+          "latency_ms": 30.352999921888113,
           "top_files": [
             "it-onboarding-checklist.txt",
             "information-security-policy.pdf",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1719,11 +2014,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.681499971076846,
+          "latency_ms": 27.65109995380044,
           "top_files": [
             "vendor-faq.txt",
             "q3-2026-business-review.pptx",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1731,12 +2029,15 @@
           "id": "company-test-27",
           "category": "unanswerable",
           "route_expected": "docs",
-          "route_predicted": "table",
-          "latency_ms": 46.71759996563196,
+          "route_predicted": "both",
+          "latency_ms": 27.087199967354536,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how much'"
           ],
           "scores": {}
         },
@@ -1745,11 +2046,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 47.76520002633333,
+          "latency_ms": 28.057899908162653,
           "top_files": [
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {}
         },
@@ -1758,11 +2062,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 47.94149997178465,
+          "latency_ms": 26.52509999461472,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "information-security-policy.pdf",
             "headcount-by-team-2026-q3.xlsx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {}
         },
@@ -1771,11 +2078,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 48.41689998283982,
+          "latency_ms": 26.981200091540813,
           "top_files": [
             "employee-handbook.pdf",
             "q3-2026-business-review.pptx",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'"
           ],
           "scores": {}
         },
@@ -1784,11 +2094,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.83079994376749,
+          "latency_ms": 30.576899996958673,
           "top_files": [
             "it-onboarding-checklist.txt",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1797,11 +2110,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 46.15790001116693,
+          "latency_ms": 30.520100030116737,
           "top_files": [
             "vendor-faq.txt",
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -1810,11 +2126,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 50.6394999101758,
+          "latency_ms": 32.0714000845328,
           "top_files": [
             "information-security-policy.pdf",
             "it-onboarding-checklist.txt",
             "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         }
@@ -1841,9 +2160,9 @@
           "ci_high": 1.0
         },
         "route_accuracy": {
-          "mean": 0.6363636363636364,
-          "ci_low": 0.48484848484848486,
-          "ci_high": 0.8181818181818182
+          "mean": 0.7272727272727273,
+          "ci_low": 0.5757575757575758,
+          "ci_high": 0.8787878787878788
         }
       },
       "by_category": {
@@ -1873,8 +2192,8 @@
         "off": 33
       },
       "latency_ms": {
-        "p50": 48.29410009551793,
-        "p95": 52.174100070260465
+        "p50": 28.06759998202324,
+        "p95": 31.435600016266108
       }
     },
     {
@@ -1887,11 +2206,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1207.5134000042453,
+          "latency_ms": 2175.0155000481755,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-faq.txt",
             "vendor-faq.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1905,11 +2227,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1086.2633999204263,
+          "latency_ms": 1991.965299937874,
           "top_files": [
             "employee-handbook.pdf",
             "talon-x2-product-specification.docx",
             "harrier-mini-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1923,11 +2248,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1069.958099978976,
+          "latency_ms": 1955.9831999940798,
           "top_files": [
             "flight-operations-safety-manual.pdf",
             "groundlink-4-2-release-notes.docx",
             "sentinel-dock-launch-plan.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1941,11 +2269,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1028.8199000060558,
+          "latency_ms": 2092.4472000915557,
           "top_files": [
             "postmortem-2026-08-14-telemetry-outage.txt",
             "postmortem-2026-08-14-telemetry-outage.txt",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1958,12 +2289,16 @@
           "id": "company-test-05",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 1026.0742000536993,
+          "route_predicted": "docs",
+          "latency_ms": 2085.4700000490993,
           "top_files": [
             "talon-x2-product-specification.docx",
             "flight-operations-safety-manual.pdf",
             "talon-x2-product-specification.docx"
+          ],
+          "route_reasons": [
+            "weak aggregate 'maximum'",
+            "weak wording without a table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -1976,12 +2311,15 @@
           "id": "company-test-06",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 1169.9642000021413,
+          "route_predicted": "docs",
+          "latency_ms": 1920.1407000655308,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx",
             "talon-x2-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -1995,11 +2333,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1208.4131999872625,
+          "latency_ms": 1953.5365999909118,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "runbook-battery-fault.txt",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2013,11 +2354,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 1128.1350000062957,
+          "latency_ms": 1884.099500020966,
           "top_files": [
             "q3-2026-business-review.pptx",
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2031,11 +2375,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1036.3267000066116,
+          "latency_ms": 1937.7138999989256,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "travel-and-expense-policy.pdf",
             "sentinel-dock-launch-plan.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2049,11 +2396,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1083.3216999890283,
+          "latency_ms": 1876.4867999125272,
           "top_files": [
             "employee-handbook.pdf",
             "information-security-policy.pdf",
-            "it-onboarding-checklist.txt"
+            "employee-handbook.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2067,11 +2417,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1028.6143000703305,
+          "latency_ms": 1927.1329999901354,
           "top_files": [
             "vendor-onboarding-guide.docx",
             "vendor-onboarding-guide.docx",
             "information-security-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2085,11 +2438,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 1038.4727999335155,
+          "latency_ms": 1958.4216000512242,
           "top_files": [
             "runbook-battery-fault.txt",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2103,11 +2459,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1062.4139999272302,
+          "latency_ms": 1856.4312000526115,
           "top_files": [
             "runbook-lost-link.txt",
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2120,12 +2479,15 @@
           "id": "company-test-14",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 1092.9428999079391,
+          "route_predicted": "docs",
+          "latency_ms": 1895.072599989362,
           "top_files": [
             "harrier-mini-product-specification.docx",
-            "postmortem-2026-06-firmware-rollback.txt",
-            "warranty-claims-2026.csv"
+            "harrier-mini-product-specification.docx",
+            "postmortem-2026-06-firmware-rollback.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2139,11 +2501,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1024.8832000652328,
+          "latency_ms": 1707.2379000019282,
           "top_files": [
             "information-security-policy.pdf",
             "it-onboarding-checklist.txt",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2157,16 +2522,19 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1021.3223000755534,
+          "latency_ms": 1852.8216000413522,
           "top_files": [
             "groundlink-4-2-release-notes.docx",
             "runbook-lost-link.txt",
             "postmortem-2026-08-14-telemetry-outage.txt"
           ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
+          ],
           "scores": {
-            "recall_at_5": 1.0,
-            "mrr_at_10": 0.2,
-            "ndcg_at_10": 0.38685280723454163,
+            "recall_at_5": 0.0,
+            "mrr_at_10": 0.16666666666666666,
+            "ndcg_at_10": 0.3562071871080222,
             "doc_recall_at_5": 1.0
           }
         },
@@ -2175,11 +2543,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1082.827299949713,
+          "latency_ms": 1891.2536000134423,
           "top_files": [
             "employee-handbook.pdf",
             "q3-2026-business-review.pptx",
             "postmortem-2026-08-14-telemetry-outage.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2192,12 +2563,15 @@
           "id": "company-test-18",
           "category": "factual",
           "route_expected": "docs",
-          "route_predicted": "both",
-          "latency_ms": 1120.7569999387488,
+          "route_predicted": "docs",
+          "latency_ms": 1860.1532999891788,
           "top_files": [
             "postmortem-2026-06-firmware-rollback.txt",
             "postmortem-2026-06-firmware-rollback.txt",
             "harrier-mini-product-specification.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2211,11 +2585,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 1163.765100063756,
+          "latency_ms": 1875.508299912326,
           "top_files": [
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2229,11 +2607,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 1090.6999000580981,
+          "latency_ms": 1931.932899984531,
           "top_files": [
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv",
             "warranty-claims-2026.csv"
+          ],
+          "route_reasons": [
+            "weak aggregate 'most'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2247,11 +2629,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 1319.6746000321582,
+          "latency_ms": 1888.248800067231,
           "top_files": [
             "headcount-by-team-2026-q3.xlsx",
             "headcount-by-team-2026-q3.xlsx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'total'",
+            "table chunk at rank 1"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2265,11 +2651,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 1304.9733999650925,
+          "latency_ms": 1804.9938000040129,
           "top_files": [
             "q3-2026-business-review.pptx",
             "sales-q3-2026.xlsx",
             "sales-q3-2026.xlsx"
+          ],
+          "route_reasons": [
+            "weak aggregate 'highest'",
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2283,11 +2673,15 @@
           "category": "table",
           "route_expected": "table",
           "route_predicted": "table",
-          "latency_ms": 1034.0236999327317,
+          "latency_ms": 1903.554799966514,
           "top_files": [
             "q3-2026-business-review.pptx",
             "support-tickets-q3-2026.csv",
             "support-tickets-q3-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'average'",
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2301,11 +2695,15 @@
           "category": "multi_hop",
           "route_expected": "both",
           "route_predicted": "table",
-          "latency_ms": 964.7680999478325,
+          "latency_ms": 1899.932499974966,
           "top_files": [
             "q3-2026-business-review.pptx",
             "price-list-2026.csv",
             "price-list-2026.csv"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'",
+            "table chunk at rank 2"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2319,16 +2717,19 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 952.8112000552937,
+          "latency_ms": 1847.6878999499604,
           "top_files": [
             "it-onboarding-checklist.txt",
             "information-security-policy.pdf",
             "information-security-policy.pdf"
           ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
+          ],
           "scores": {
             "recall_at_5": 1.0,
             "mrr_at_10": 1.0,
-            "ndcg_at_10": 0.9197207891481876,
+            "ndcg_at_10": 1.0,
             "doc_recall_at_5": 1.0
           }
         },
@@ -2337,11 +2738,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1051.3061999808997,
+          "latency_ms": 1897.2548000747338,
           "top_files": [
-            "travel-and-expense-policy.pdf",
+            "employee-handbook.pdf",
             "q3-2026-business-review.pptx",
-            "employee-handbook.pdf"
+            "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -2349,12 +2753,15 @@
           "id": "company-test-27",
           "category": "unanswerable",
           "route_expected": "docs",
-          "route_predicted": "table",
-          "latency_ms": 974.7950000455603,
+          "route_predicted": "both",
+          "latency_ms": 1902.6157000334933,
           "top_files": [
             "sentinel-dock-launch-plan.pptx",
             "sentinel-dock-launch-plan.pptx",
             "q3-2026-business-review.pptx"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how much'"
           ],
           "scores": {}
         },
@@ -2363,11 +2770,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 960.8186000259593,
+          "latency_ms": 1948.2676000334322,
           "top_files": [
             "q3-2026-business-review.pptx",
-            "support-tickets-q3-2026.csv",
+            "warranty-claims-2026.csv",
             "groundlink-4-2-release-notes.docx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 2"
           ],
           "scores": {}
         },
@@ -2376,11 +2786,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 987.0335999876261,
+          "latency_ms": 1863.235600059852,
           "top_files": [
             "travel-and-expense-policy.pdf",
             "information-security-policy.pdf",
             "headcount-by-team-2026-q3.xlsx"
+          ],
+          "route_reasons": [
+            "table chunk at rank 3"
           ],
           "scores": {}
         },
@@ -2389,11 +2802,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "both",
-          "latency_ms": 1076.099899946712,
+          "latency_ms": 1838.7500999961048,
           "top_files": [
             "q3-2026-business-review.pptx",
             "employee-handbook.pdf",
-            "it-onboarding-checklist.txt"
+            "travel-and-expense-policy.pdf"
+          ],
+          "route_reasons": [
+            "strong aggregate 'how many'"
           ],
           "scores": {}
         },
@@ -2402,11 +2818,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1022.8496000636369,
+          "latency_ms": 1709.7376000601798,
           "top_files": [
             "it-onboarding-checklist.txt",
-            "it-onboarding-checklist.txt",
-            "information-security-policy.pdf"
+            "information-security-policy.pdf",
+            "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -2415,11 +2834,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1012.0489000109956,
+          "latency_ms": 1838.4633999085054,
           "top_files": [
             "vendor-faq.txt",
             "vendor-onboarding-guide.docx",
-            "vendor-faq.txt"
+            "vendor-onboarding-guide.docx"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         },
@@ -2428,30 +2850,33 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 985.0279999664053,
+          "latency_ms": 1903.7686999654397,
           "top_files": [
             "information-security-policy.pdf",
             "employee-handbook.pdf",
             "it-onboarding-checklist.txt"
+          ],
+          "route_reasons": [
+            "no aggregate wording and no table chunk near the top"
           ],
           "scores": {}
         }
       ],
       "metrics": {
         "recall_at_5": {
-          "mean": 0.96,
-          "ci_low": 0.88,
+          "mean": 0.92,
+          "ci_low": 0.8,
           "ci_high": 1.0
         },
         "mrr_at_10": {
-          "mean": 0.848,
-          "ci_low": 0.7253333333333333,
-          "ci_high": 0.948
+          "mean": 0.8466666666666667,
+          "ci_low": 0.72,
+          "ci_high": 0.9466666666666668
         },
         "ndcg_at_10": {
-          "mean": 0.8822228017682049,
-          "ci_low": 0.7875082083027742,
-          "ci_high": 0.9576297065494266
+          "mean": 0.8842081453972166,
+          "ci_low": 0.7889308131672541,
+          "ci_high": 0.9594854776271792
         },
         "doc_recall_at_5": {
           "mean": 1.0,
@@ -2459,23 +2884,23 @@
           "ci_high": 1.0
         },
         "route_accuracy": {
-          "mean": 0.6666666666666666,
-          "ci_low": 0.5151515151515151,
-          "ci_high": 0.8181818181818182
+          "mean": 0.7878787878787878,
+          "ci_low": 0.6363636363636364,
+          "ci_high": 0.9090909090909091
         }
       },
       "by_category": {
         "factual": {
-          "recall_at_5": 0.9444444444444444,
-          "mrr_at_10": 0.8444444444444444,
-          "ndcg_at_10": 0.8818883193285568,
+          "recall_at_5": 0.8888888888888888,
+          "mrr_at_10": 0.8425925925925926,
+          "ndcg_at_10": 0.8801857848770834,
           "doc_recall_at_5": 1.0,
           "count": 18.0
         },
         "multi_hop": {
           "recall_at_5": 1.0,
           "mrr_at_10": 1.0,
-          "ndcg_at_10": 0.9598603945740938,
+          "ndcg_at_10": 1.0,
           "doc_recall_at_5": 1.0,
           "count": 2.0
         },
@@ -2491,8 +2916,8 @@
         "flashrank": 33
       },
       "latency_ms": {
-        "p50": 1051.3061999808997,
-        "p95": 1304.9733999650925
+        "p50": 1897.2548000747338,
+        "p95": 2092.4472000915557
       }
     },
     {
@@ -2505,11 +2930,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.852800006978214,
+          "latency_ms": 22.807199973613024,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2523,11 +2951,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 42.47190000023693,
+          "latency_ms": 27.0966999232769,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2541,11 +2972,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 37.879600073210895,
+          "latency_ms": 27.911199955269694,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2559,11 +2993,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 37.30260010343045,
+          "latency_ms": 28.099200106225908,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2577,11 +3014,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.62929995637387,
+          "latency_ms": 27.072399971075356,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2595,11 +3035,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.38909996859729,
+          "latency_ms": 26.35800000280142,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2613,11 +3056,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.058299963362515,
+          "latency_ms": 25.722599937580526,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2631,11 +3077,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.85870000440627,
+          "latency_ms": 25.796600035391748,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2649,11 +3098,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.941300003789365,
+          "latency_ms": 25.24639992043376,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2667,11 +3119,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.63570000510663,
+          "latency_ms": 25.29120002873242,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2685,11 +3140,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.9127999721095,
+          "latency_ms": 24.04920000117272,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2703,11 +3161,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 33.2593999337405,
+          "latency_ms": 24.653000058606267,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2721,11 +3182,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 36.21380007825792,
+          "latency_ms": 27.338000014424324,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2739,11 +3203,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 32.564900000579655,
+          "latency_ms": 23.236299981363118,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2757,11 +3224,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.77760001644492,
+          "latency_ms": 27.35470002517104,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2775,11 +3245,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.77510006632656,
+          "latency_ms": 26.307999971322715,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -2793,11 +3266,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.255599999800324,
+          "latency_ms": 27.228099992498755,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2811,11 +3287,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 40.95520009286702,
+          "latency_ms": 27.749800006859004,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -2829,11 +3308,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 36.84549999888986,
+          "latency_ms": 24.428299977444112,
           "top_files": [
             "2212.03533v2.pdf",
             "2402.03216v5.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2842,11 +3324,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.50550004001707,
+          "latency_ms": 23.899999912828207,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2855,11 +3340,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.45480000320822,
+          "latency_ms": 25.35500004887581,
           "top_files": [
             "2312.06648v3.pdf",
             "2403.14403v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2868,11 +3356,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.80129996407777,
+          "latency_ms": 25.765600032173097,
           "top_files": [
             "2310.07554v3.pdf",
             "2212.03533v2.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2881,11 +3372,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 38.35250006522983,
+          "latency_ms": 23.291800054721534,
           "top_files": [
             "2312.06648v3.pdf",
             "2212.03533v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2894,11 +3388,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.36739998869598,
+          "latency_ms": 25.39309998974204,
           "top_files": [
             "2212.03533v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2907,11 +3404,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 35.24920006748289,
+          "latency_ms": 27.184900012798607,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -2920,11 +3420,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 34.97649997007102,
+          "latency_ms": 25.571499951183796,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         }
@@ -2976,8 +3479,8 @@
         "off": 26
       },
       "latency_ms": {
-        "p50": 35.38909996859729,
-        "p95": 40.95520009286702
+        "p50": 25.765600032173097,
+        "p95": 27.911199955269694
       }
     },
     {
@@ -2990,11 +3493,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 24.67790001537651,
+          "latency_ms": 13.727199984714389,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3008,11 +3514,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 23.432500078342855,
+          "latency_ms": 14.027899946086109,
           "top_files": [
             "2310.07554v3.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3026,11 +3535,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 23.26280006673187,
+          "latency_ms": 38.99849997833371,
           "top_files": [
             "2311.09476v2.pdf",
             "2309.15217v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3044,11 +3556,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 23.918399936519563,
+          "latency_ms": 15.386799932457507,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3062,11 +3577,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 23.433499969542027,
+          "latency_ms": 14.035400003194809,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3080,11 +3598,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 21.793599938973784,
+          "latency_ms": 13.36560002528131,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3098,11 +3619,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 21.76789997611195,
+          "latency_ms": 14.72580002155155,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3116,11 +3640,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 22.285799961537123,
+          "latency_ms": 14.401899999938905,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3134,11 +3661,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.84929996635765,
+          "latency_ms": 14.329800033010542,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3152,11 +3682,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 21.361200022511184,
+          "latency_ms": 14.109099982306361,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3170,11 +3703,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.606499980203807,
+          "latency_ms": 15.33449999988079,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3188,11 +3724,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 39.60800007916987,
+          "latency_ms": 14.450800023041666,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3206,11 +3745,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 30.069499975070357,
+          "latency_ms": 14.743000036105514,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3224,11 +3766,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 31.5612000413239,
+          "latency_ms": 14.618999906815588,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3242,11 +3787,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.78410005196929,
+          "latency_ms": 14.900200068950653,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3260,11 +3808,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.692500005476177,
+          "latency_ms": 14.142399886623025,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3278,11 +3829,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.589100080542266,
+          "latency_ms": 34.387500025331974,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3296,11 +3850,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.158299943432212,
+          "latency_ms": 30.292000039480627,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.5,
@@ -3314,11 +3871,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 37.88870002608746,
+          "latency_ms": 14.133499935269356,
           "top_files": [
             "2212.03533v2.pdf",
             "2311.09476v2.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3327,11 +3887,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.687200012616813,
+          "latency_ms": 14.186999993398786,
           "top_files": [
             "2311.09476v2.pdf",
             "2309.15217v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3340,11 +3903,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.26389993261546,
+          "latency_ms": 14.30479995906353,
           "top_files": [
             "2312.06648v3.pdf",
             "2212.03533v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3353,11 +3919,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 36.32319997996092,
+          "latency_ms": 13.341200072318316,
           "top_files": [
             "2309.15217v2.pdf",
             "2402.03216v5.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3366,11 +3935,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 19.43430001847446,
+          "latency_ms": 14.6206000354141,
           "top_files": [
             "2312.06648v3.pdf",
             "2403.14403v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3379,11 +3951,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.65489999949932,
+          "latency_ms": 14.27970000077039,
           "top_files": [
             "2401.05856v1.pdf",
             "2309.15217v2.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3392,11 +3967,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 21.71000000089407,
+          "latency_ms": 24.539300007745624,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3405,11 +3983,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 20.30850003939122,
+          "latency_ms": 13.98920000065118,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         }
@@ -3461,8 +4042,8 @@
         "off": 26
       },
       "latency_ms": {
-        "p50": 21.76789997611195,
-        "p95": 37.88870002608746
+        "p50": 14.401899999938905,
+        "p95": 34.387500025331974
       }
     },
     {
@@ -3475,11 +4056,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 41.788200032897294,
+          "latency_ms": 24.00640002451837,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3493,11 +4077,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.664100071415305,
+          "latency_ms": 27.588000055402517,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3511,11 +4098,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.58220002986491,
+          "latency_ms": 26.79200004786253,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3529,11 +4119,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.022599959746,
+          "latency_ms": 28.694999986328185,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3547,11 +4140,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.149900045245886,
+          "latency_ms": 28.93290005158633,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3565,11 +4161,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.59040009230375,
+          "latency_ms": 29.875900014303625,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3583,11 +4182,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.056299983523786,
+          "latency_ms": 29.953100020065904,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3601,11 +4203,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.37880004197359,
+          "latency_ms": 30.995900044217706,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3619,11 +4224,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.17619996517897,
+          "latency_ms": 28.051599976606667,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3637,11 +4245,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.54879989195615,
+          "latency_ms": 30.069699976593256,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3655,11 +4266,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 49.828600022010505,
+          "latency_ms": 28.30320002976805,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3673,11 +4287,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.25839994009584,
+          "latency_ms": 28.349400032311678,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3691,11 +4308,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.69180004950613,
+          "latency_ms": 31.864200020208955,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3709,11 +4329,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 45.20290007349104,
+          "latency_ms": 27.724299929104745,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3727,11 +4350,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 50.11070007458329,
+          "latency_ms": 30.355799943208694,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3745,11 +4371,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.03919996973127,
+          "latency_ms": 29.19939998537302,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3763,11 +4392,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 47.643200028687716,
+          "latency_ms": 30.55810008663684,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3781,11 +4413,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 51.47239996585995,
+          "latency_ms": 32.3749000672251,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -3799,11 +4434,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 51.45889997947961,
+          "latency_ms": 29.205899918451905,
           "top_files": [
             "2212.03533v2.pdf",
             "2311.09476v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3812,11 +4450,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.04550006520003,
+          "latency_ms": 26.817400008440018,
           "top_files": [
             "2311.09476v2.pdf",
             "2309.15217v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3825,11 +4466,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 57.30059999041259,
+          "latency_ms": 28.95209996495396,
           "top_files": [
             "2212.03533v2.pdf",
             "2312.06648v3.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3838,11 +4482,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 54.66699996031821,
+          "latency_ms": 27.13229996152222,
           "top_files": [
             "2212.03533v2.pdf",
             "2310.07554v3.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3851,11 +4498,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 53.60619991552085,
+          "latency_ms": 29.99329997692257,
           "top_files": [
             "2212.03533v2.pdf",
             "2312.06648v3.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3864,11 +4514,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 55.424700025469065,
+          "latency_ms": 30.989899998530746,
           "top_files": [
             "2309.15217v2.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3877,11 +4530,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 49.83560007531196,
+          "latency_ms": 31.175999902188778,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -3890,11 +4546,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 48.33979997783899,
+          "latency_ms": 29.329299926757812,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         }
@@ -3946,8 +4605,8 @@
         "off": 26
       },
       "latency_ms": {
-        "p50": 48.149900045245886,
-        "p95": 55.424700025469065
+        "p50": 29.205899918451905,
+        "p95": 31.864200020208955
       }
     },
     {
@@ -3960,16 +4619,19 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 954.1911999695003,
+          "latency_ms": 1918.2622999651358,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
           ],
+          "route_reasons": [
+            "workspace has no tables"
+          ],
           "scores": {
-            "recall_at_5": 0.0,
-            "mrr_at_10": 0.16666666666666666,
-            "ndcg_at_10": 0.3562071871080222,
+            "recall_at_5": 1.0,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
             "doc_recall_at_5": 1.0
           }
         },
@@ -3978,11 +4640,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 965.9986000042409,
+          "latency_ms": 1990.4004000127316,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -3996,11 +4661,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 973.6979000736028,
+          "latency_ms": 1998.6471999436617,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4014,16 +4682,19 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 991.7584999930114,
+          "latency_ms": 1913.6846999172121,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
           ],
+          "route_reasons": [
+            "workspace has no tables"
+          ],
           "scores": {
             "recall_at_5": 1.0,
-            "mrr_at_10": 0.3333333333333333,
-            "ndcg_at_10": 0.5,
+            "mrr_at_10": 0.5,
+            "ndcg_at_10": 0.6309297535714575,
             "doc_recall_at_5": 1.0
           }
         },
@@ -4032,11 +4703,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1069.8009000625461,
+          "latency_ms": 1873.136100010015,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4050,11 +4724,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1039.4602000014856,
+          "latency_ms": 1752.3148000473157,
           "top_files": [
             "2309.15217v2.pdf",
             "2309.15217v2.pdf",
             "2309.15217v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -4068,16 +4745,19 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1022.8467000415549,
+          "latency_ms": 1842.4125000601634,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
           ],
+          "route_reasons": [
+            "workspace has no tables"
+          ],
           "scores": {
             "recall_at_5": 0.0,
-            "mrr_at_10": 0.1111111111111111,
-            "ndcg_at_10": 0.3010299956639812,
+            "mrr_at_10": 0.1,
+            "ndcg_at_10": 0.2890648263178879,
             "doc_recall_at_5": 1.0
           }
         },
@@ -4086,11 +4766,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 952.6879999320954,
+          "latency_ms": 1808.1718001049012,
           "top_files": [
             "2401.05856v1.pdf",
             "2401.05856v1.pdf",
             "2401.05856v1.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4104,11 +4787,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 957.6480999821797,
+          "latency_ms": 1590.4377999249846,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4122,11 +4808,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1047.8508999804035,
+          "latency_ms": 1707.2962999809533,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4140,11 +4829,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1081.83449995704,
+          "latency_ms": 1594.6265999227762,
           "top_files": [
             "2312.06648v3.pdf",
             "2312.06648v3.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4158,11 +4850,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1027.5209000101313,
+          "latency_ms": 1778.5592000000179,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4176,11 +4871,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 956.1943999724463,
+          "latency_ms": 1931.313099921681,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4194,16 +4892,19 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1028.455900028348,
+          "latency_ms": 1792.2023000428453,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
           ],
+          "route_reasons": [
+            "workspace has no tables"
+          ],
           "scores": {
             "recall_at_5": 1.0,
-            "mrr_at_10": 0.25,
-            "ndcg_at_10": 0.43067655807339306,
+            "mrr_at_10": 0.2,
+            "ndcg_at_10": 0.38685280723454163,
             "doc_recall_at_5": 1.0
           }
         },
@@ -4212,11 +4913,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1068.2403000537306,
+          "latency_ms": 1770.7687000511214,
           "top_files": [
             "2403.14403v2.pdf",
             "2403.14403v2.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4230,11 +4934,14 @@
           "category": "factual",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 954.4271000195295,
+          "latency_ms": 1857.5340999523178,
           "top_files": [
             "2310.07554v3.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 1.0,
@@ -4248,16 +4955,19 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 958.9644999941811,
+          "latency_ms": 1791.6024000151083,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
           ],
+          "route_reasons": [
+            "workspace has no tables"
+          ],
           "scores": {
             "recall_at_5": 0.5,
-            "mrr_at_10": 0.5,
-            "ndcg_at_10": 0.38685280723454163,
+            "mrr_at_10": 0.3333333333333333,
+            "ndcg_at_10": 0.3065735963827292,
             "doc_recall_at_5": 0.5
           }
         },
@@ -4266,11 +4976,14 @@
           "category": "multi_hop",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 965.9302999498323,
+          "latency_ms": 1878.6007000599056,
           "top_files": [
             "2403.14403v2.pdf",
             "2310.07554v3.pdf",
             "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {
             "recall_at_5": 0.0,
@@ -4284,11 +4997,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 954.3742999667302,
+          "latency_ms": 1905.3151999833062,
           "top_files": [
             "2212.03533v2.pdf",
             "2212.03533v2.pdf",
             "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4297,11 +5013,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1074.7667999239638,
+          "latency_ms": 1892.3371999990195,
           "top_files": [
             "2311.09476v2.pdf",
             "2311.09476v2.pdf",
             "2311.09476v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4310,11 +5029,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 967.4047000007704,
+          "latency_ms": 1883.2078999839723,
           "top_files": [
             "2402.03216v5.pdf",
-            "2403.14403v2.pdf",
-            "2402.03216v5.pdf"
+            "2402.03216v5.pdf",
+            "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4323,11 +5045,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 954.36840003822,
+          "latency_ms": 1829.6289999270812,
           "top_files": [
             "2309.15217v2.pdf",
             "2311.09476v2.pdf",
-            "2402.03216v5.pdf"
+            "2310.07554v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4336,11 +5061,14 @@
           "category": "unanswerable",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1005.0414999714121,
+          "latency_ms": 1853.875800035894,
           "top_files": [
             "2212.03533v2.pdf",
             "2311.09476v2.pdf",
             "2312.06648v3.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4349,11 +5077,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1058.6475000018254,
+          "latency_ms": 1900.191399967298,
           "top_files": [
             "2312.06648v3.pdf",
-            "2212.03533v2.pdf",
-            "2402.03216v5.pdf"
+            "2402.03216v5.pdf",
+            "2212.03533v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4362,11 +5093,14 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1035.7969000469893,
+          "latency_ms": 1849.4436000473797,
           "top_files": [
             "2402.03216v5.pdf",
             "2402.03216v5.pdf",
             "2402.03216v5.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         },
@@ -4375,30 +5109,33 @@
           "category": "adversarial",
           "route_expected": "docs",
           "route_predicted": "docs",
-          "latency_ms": 1006.1721000820398,
+          "latency_ms": 2033.8876999448985,
           "top_files": [
-            "2401.05856v1.pdf",
             "2311.09476v2.pdf",
+            "2401.05856v1.pdf",
             "2403.14403v2.pdf"
+          ],
+          "route_reasons": [
+            "workspace has no tables"
           ],
           "scores": {}
         }
       ],
       "metrics": {
         "recall_at_5": {
-          "mean": 0.75,
-          "ci_low": 0.5555555555555556,
-          "ci_high": 0.9166666666666666
+          "mean": 0.8055555555555556,
+          "ci_low": 0.6111111111111112,
+          "ci_high": 0.9444444444444444
         },
         "mrr_at_10": {
-          "mean": 0.566358024691358,
-          "ci_low": 0.3919753086419753,
-          "ci_high": 0.7268518518518519
+          "mean": 0.5814814814814815,
+          "ci_low": 0.4148148148148148,
+          "ci_high": 0.7407407407407408
         },
         "ndcg_at_10": {
-          "mean": 0.6315308782663506,
-          "ci_low": 0.48047239447199414,
-          "ci_high": 0.780083420838435
+          "mean": 0.6465077776551359,
+          "ci_low": 0.49654317448307467,
+          "ci_high": 0.7951546578113177
         },
         "doc_recall_at_5": {
           "mean": 0.9722222222222222,
@@ -4413,16 +5150,16 @@
       },
       "by_category": {
         "factual": {
-          "recall_at_5": 0.8125,
-          "mrr_at_10": 0.6059027777777778,
-          "ndcg_at_10": 0.6862939375974856,
+          "recall_at_5": 0.875,
+          "mrr_at_10": 0.6333333333333333,
+          "ndcg_at_10": 0.7081604000881073,
           "doc_recall_at_5": 1.0,
           "count": 16.0
         },
         "multi_hop": {
           "recall_at_5": 0.25,
-          "mrr_at_10": 0.25,
-          "ndcg_at_10": 0.19342640361727081,
+          "mrr_at_10": 0.16666666666666666,
+          "ndcg_at_10": 0.1532867981913646,
           "doc_recall_at_5": 0.75,
           "count": 2.0
         }
@@ -4431,8 +5168,8 @@
         "flashrank": 26
       },
       "latency_ms": {
-        "p50": 1005.0414999714121,
-        "p95": 1074.7667999239638
+        "p50": 1857.5340999523178,
+        "p95": 1998.6471999436617
       }
     }
   ]

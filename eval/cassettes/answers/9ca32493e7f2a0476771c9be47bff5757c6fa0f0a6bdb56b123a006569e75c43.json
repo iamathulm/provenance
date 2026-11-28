@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT _row, team, open_roles\\nFROM t_headcount_by_team_2026_q3_headcount\\nORDER BY open_roles DESC\\nLIMIT 1\"}",
+  "usage": {
+    "prompt_tokens": 538,
+    "completion_tokens": 83
+  }
+}

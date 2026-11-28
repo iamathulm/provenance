@@ -65,3 +65,11 @@ def test_mismatched_header_is_rejected(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="declares research/dev"):
         load_golden("company", "dev", tmp_path)
+
+
+@pytest.mark.parametrize("split", get_args(Split))
+def test_table_items_carry_gold_sql(split: Split) -> None:
+    tables = [i for i in load_golden("company", split).items if i.category == "table"]
+
+    assert tables
+    assert all(i.sql and i.sql.lstrip().upper().startswith("SELECT") for i in tables)

@@ -1,0 +1,8 @@
+{
+  "model": "qwen/qwen3.8-27b",
+  "text": "The provided sources do not state which backbone LLM LLM-Embedder uses in its experiments [S2][S3][S4]. The sources also do not specify which model Adaptive-RAG trains as its classifier, only noting that it uses a classifier to assess query complexity [S1][S5].\n\nNO_ANSWER",
+  "usage": {
+    "prompt_tokens": 2183,
+    "completion_tokens": 68
+  }
+}

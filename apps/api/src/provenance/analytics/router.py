@@ -27,7 +27,7 @@ async def analytics(
 async def overview(
     request: Request, user: CurrentUser, db: DbSession, settings: AppSettings
 ) -> dict[str, Any]:
-    if user.email not in settings.operator_emails:
+    if user.email.casefold() not in {email.casefold() for email in settings.operator_emails}:
         msg = "The operator view is limited to operator accounts."
         raise ForbiddenError(msg)
     index = request.app.state.chunk_index
