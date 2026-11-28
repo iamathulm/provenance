@@ -1,6 +1,6 @@
 # SQL evaluation
 
-Run 2026-11-28T14:43:40+00:00 at `8efaa9e6d15a`; SQL model `openai/gpt-oss-20b`. Execution accuracy: the generated query returns the gold query's rows (row order, column names and extra columns ignored). 95% bootstrap CIs.
+Run 2026-11-28T14:58:20+00:00 at `258f8f9aafb3`; SQL model `openai/gpt-oss-20b`. Execution accuracy: the generated query returns the gold query's rows (row order, column names and extra columns ignored). 95% bootstrap CIs.
 
 | Domain | Split | Items | Not scored | Execution accuracy |
 |---|---|---|---|---|
