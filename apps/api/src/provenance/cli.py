@@ -6,9 +6,11 @@ import signal
 import sys
 import time
 from collections.abc import Coroutine, Sequence
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, get_args
 
+import httpx
 from alembic import command
 from alembic.config import Config
 from qdrant_client import AsyncQdrantClient
@@ -18,6 +20,15 @@ from provenance.db.engine import create_engine_from_settings, session_factory
 from provenance.demo import company_corpus, research_corpus
 from provenance.evaluation.answers import evaluate_answers
 from provenance.evaluation.golden import Domain, Split, load_golden
+from provenance.evaluation.guardrail_eval import (
+    Classifier,
+    PromptGuardClassifier,
+    evaluate_guardrails,
+    guardrails_json,
+    guardrails_markdown,
+    labeled_questions,
+    local_classifier,
+)
 from provenance.evaluation.report import (
     answers_json,
     answers_markdown,
@@ -42,6 +53,7 @@ COMPANY_SOURCE = REPO_ROOT / "data" / "company" / "source"
 COMPANY_FILES = REPO_ROOT / "data" / "company" / "files"
 RESEARCH_MANIFEST = REPO_ROOT / "data" / "research" / "manifest.yaml"
 RESEARCH_FILES = REPO_ROOT / "data" / "research" / "files"
+PROMPT_GUARD_CASSETTES = REPO_ROOT / "eval" / "cassettes" / "prompt_guard"
 
 
 def _run[T](coroutine: Coroutine[Any, Any, T]) -> T:
@@ -171,6 +183,28 @@ async def _eval_answers(
     return 0
 
 
+async def _eval_guardrails(out: Path | None) -> int:
+    settings = get_settings()
+    key = settings.groq_api_key.get_secret_value() if settings.groq_api_key else None
+    async with httpx.AsyncClient(base_url=settings.groq_base_url) as http:
+        prompt_guard = PromptGuardClassifier(http, key, PROMPT_GUARD_CASSETTES)
+        classifiers: dict[str, Classifier] = {
+            "local": local_classifier,
+            "prompt_guard": prompt_guard,
+        }
+        report = await evaluate_guardrails(labeled_questions(), classifiers)
+    metadata = {"created_at": _now(), "git_sha": run_metadata([], settings)["git_sha"]}
+    markdown = guardrails_markdown(report, metadata)
+    print(markdown)
+    if out is not None:
+        write_report(out, "guardrails", guardrails_json(report, metadata), markdown)
+    return 0
+
+
+def _now() -> str:
+    return datetime.now(UTC).isoformat(timespec="seconds")
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="provenance", description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -197,9 +231,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     evaluation = commands.add_parser("eval", help="score the system against the golden sets")
     evaluation.add_argument(
         "--suite",
-        choices=["retrieval", "answers"],
+        choices=["retrieval", "answers", "guardrails"],
         default="retrieval",
-        help="retrieval (no model calls) or answers (Groq answers, optional RAGAS judge)",
+        help="retrieval (no model calls), answers (Groq answers, optional RAGAS judge) or "
+        "guardrails (local injection rules vs Prompt Guard)",
     )
     evaluation.add_argument(
         "--limit", type=int, help="answers: items per domain, stratified by category"
@@ -237,6 +272,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 research_corpus.fetch(RESEARCH_MANIFEST, RESEARCH_FILES)
         case "eval":
             domains = list(get_args(Domain)) if args.domain == "all" else [args.domain]
+            if args.suite == "guardrails":
+                status = _run(_eval_guardrails(args.out))
+                _say("eval: done")
+                return status
             if args.suite == "answers":
                 use_judge = not args.no_judge
                 status = _run(_eval_answers(domains, args.split, args.limit, use_judge, args.out))
