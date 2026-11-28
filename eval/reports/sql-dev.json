@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "created_at": "2026-11-28T13:19:31+00:00",
-    "git_sha": "e824e449b34367a9e66272b0e1ce810b2464c9a7",
+    "created_at": "2026-11-28T14:29:20+00:00",
+    "git_sha": "c196ddc458ffed41517f1bc29078bda26b41f58e",
     "golden_sha256": {
       "company/dev": "81a215ce3203eaeaf4613be6f1ce9558b8c3eb9dd5c71e81b674ae52d48f3308"
     },
@@ -16,7 +16,7 @@
     "settings": {
       "search_candidates": 40,
       "rerank_candidates": 20,
-      "rerank_max_tokens": 256,
+      "rerank_max_tokens": 384,
       "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
     },
     "sql_model": "openai/gpt-oss-20b"
@@ -57,7 +57,8 @@
           "ci_low": 1.0,
           "ci_high": 1.0
         }
-      }
+      },
+      "errors": 0
     }
   ]
 }
