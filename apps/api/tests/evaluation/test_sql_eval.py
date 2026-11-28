@@ -8,7 +8,7 @@ from provenance.evaluation.retrieval import Estimate
 from provenance.evaluation.sql_eval import SqlReport, evaluate_sql, results_match
 from provenance.generation.client import LLMClient
 from provenance.generation.limiter import ModelLimits, TokenLimiter
-from provenance.generation.providers import ChatRequest
+from provenance.generation.providers import ChatRequest, LLMUnavailableError
 from provenance.structured.engine import QueryResult, Value
 from tests.generation.fakes import Reply, ScriptedProvider
 from tests.ingest.harness import Harness
@@ -117,14 +117,61 @@ def test_check_sql_threshold() -> None:
         split="test",
         items=[],
         metrics={"execution_accuracy": Estimate(0.5, 0.2, 0.8)},
+        errors=0,
     )
     research = SqlReport(
         domain="research",
         split="test",
         items=[],
         metrics={"execution_accuracy": Estimate(0.0, 0.0, 0.0)},
+        errors=0,
     )
 
     failures = check_sql_threshold([report, research], {"sql": {"company": 0.8}})
 
     assert failures == ["company/test execution_accuracy 0.500 < 0.80"]
+
+
+def test_rows_are_assigned_as_a_matching_not_greedily() -> None:
+    gold = result(["n"], [[5], [9]])
+    predicted = result(["a", "b"], [[5, 9], [5, 1]])
+
+    assert results_match(gold, predicted)
+
+
+async def test_empty_gold_result_is_a_bug(tables: Harness) -> None:
+    stale = GoldenItem(
+        id="t9",
+        question="headcount of nobody?",
+        category="table",
+        route="table",
+        sql="SELECT headcount FROM t_headcount_teams WHERE team = 'Nobody'",
+    )
+    golden = GoldenSet(domain="company", split="dev", items=[stale])
+    llm = LLMClient(
+        ScriptedProvider(), TokenLimiter(ModelLimits(30, 8_000), 0), tables.deps.recorder
+    )  # type: ignore[arg-type]
+
+    with pytest.raises(ValueError, match="t9"):
+        await evaluate_sql(tables.session_factory, llm, tables.deps.settings, golden)
+
+
+async def test_unavailable_model_is_a_run_error_not_a_miss(tables: Harness) -> None:
+    def reply(request: ChatRequest) -> Reply:
+        if "headcount on mars?" in request.messages[-1].content:
+            return LLMUnavailableError("no cassette")
+        return sql_reply(request)
+
+    golden = GoldenSet(domain="company", split="dev", items=GOLDEN.items[:2])
+    llm = LLMClient(
+        ScriptedProvider(sql=reply), TokenLimiter(ModelLimits(30, 8_000), 0), tables.deps.recorder
+    )  # type: ignore[arg-type]
+
+    report = await evaluate_sql(tables.session_factory, llm, tables.deps.settings, golden)
+
+    assert [r.reason for r in report.items] == ["match", "error:llm_unavailable"]
+    assert report.errors == 1
+    assert report.metrics["execution_accuracy"].mean == 1.0
+    assert check_sql_threshold([report], {"sql": {"company": 0.8}}) == [
+        "company/dev: 1 item(s) not scored (model unavailable or rate limited; rerun to resume)"
+    ]
