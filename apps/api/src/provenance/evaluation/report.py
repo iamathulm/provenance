@@ -115,6 +115,20 @@ def to_markdown(reports: list[RetrievalReport], metadata: dict[str, Any]) -> str
         misses = [i for i in r.items if i.scores and i.scores["recall_at_5"] < 1.0]
         lines += ["", f"Missed at 5 ({len(misses)}):" if misses else "No misses at 5."]
         lines += [f"- `{i.id}` top files: {', '.join(i.top_files) or 'none'}" for i in misses]
+        misrouted = [i for i in r.items if i.route_predicted != i.route_expected]
+        if misrouted:
+            lines += [
+                "",
+                f"Route misses ({len(misrouted)}):",
+                "",
+                "| Item | Expected | Predicted | Reasons |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| `{i.id}` | {i.route_expected} | {i.route_predicted} | "
+                f"{'; '.join(i.route_reasons)} |"
+                for i in misrouted
+            ]
     return "\n".join(lines) + "\n"
 
 
