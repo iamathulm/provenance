@@ -70,7 +70,9 @@ class Settings(BaseSettings):
     flashrank_cache_dir: Path = REPO_ROOT / ".cache" / "flashrank"
     search_candidates: int = 40
     rerank_candidates: int = 20
-    rerank_max_tokens: int = 256  # truncation per passage; latency grows faster than linearly
+    # Truncation per passage. 384 (not 256) so research chunks (up to 320 tokens) are scored whole;
+    # latency grows faster than linearly (dev grid in docs/eval-report.md).
+    rerank_max_tokens: int = 384
     rerank_timeout_s: float = 3.0
     sql_max_rows: int = 200
     sql_timeout_s: float = 5.0

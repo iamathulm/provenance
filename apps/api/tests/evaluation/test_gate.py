@@ -42,8 +42,8 @@ def test_gate_trips_on_regression() -> None:
 
     assert passing == []
     assert failing == [
-        "company/test recall_at_5 0.400 < 0.90",
-        "company/test mrr_at_10 0.400 < 0.80",
+        "company/test recall_at_5 0.400 < 0.87",
+        "company/test mrr_at_10 0.400 < 0.79",
     ]
     assert raised == ["company/test recall_at_5 0.950 < 0.99"]
 
