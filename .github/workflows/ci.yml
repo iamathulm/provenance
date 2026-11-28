@@ -130,6 +130,10 @@ jobs:
         run: >-
           uv run provenance eval --split test --ablation
           --out eval-report --check eval/thresholds.yaml
+      - name: SQL gate (held-out test split, replayed from cassettes)
+        run: >-
+          uv run provenance eval --suite sql --split test --domain company
+          --out eval-report --check eval/thresholds.yaml
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v7

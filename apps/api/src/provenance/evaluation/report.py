@@ -13,6 +13,7 @@ from provenance.core.config import REPO_ROOT, Settings
 from provenance.evaluation.answers import AnswerReport
 from provenance.evaluation.golden import GoldenSet
 from provenance.evaluation.retrieval import Estimate, RetrievalReport
+from provenance.evaluation.sql_eval import SqlReport
 
 GATED_MODE = "hybrid_rerank"
 
@@ -185,4 +186,45 @@ def answers_markdown(reports: list[AnswerReport], metadata: dict[str, Any]) -> s
     if failed:
         lines += ["", "Errors (rerun to resume from cassettes):"]
         lines += [f"- `{i.id}`: {i.error_code}" for _, i in failed]
+    return "\n".join(lines) + "\n"
+
+
+def check_sql_threshold(
+    reports: list[SqlReport], thresholds: dict[str, dict[str, float]]
+) -> list[str]:
+    """Failures against the `sql:` floors; domains without a floor are not gated."""
+    floors = thresholds.get("sql", {})
+    failures: list[str] = []
+    for report in reports:
+        minimum = floors.get(report.domain)
+        value = report.metrics["execution_accuracy"].mean
+        if minimum is not None and value < minimum:
+            failures.append(
+                f"{report.domain}/{report.split} execution_accuracy {value:.3f} < {minimum:.2f}"
+            )
+    return failures
+
+
+def sql_json(reports: list[SqlReport], metadata: dict[str, Any]) -> dict[str, Any]:
+    return {"metadata": metadata, "reports": [dataclasses.asdict(r) for r in reports]}
+
+
+def sql_markdown(reports: list[SqlReport], metadata: dict[str, Any]) -> str:
+    lines = [
+        "# SQL evaluation",
+        "",
+        f"Run {metadata['created_at']} at `{metadata['git_sha'][:12]}`; SQL model "
+        f"`{metadata['sql_model']}`. Execution accuracy: the generated query returns the gold "
+        "query's rows (row order, column names and extra columns ignored). 95% bootstrap CIs.",
+        "",
+        "| Domain | Split | Items | Execution accuracy |",
+        "|---|---|---|---|",
+    ]
+    for r in reports:
+        accuracy = _cell(r.metrics, "execution_accuracy")
+        lines.append(f"| {r.domain} | {r.split} | {len(r.items)} | {accuracy} |")
+    misses = [i for r in reports for i in r.items if not i.match]
+    if misses:
+        lines += ["", "Misses:"]
+        lines += [f"- `{i.id}`: {i.reason}" for i in misses]
     return "\n".join(lines) + "\n"

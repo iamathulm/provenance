@@ -12,3 +12,9 @@ company:
 research:
   recall_at_5: 0.70
   mrr_at_10: 0.50
+
+# SQL gate: `provenance eval --suite sql --split test --check eval/thresholds.yaml` exits 1 when
+# execution accuracy on the company table items drops below the floor (research has no tables).
+# Target (design spec): >= 0.80.
+sql:
+  company: 0.80

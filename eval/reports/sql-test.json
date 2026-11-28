@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "created_at": "2026-11-28T13:19:50+00:00",
+    "git_sha": "e824e449b34367a9e66272b0e1ce810b2464c9a7",
+    "golden_sha256": {
+      "company/test": "77b9ba26fa9be0c36f30abfb38ef7335895076de1cfd8abaa8d1b200b57ca63f"
+    },
+    "profile_sha256": {
+      "company": "daa1397215c43d6c580e99a3be713b9c874b3ca9f575cddf5842c2d4038e4b0c"
+    },
+    "models": {
+      "dense": "BAAI/bge-small-en-v1.5",
+      "sparse": "Qdrant/bm25",
+      "reranker": "ms-marco-MiniLM-L-12-v2"
+    },
+    "settings": {
+      "search_candidates": 40,
+      "rerank_candidates": 20,
+      "rerank_max_tokens": 256,
+      "embedding_query_prefix": "Represent this sentence for searching relevant passages: "
+    },
+    "sql_model": "openai/gpt-oss-20b"
+  },
+  "reports": [
+    {
+      "domain": "company",
+      "split": "test",
+      "items": [
+        {
+          "id": "company-test-19",
+          "match": true,
+          "reason": "match",
+          "sql": "SELECT COUNT(*) AS support_ticket_count FROM t_support_tickets_q3_2026 WHERE product = 'Harrier Mini';"
+        },
+        {
+          "id": "company-test-20",
+          "match": true,
+          "reason": "match",
+          "sql": "SELECT failure_mode, COUNT(*) AS claim_count\nFROM t_warranty_claims_2026\nGROUP BY failure_mode\nORDER BY claim_count DESC\nLIMIT 1;"
+        },
+        {
+          "id": "company-test-21",
+          "match": true,
+          "reason": "match",
+          "sql": "SELECT SUM(headcount) AS total_headcount FROM t_headcount_by_team_2026_q3_headcount;"
+        },
+        {
+          "id": "company-test-22",
+          "match": true,
+          "reason": "match",
+          "sql": "SELECT month, revenue_usd\nFROM t_sales_q3_2026_by_month\nORDER BY revenue_usd DESC\nLIMIT 1;"
+        },
+        {
+          "id": "company-test-23",
+          "match": true,
+          "reason": "match",
+          "sql": "SELECT AVG(hours_to_resolve) AS avg_resolution_time_hours\nFROM t_support_tickets_q3_2026\nWHERE \"category\" = 'battery';"
+        }
+      ],
+      "metrics": {
+        "execution_accuracy": {
+          "mean": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0
+        }
+      }
+    }
+  ]
+}

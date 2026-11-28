@@ -1,0 +1,8 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "text": "{\"answerable\":true,\"sql\":\"SELECT month, revenue_usd\\nFROM t_sales_q3_2026_by_month\\nORDER BY revenue_usd DESC\\nLIMIT 1;\"}",
+  "usage": {
+    "prompt_tokens": 540,
+    "completion_tokens": 95
+  }
+}

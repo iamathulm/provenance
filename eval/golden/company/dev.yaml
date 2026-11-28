@@ -163,6 +163,7 @@ items:
     question: How many support tickets in Q3 2026 were severity S1?
     category: table
     route: table
+    sql: "SELECT COUNT(*) FROM t_support_tickets_q3_2026 WHERE severity = 'S1'"
     gold:
       - {file: support-tickets-q3-2026.csv}
     reference: "3"
@@ -171,6 +172,7 @@ items:
     question: What was the total revenue for North America in the Q3 sales by region?
     category: table
     route: table
+    sql: "SELECT revenue_usd FROM t_sales_q3_2026_by_region WHERE region = 'North America'"
     gold:
       - {file: sales-q3-2026.xlsx, evidence: "region: North America"}
     reference: 9,568,000 US dollars.
@@ -179,6 +181,7 @@ items:
     question: Which team has the most open roles?
     category: table
     route: table
+    sql: "SELECT team FROM t_headcount_by_team_2026_q3_headcount ORDER BY open_roles DESC LIMIT 1"
     gold:
       - {file: headcount-by-team-2026-q3.xlsx}
     reference: Engineering, with 9 open roles.
@@ -187,6 +190,7 @@ items:
     question: What is the total cost of approved warranty claims in 2026?
     category: table
     route: table
+    sql: "SELECT SUM(cost_usd) FROM t_warranty_claims_2026 WHERE approved = 'yes'"
     gold:
       - {file: warranty-claims-2026.csv}
     reference: 34,691 US dollars across 42 approved claims.

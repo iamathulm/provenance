@@ -39,14 +39,18 @@ from provenance.evaluation.optimize import (
 from provenance.evaluation.report import (
     answers_json,
     answers_markdown,
+    check_sql_threshold,
     check_thresholds,
     load_thresholds,
     run_metadata,
+    sql_json,
+    sql_markdown,
     to_json,
     to_markdown,
 )
 from provenance.evaluation.retrieval import NullRecorder, RetrievalReport, evaluate
 from provenance.evaluation.runner import eval_runtime, write_report
+from provenance.evaluation.sql_eval import evaluate_sql
 from provenance.generation.prompts import Prompt
 from provenance.ingest.runtime import build_worker
 from provenance.observability.logging import configure_logging
@@ -198,6 +202,33 @@ async def _eval_answers(
     return 0
 
 
+async def _eval_sql(
+    domains: list[Domain], split: Split, out: Path | None, check: Path | None
+) -> int:
+    settings = get_settings()
+    async with eval_runtime(settings, use_judge=False) as runtime:
+        if not runtime.recording:
+            _say("no GROQ_API_KEY: generating SQL only from recorded cassettes")
+        golden_sets = [load_golden(domain, split) for domain in domains]
+        reports = []
+        for golden in golden_sets:
+            report = await evaluate_sql(runtime.sessions, runtime.llm, runtime.settings, golden)
+            accuracy = report.metrics["execution_accuracy"].mean
+            _say(f"{golden.domain}/{split}: {len(report.items)} items, accuracy {accuracy:.3f}")
+            reports.append(report)
+    metadata = run_metadata(golden_sets, settings) | {"sql_model": settings.sql_model}
+    markdown = sql_markdown(reports, metadata)
+    _print_report(markdown)
+    if out is not None:
+        write_report(out, f"sql-{split}", sql_json(reports, metadata), markdown)
+    if check is None:
+        return 0
+    failures = check_sql_threshold(reports, load_thresholds(check))
+    for failure in failures:
+        _say(f"gate failed: {failure}")
+    return 1 if failures else 0
+
+
 async def _eval_guardrails(out: Path | None) -> int:
     settings = get_settings()
     key = settings.groq_api_key.get_secret_value() if settings.groq_api_key else None
@@ -287,9 +318,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     evaluation = commands.add_parser("eval", help="score the system against the golden sets")
     evaluation.add_argument(
         "--suite",
-        choices=["retrieval", "answers", "guardrails"],
+        choices=["retrieval", "answers", "sql", "guardrails"],
         default="retrieval",
-        help="retrieval (no model calls), answers (Groq answers, optional RAGAS judge) or "
+        help="retrieval (no model calls), answers (Groq answers, optional RAGAS judge), "
+        "sql (text-to-SQL execution accuracy on table items) or "
         "guardrails (local injection rules vs Prompt Guard)",
     )
     evaluation.add_argument(
@@ -350,6 +382,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             if args.suite == "guardrails":
                 status = _run(_eval_guardrails(args.out))
                 _say("eval: done")
+                return status
+            if args.suite == "sql":
+                status = _run(_eval_sql(domains, args.split, args.out, args.check))
+                _say(f"eval: {'gate failed' if status else 'done'}")
                 return status
             if args.suite == "answers":
                 use_judge = not args.no_judge
